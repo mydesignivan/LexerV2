@@ -14,7 +14,6 @@
 <!--========== LIBRARIES ============-->
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="js/helpers/helpers<?=$this->config->item('sufix_pack_js');?>.js"></script>
-<script type="text/javascript" src="js/comun.js"></script>
 <!--========== END LIBRARIES =======-->
 
 

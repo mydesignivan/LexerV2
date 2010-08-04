@@ -43,6 +43,10 @@ class Simplelogin{
                 return array('status'=>'error', 'error'=>'loginfaild');
             }
 
+            if( $row['level']==0 && $row['active']==0 ){
+                return array('status'=>'error', 'error'=>'userinactive');
+            }
+
             //Destroy old session
             $this->CI->session->sess_destroy();
 
@@ -53,12 +57,7 @@ class Simplelogin{
             unset($row['password']);
 
             //Set session data
-            //$this->CI->session->set_userdata($row);
-            $this->CI->session->set_userdata(array(
-                'username' => $row['username'],
-                'user_id'  => $row['user_id']
-            ));
-
+            $this->CI->session->set_userdata($row);
 
             //Set logged_in to true
             $this->CI->session->set_userdata(array('logged_in' => true));
@@ -72,6 +71,9 @@ class Simplelogin{
     }
 
     public function logout() {
+        //Delete User online
+        //$this->CI->db->delete(TBL_USERSONLINE, array('user_id' => $this->CI->session->userdata('user_id')));
+
         //Destroy session
         $this->CI->session->sess_destroy();
     }

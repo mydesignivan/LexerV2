@@ -206,3 +206,29 @@ function basename (path, suffix) {
 Array.prototype.unset_array = function(key){
     return this.splice(this.indexOf(key), 1);
 }
+
+var loader={
+    back:true,
+    show : function(){
+        if( $('#loader-back').length==0 ){
+            var f = function(){
+                $('<div id="loader-image" class="loader-image"></div>').css('opacity',1).appendTo('body');
+            };
+
+            if( this.back ){
+                var div = $('<div id="loader-back" class="loader-back"></div>').css('opacity', 0.5)
+                                                                               .css('styleOpacity', 0.5)
+                                                                               .appendTo('body');
+                    div.stop().fadeIn('slow');
+                    f();
+            }else f();
+        }else{
+            $('#loader-back').stop().fadeIn('slow')
+            $('#loader-image').show();
+        }
+    },
+    hide : function(){
+            $('#loader-image').hide();
+            $('#loader-back').stop().fadeOut('slow')
+    }
+}

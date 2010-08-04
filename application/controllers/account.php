@@ -6,6 +6,8 @@ class Account extends Controller {
     function __construct(){
         parent::Controller();
 
+        $this->load->model('users_model');
+
         $this->load->library('dataview', array(
             'tlp_title'            =>  TITLE_INDEX,
             'tlp_meta_description' => META_DESCRIPTION_INDEX,
@@ -29,8 +31,72 @@ class Account extends Controller {
         $this->load->view('template_frontpage_view', $this->_data);
     }
 
+    public function create(){
+        if( $_SERVER['REQUEST_METHOD']=="POST" ){
+
+            $res = $this->users_model->create();
+
+            if( $res ){
+                $this->load->library('email');
+
+                $id = $this->encpss->urlsafe_base64_encode($res['id']);
+                $link = site_url('/account/confirm_email/'.$id);
+
+                $message = EMAIL_REG_MESSAGE;
+                $message = str_replace('{link}', $link, $message);
+                $message = str_replace('{email}', $this->input->post('txtEmail'), $message);
+                $message = str_replace('{password}', $this->input->post('txtPass'), $message);
+
+                $this->email->from(EMAIL_REG_FROM_MAIL, EMAIL_REG_FROM_NAME);
+                $this->email->to($this->input->post('txtEmail'));
+                $this->email->subject(EMAIL_REG_SUBJECT);
+                $this->email->message($message);
+
+                if( $this->email->send() ){
+                    if( $res['result'] ){
+                        $this->session->set_flashdata('status', 'success');
+                        $this->session->set_flashdata('suffix', 'success');
+                        redirect('/account/success/');
+                    }else{
+                        $this->session->set_flashdata('status', 'error');
+                        $this->session->set_flashdata('suffix', 'errorsave');
+                        redirect('/account/error/');
+                    }
+
+                }else {
+                    $this->session->set_flashdata('status', 'error');
+                    $this->session->set_flashdata('suffix', 'errormail');
+                    $this->session->set_flashdata('message', $this->email->print_debugger());
+                    redirect('/account/error/');
+                }                
+                
+            }
+        }
+    }
+
+    public function showmsg(){
+        $seg = trim($this->uri->segment(3));
+
+        if( $this->session->flashdata('status')==$seg ){
+            $suffix = $this->session->flashdata('suffix');
+            
+            $this->_data = $this->dataview->set_data(array(
+                'tlp_section'       => "frontpage/account_msg_$suffix.php",
+                'tlp_title_section' => $seg=="success" ? "Bienvenido a LexerSports!" : "Ha ocurrido un Error",
+                'message'           => $this->session->flashdata('message')
+            ));
+            $this->load->view('template_frontpage_view', $this->_data);
+        }
+
+    }
+
     /* AJAX FUNCTIONS
      **************************************************************************/
+    public function ajax_check_exists(){
+        if( $_SERVER['REQUEST_METHOD']=="POST" && $_POST['txtEmail'] ){
+            echo json_encode(!$this->users_model->check_exists($_POST['txtEmail']));
+        }
+    }
 
     /* PRIVATE FUNCTIONS
      **************************************************************************/

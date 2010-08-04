@@ -34,5 +34,10 @@ class Captcha extends Controller {
         $this->securimage->outputAudioFile();
     }
 
+    public function validate() {
+        if( $_SERVER['REQUEST_METHOD']=="POST" && $_POST['txtCaptcha'] ){
+            echo json_encode($this->securimage->check($_POST['txtCaptcha']));
+        }
+    }
+
 }
-?>

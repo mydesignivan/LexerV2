@@ -3,20 +3,51 @@ var Account = new (function(){
     /* PUBLIC METHODS
      **************************************************************************/
     this.initializer = function(){
-        $('#txtEmail').validate({
+        $('#form1').submit(function(){
+            loader.show();
+
+        }).validate({
             rules : {
-                email: {
+                cboUserType: 'required',
+                txtEmail: {
                    required: true,
-                   email: true
-                }
-            }
-        })
+                   email: true,
+                   remote : {
+                       url  : baseURI+'account/ajax_check_exists/',
+                       type : "post"
+                   }
+                },
+                txtConfirmEmail: {
+                    required: true,
+                    equalTo: "#txtEmail"
+                },
+                txtPass: {
+                    required: true,
+                    password: true
+                },
+                txtConfirmPass: {
+                    required: true,
+                    equalTo: "#txtPass"
+                },
+                chkPolitic: 'required',
+                txtCaptcha: {
+                    required : true,
+                    remote : {
+                        url  : baseURI+'captcha/validate/',
+                        type : "post"
+                    }
+                }                
+            },
 
-    };
+            invalidHandler : function(){
+                loader.hide();
+            },
+           
+            success: 'valid-success',
+            errorClass: 'valid-error',
+            onfocusout: false
+        });
 
-    this.save = function(){
-
-        return false;
     };
 
 
@@ -28,3 +59,4 @@ var Account = new (function(){
      **************************************************************************/
 
 })();
+

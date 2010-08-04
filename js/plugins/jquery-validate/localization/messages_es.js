@@ -19,5 +19,19 @@ jQuery.extend(jQuery.validator.messages, {
   rangelength: jQuery.validator.format("Por favor, escribe un valor entre {0} y {1} caracteres."),
   range: jQuery.validator.format("Por favor, escribe un valor entre {0} y {1}."),
   max: jQuery.validator.format("Por favor, escribe un valor menor o igual a {0}."),
-  min: jQuery.validator.format("Por favor, escribe un valor mayor o igual a {0}.")
+  min: jQuery.validator.format("Por favor, escribe un valor mayor o igual a {0}.")  
+});
+
+jQuery.validator.setDefaults({
+    messages : {
+        txtEmail: {
+            remote : 'La direcci&oacute;n de email ya existe.'
+        },
+        chkPolitic:{
+            required : 'Debe aceptar las pol&iacute;ticas de Privacidad para poder continuar.'
+        },
+        txtCaptcha:{
+            remote : 'El c&oacute;digo ingresado no es v&aacute;lido.'
+        }
+    }
 });

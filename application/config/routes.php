@@ -43,6 +43,8 @@
 $route['default_controller'] = "index";
 $route['scaffolding_trigger'] = "";
 
+$route['account/success'] = "/account/showmsg/success";
+$route['account/error'] = "/account/showmsg/error";
 
 /* End of file routes.php */
 /* Location: ./system/application/config/routes.php */

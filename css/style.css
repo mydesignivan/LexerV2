@@ -15,6 +15,23 @@
 }
 
 /*------------------------------------------------------------------------------
+ - ESTILO PARA MENSAJES DEL VALIDADOR
+ -----------------------------------------------------------------------------*/
+.valid-success{
+    float: left;
+    background: transparent url(../images/icon_success.png) no-repeat !important;
+    width: 16px;
+    height: 16px;
+}
+.valid-error{
+    background: #FBE3E4;
+    color: #8a1f11;
+    border-color: #FBC2C4;
+    padding: 5px;
+    margin-bottom: 1em;
+}
+
+/*------------------------------------------------------------------------------
  - ESTILOS PARA LINK
  -----------------------------------------------------------------------------*/
 
@@ -52,4 +69,23 @@ input[type=text],input[type=password], textarea{
  - ESTILOS PARA FORMULARIO FIELDSET
  -----------------------------------------------------------------------------*/
 
-
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA AJAX LOADER
+ -----------------------------------------------------------------------------*/
+.loader-back{
+    position: fixed;
+    top:0;left:0;
+    width:100%;
+    height: 100%;
+    background: #fff;
+    display: none;
+    z-index: 1000;
+}
+.loader-image{
+    position: fixed;
+    top:0;left:0;
+    background: url(../images/ajax-loader2.gif) no-repeat center;
+    width: 100%;
+    height: 100%;
+    z-index: 1001;
+}

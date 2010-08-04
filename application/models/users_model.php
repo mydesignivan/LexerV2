@@ -10,31 +10,32 @@ class Users_model extends Model {
 
     /* PUBLIC FUNCTIONS
      **************************************************************************/
-    public function save(){
-        $this->db->where('user_id', $this->session->userdata('user_id'));
+    public function create(){
 
         $data = array(
-            'username'      => $_POST['txtUsername'],
-            'email'         => $_POST['txtEmail'],
-            'emailcv'       => $_POST['txtEmailCV'],
-            'address1'      => $_POST['txtAddress1'],
-            'address2'      => $_POST['txtAddress2'],
-            'phone1'        => $_POST['txtPhone1'],
-            'phone2'        => $_POST['txtPhone2'],
-            'last_modified' => date('Y-m-d H:i:s')
+            'users_type' => $this->input->post('cboUserType'),
+            'email'      => $this->input->post('txtEmail'),
+            'password'   => $this->encpss->encode($this->input->post('txtPass')),
+            'newsletter' => $this->input->post('chkNewsletter'),
+            'date_added' => date('Y-m-d H:i:s')
         );
 
-        if( !empty($_POST['txtPass']) ) $data['password'] = $this->encpss->encode($_POST['txtPass']);
+        $res = $this->db->insert(TBL_USERS, $data);
+        $id = $this->db->insert_id();
 
-        return $this->db->update(TBL_USERS, $data);
+        return array('id'=>$id, 'result'=>$res);
     }
 
     public function get_info($id=null){
-        $where = array();
-        if( !is_null($id) ) $where = array('user_id'=>$id);
-        $query = $this->db->get_where(TBL_USERS, $where);
-        return $query->row_array();
+
     }
+
+    /* PUBLIC FUNCTIONS (LLAMADAS POR AJAX)
+     **************************************************************************/
+     public function check_exists($v, $id=null){
+         $where = is_null($id) ? array('email'=>$v) : array('id<>'=>$id, 'email'=>$v);
+         return $this->db->get_where(TBL_USERS, $where)->num_rows>0;
+     }
     
 }
 ?>
