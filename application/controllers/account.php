@@ -56,6 +56,7 @@ class Account extends Controller {
                     if( $res['result'] ){
                         $this->session->set_flashdata('status', 'success');
                         $this->session->set_flashdata('suffix', 'success');
+                        $this->session->set_flashdata('data', array('username' => $this->input->post('txtEmail')));
                         redirect('/account/success/');
                     }else{
                         $this->session->set_flashdata('status', 'error');
@@ -80,15 +81,54 @@ class Account extends Controller {
         if( $this->session->flashdata('status')==$seg ){
             $suffix = $this->session->flashdata('suffix');
             
+            if( is_array($this->session->flashdata('data')) ) $this->_data = $this->dataview->set_data($this->session->flashdata('data'));
             $this->_data = $this->dataview->set_data(array(
                 'tlp_section'       => "frontpage/account_msg_$suffix.php",
-                'tlp_title_section' => $seg=="success" ? "Bienvenido a LexerSports!" : "Ha ocurrido un Error",
+                'tlp_title_section' => $seg=="success" ? "¡Felicitaciones!" : "Ha ocurrido un Error",
                 'message'           => $this->session->flashdata('message')
             ));
             $this->load->view('template_frontpage_view', $this->_data);
         }
-
     }
+
+    public function confirm_email(){
+        if( $this->uri->segment(3) ){
+            $seg = $this->encpss->urlsafe_base64_decode($this->uri->segment(3));
+            $res = $this->users_model->activate($seg);
+            if( !$res ){
+                redirect($this->config->item('base_url'));
+
+            }else{
+                $user = $res->row_array();
+                $message = sprintf(EMAIL_REGACTIVE_MESSAGE,
+                    $user['username'],
+                    $user['username'],
+                    $this->encpss->decode($user['password'])
+                );
+
+                $this->email->from(EMAIL_REGACTIVE_FROM, EMAIL_REGACTIVE_NAME);
+                $this->email->to($user['email']);
+                $this->email->subject(EMAIL_REGACTIVE_SUBJECT);
+                $this->email->message($message);
+                if( $this->email->send() ){
+
+                    $this->_data = $this->dataview->set_data(array(
+                        'tlp_section'       => 'frontpage/useractivation_view.php',
+                        'tlp_title_section' => 'Cuenta Activada',
+                        'username'          => $user['username']
+                    ));
+                    $this->load->view('template_frontpage_view', $this->_data);
+
+                }else {
+                    $err = $this->email->print_debugger();
+                    log_message("error", $err);
+                    die($err);
+                }
+
+            }
+        }else redirect('/index/');
+    }
+
 
     /* AJAX FUNCTIONS
      **************************************************************************/

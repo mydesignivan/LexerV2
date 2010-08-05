@@ -26,8 +26,36 @@ class Users_model extends Model {
         return array('id'=>$id, 'result'=>$res);
     }
 
-    public function get_info($id=null){
+    public function rememberpass($field){
+        $result = $this->db->get_where(TBL_USERS, "(email = '".$field."' or username='".$field."') and active=0");
+        if( $result->num_rows >0 ) return array("status"=>"userinactive");
 
+        $result = $this->db->get_where(TBL_USERS, "(email = '".$field."' or username='".$field."') and active=1");
+        if( $result->num_rows==0 ) return array("status"=>"notexists");
+
+        $data = $result->row_array();
+        $data['token'] = uniqid(time());
+
+        $this->db->where('user_id', $data['user_id']);
+        if( !$this->db->update(TBL_USERS, array('token'=>$data['token'])) ){
+            display_error(__FILE__, "rememberpass", ERR_DB_UPDATE, array(TBL_USERS));
+        }
+
+        return array("status"=>"ok", "data"=>$data);
+    }
+
+    public function activate($users_id){
+        $result = $this->db->get_where(TBL_USERS, array('users_id'=>$users_id));
+        if( $result->num_rows>0 ) {
+            $row = $result->row_array();
+
+            if( $row['active']==1 ) return false;
+
+            $this->db->where('users_id', $users_id);
+            if( !$this->db->update(TBL_USERS, array('active'=>1)) ) return false;
+            return $result;
+
+        }else return false;
     }
 
     /* PUBLIC FUNCTIONS (LLAMADAS POR AJAX)

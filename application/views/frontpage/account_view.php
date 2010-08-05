@@ -2,18 +2,6 @@
 
 <form id="form1" action="<?=site_url('/account/create');?>" method="post" enctype="application/x-www-form-urlencoded">
 
-    <!--<div class="trow">
-        <label for="cboIdUser">Soy un</label>
-        <div id="radio">
-            <input type="radio" id="optDep" name="optUserType" value="<?=TBL_USERS_DEP?>" onclick="Account.show_form(this.value)" /><label for="optDep">Deportista</label>
-            <input type="radio" id="optClub" name="optUserType" value="<?=TBL_USERS_CLUB?>" onclick="Account.show_form(this.value)" /><label for="optClub">Club</label>
-            <input type="radio" id="optRep" name="optUserType" value="<?=TBL_USERS_REPR?>" onclick="Account.show_form(this.value)" /><label for="optRep">Representante</label>
-            <input type="radio" id="optSponsors" name="optUserType" value="<?=TBL_USERS_SPONSORS?>" onclick="Account.show_form(this.value)" /><label for="optSponsors">Sponsor</label>
-            <input type="radio" id="optEntrenador" name="optUserType" value="<?=TBL_USERS_TRAINER?>" onclick="Account.show_form(this.value)" /><label for="optEntrenador">Entrenador</label>
-            <input type="radio" id="optPrepfis" name="optUserType" value="<?=TBL_USERS_PREPFIS?>" onclick="Account.show_form(this.value)" /><label for="optPrepfis">Preparador F&iacute;sico</label>
-        </div>
-    </div>-->
-
     <div class="trow">
         <label for="cboIdUser">*Soy un</label>
         <select name="cboUserType">

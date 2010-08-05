@@ -55,6 +55,13 @@ input[type=text],input[type=password], textarea{
     letter-spacing: 1px;
 }
 
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA INPUT
+ -----------------------------------------------------------------------------*/
+select{
+    background-color: #fff;
+    border:1px solid #D5DEDF;
+}
 
 /*------------------------------------------------------------------------------
  - ESTILOS PARA TEXTAREA
