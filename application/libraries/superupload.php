@@ -16,10 +16,11 @@ class SuperUpload{
                 'opacity'       => isset($params['watermark_options']['opacity']) ? $params['watermark_options']['opacity'] : '30',
                 'overlay_path'  => isset($params['watermark_options']['overlay_path']) ? $params['watermark_options']['overlay_path'] : '',
              ),
+            'resize_image_original' => true,
             'thumb_width'    => $params['thumb_width'], //Obligatorio
             'thumb_height'   => $params['thumb_height'], //Obligatorio
-            'image_width'    => $params['image_width'], //Obligatorio
-            'image_height'   => $params['image_height'], //Obligatorio
+            'image_width'    => @$params['image_width'], //Obligatorio
+            'image_height'   => @$params['image_height'], //Obligatorio
             'maxsize'        => isset($params['maxsize']) ? $params['maxsize'] : 2048,
             'filetype'       => isset($params['filetype']) ? $params['filetype'] : 'gif|jpg|png',
             'error_uploaded' => isset($params['error_uploaded']) ? $params['error_uploaded'] : 'El archivo no ha podido llegar al servidor',
@@ -102,16 +103,18 @@ class SuperUpload{
 
 
                     // Dimensiona la imagen original   (ORIGINAL)
-                    if( $sizes_image_original[0] > $this->_params['image_width'] || $sizes_image_original[1] > $this->_params['image_height'] ){
-                        $config = array();
-                        $config['source_image'] = $this->_params['path'] . $filename;
-                        if( $sizes_image_original[0] > $this->_params['image_width'] ) $config['width'] = $this->_params['image_width'];
-                        if( $sizes_image_original[1] > $this->_params['image_height'] ) $config['height'] = $this->_params['image_height'];
+                    if( $this->_params['resize_image_original'] ){
+                        if( $sizes_image_original[0] > $this->_params['image_width'] || $sizes_image_original[1] > $this->_params['image_height'] ){
+                            $config = array();
+                            $config['source_image'] = $this->_params['path'] . $filename;
+                            if( $sizes_image_original[0] > $this->_params['image_width'] ) $config['width'] = $this->_params['image_width'];
+                            if( $sizes_image_original[1] > $this->_params['image_height'] ) $config['height'] = $this->_params['image_height'];
 
-                        $this->CI->image_lib->clear();
-                        $this->CI->image_lib->initialize($config);
+                            $this->CI->image_lib->clear();
+                            $this->CI->image_lib->initialize($config);
 
-                        if( !$this->CI->image_lib->resize() ) $this->_save_error($output, $this->CI->image_lib->display_errors());
+                            if( !$this->CI->image_lib->resize() ) $this->_save_error($output, $this->CI->image_lib->display_errors());
+                        }
                     }
 
                 }else $this->_save_error($output, $this->CI->image_lib->display_errors());

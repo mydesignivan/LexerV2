@@ -65,6 +65,17 @@ define('TBL_USERS_TRAINER',      'users_trainer');
 define('TBL_USERS_TRAINER_PIC',  'users_trainer_picgallery');
 define('TBL_USERS_TRAINER_VID',  'users_trainer_videogallery');
 
+define('TBL_LIST_COUNTRY',  'list_country');
+define('TBL_LIST_STATES',   'list_states');
+define('TBL_LIST_TIPODOC',  'list_tipodoc');
+define('TBL_LIST_PASSPORT', 'list_passport');
+define('TBL_LIST_LANG',     'list_lang');
+define('TBL_LIST_TIPODISC', 'list_tipodisc');
+define('TBL_LIST_WORKS',    'list_works');
+define('TBL_LIST_SPORTS',   'list_sports');
+define('TBL_LIST_CARGO',    'list_cargo');
+define('TBL_LIST_RUBRO',    'list_rubro');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -100,10 +111,30 @@ Clave: {password}
 ¡Gracias!
 ';
 
-define('EMAIL_REG_FROM_MAIL', 'ivan@mydesign.com.ar');
-define('EMAIL_REG_FROM_NAME', 'www.lexersports.com');
+define('EMAIL_REG_FROM_MAIL', 'no-reply@lexersports.com');
+define('EMAIL_REG_FROM_NAME', 'LexerSports.com');
 define('EMAIL_REG_SUBJECT', 'Confirmación de Registro en LexerSports!');
 define('EMAIL_REG_MESSAGE', $msg);
+
+/*
+|--------------------------------------------------------------------------
+| EMAIL RECORDAR CONTRASEÑA
+|--------------------------------------------------------------------------
+*/
+$msg = "Hola!<br /><br />";
+$msg.= "¿No recuerda su contrase&ntilde;a?<br />";
+$msg.= "Puede sucederle a cualquiera.<br /><br />";
+$msg.= "Por favor abra este link en su navegador:<br /><br />";
+$msg.= '<a href="{link}">{link}</a><br /><br />';
+$msg.= 'Esto resetear&aacute; su contrase&ntilde;a<br />';
+$msg.= 'Usted puede luego ingresar y cambiarla por alguna que recuerde.<br /><br />';
+$msg.= 'Atentamente,<br />';
+$msg.= 'LexerSports.com';
+
+define('EMAIL_RP_FROM', 'no-reply@lexersports.com');
+define('EMAIL_RP_NAME', 'LexerSports.com');
+define('EMAIL_RP_SUBJECT', 'Resetear su contraseña de AlquileresTemporarios.org');
+define('EMAIL_RP_MESSAGE', $msg);
 
 /*
 |--------------------------------------------------------------------------
@@ -119,24 +150,21 @@ define('EMAIL_CONTACT_MESSAGE', $msg);
 
 /*
 |--------------------------------------------------------------------------
-| UPLOAD FILE PARA IMAGENES EN GENERAL
+| UPLOAD FILE
 |--------------------------------------------------------------------------
 */
 define('UPLOAD_FILETYPE', 'gif|jpg|png');
 define('UPLOAD_MAXSIZE', 2048); //Expresado en Kylobytes
 
-/*
-|--------------------------------------------------------------------------
-| UPLOAD FILE PARA IMAGENES "GALERIA DE IMAGEN"
-|--------------------------------------------------------------------------
-*/
-define('UPLOAD_PATH_GALERIE', './uploads/obras/');
-define('UPLOAD_PATH_TMP_GALERIE', './uploads/obras/.tmp/');
+define('UPLOAD_PATH_GALLERY', './uploads/gallery/');
+define('UPLOAD_PATH_CV', './uploads/cv/');
 
-define('IMAGE_THUMB_WIDTH_GALERIE', 153);
-define('IMAGE_THUMB_HEIGHT_GALERIE', 103);
-define('IMAGE_ORIGINAL_WIDTH_GALERIE', 800);
-define('IMAGE_ORIGINAL_HEIGHT_GALERIE', 600);
+define('IMAGE_CV_THUMB_WIDTH', 200);
+define('IMAGE_CV_THUMB_HEIGHT', 250);
+define('IMAGE_GALLERY_THUMB_WIDTH', 100);
+define('IMAGE_GALLERY_THUMB_HEIGHT', 80);
+define('IMAGE_GALLERY_ORIGINAL_WIDTH', 450);
+define('IMAGE_GALLERY_ORIGINAL_HEIGHT', 300);
 
 /*
 |--------------------------------------------------------------------------

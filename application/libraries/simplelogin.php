@@ -26,14 +26,14 @@ class Simplelogin{
         }
 
         //Check if already logged in
-        if( $this->CI->session->userdata('username') == $user ) {
+        if( $this->CI->session->userdata('email') == $user ) {
             //User is already logged in.
             return array('status'=>'error', 'error'=>'loginfaild');
         }
 
 
         //Check against user table
-        $query = $this->CI->db->get_where($this->user_table, array('username'=>$user));
+        $query = $this->CI->db->get_where($this->user_table, array('email'=>$user));
 
         if( $query->num_rows > 0 ) {
             $row = $query->row_array();

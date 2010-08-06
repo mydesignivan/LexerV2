@@ -16,7 +16,7 @@
     </div>
 
     <div class="trow">
-        <label for="txtEmail"><span class="asterisco">*</span>txtEmail</label>
+        <label for="txtEmail"><span class="asterisco">*</span>Email</label>
         <input type="text" name="txtEmail" id="txtEmail" tabindex="2" />
     </div>
 
@@ -69,8 +69,6 @@
     <div class="trow">
         <button type="submit" tabindex="10">Registrarme</button>
     </div>
-
-    <div class="trow" id="output"></div>
 </form>
 
 <script type="text/javascript">

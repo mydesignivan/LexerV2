@@ -48,20 +48,6 @@ jQuery.fn.extend({
         
     },
 
-    setOpacity : function(opacity){ //Opacity = 1-10
-        return this.each(function(){
-            var s = this.style;
-            var alphaRe = /alpha\([^\)]*\)/gi;
-            if( window.ActiveXObject ){ // IE
-                s.zoom = 1;
-                s.filter = (s.filter || '').replace(alphaRe, '') +
-                           (opacity == 1 ? '' : ' alpha(opacity=' + opacity * 100 + ')');
-            }else{
-                s.opacity = opacity*0.1;
-            }
-        });
-    },
-
     formatURL : function(){
         return this.each(function(){
             if( this.value ){
@@ -73,49 +59,11 @@ jQuery.fn.extend({
         });
     },
     
-    toArrayValue : function(){
-        var arr = new Array();
-        this.each(function(){
-            var t = $(this);
-            if( t.is(':input') ) arr.push(t.val());
-            else arr.push(t.text());
-        });
-        return arr;
-    },
-
-    show2 : function(){
-        this.each(function(){
-            $(this).css({
-                visibility : 'visible',
-                position   : 'relative'
-            });
-        });
-    },
-
-    hide2 : function(){
-        this.each(function(){
-            $(this).css({
-                visibility : 'hidden',
-                position   : 'absolute'
-            });
-        });
-    }
-    
 });
 
-
-function getKeyCode(e){
-    if (!e) e = window.event;
-    if( e.keyCode ) {
-        return e.keyCode;  //DOM
-    } else if( e.which ) {
-        return e.which;    //NS 4 compatible
-    } else if( e.charCode ) {
-        return e.charCode; //also NS 6+, Mozilla 0.9+
-    } else { //total failure, we have no way of obtaining the key code
-        return false;
-    }
-}
+jQuery.fn.outerHTML = function(s) {
+    return (s) ? this.before(s).remove() : jQuery("<p>").append(this.eq(0).clone()).html();
+};
 
 function clear_input(e, isPass){
     if (!e) e = window.event;
@@ -231,4 +179,9 @@ var loader={
             $('#loader-image').hide();
             $('#loader-back').stop().fadeOut('slow')
     }
+}
+
+function showhide(el, sel){
+    if( $(el)[0].checked ) $(sel).fadeIn('slow');
+    else $(sel).fadeOut('slow');
 }

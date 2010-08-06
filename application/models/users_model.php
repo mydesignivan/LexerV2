@@ -53,7 +53,7 @@ class Users_model extends Model {
 
             $this->db->where('users_id', $users_id);
             if( !$this->db->update(TBL_USERS, array('active'=>1)) ) return false;
-            return $result;
+            return $row;
 
         }else return false;
     }

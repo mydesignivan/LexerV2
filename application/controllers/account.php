@@ -21,12 +21,12 @@ class Account extends Controller {
     private $_data;
 
     /* PUBLIC FUNCTIONS
-     **************************************************************************/
+     **************************************************1************************/
     public function index(){
         $this->_data = $this->dataview->set_data(array(
             'tlp_section'       =>  'frontpage/account_view.php',
             'tlp_title_section' =>  'Formulario de Registro',
-            'tlp_script'        =>  array('validator', 'account')
+            'tlp_script'        =>  array('plugins_validator', 'class_account')
         ));
         $this->load->view('template_frontpage_view', $this->_data);
     }
@@ -83,7 +83,7 @@ class Account extends Controller {
             
             if( is_array($this->session->flashdata('data')) ) $this->_data = $this->dataview->set_data($this->session->flashdata('data'));
             $this->_data = $this->dataview->set_data(array(
-                'tlp_section'       => "frontpage/account_msg_$suffix.php",
+                'tlp_section'       => "frontpage/account_msg_".$suffix."_view.php",
                 'tlp_title_section' => $seg=="success" ? "¡Felicitaciones!" : "Ha ocurrido un Error",
                 'message'           => $this->session->flashdata('message')
             ));
@@ -99,32 +99,13 @@ class Account extends Controller {
                 redirect($this->config->item('base_url'));
 
             }else{
-                $user = $res->row_array();
-                $message = sprintf(EMAIL_REGACTIVE_MESSAGE,
-                    $user['username'],
-                    $user['username'],
-                    $this->encpss->decode($user['password'])
-                );
-
-                $this->email->from(EMAIL_REGACTIVE_FROM, EMAIL_REGACTIVE_NAME);
-                $this->email->to($user['email']);
-                $this->email->subject(EMAIL_REGACTIVE_SUBJECT);
-                $this->email->message($message);
-                if( $this->email->send() ){
-
-                    $this->_data = $this->dataview->set_data(array(
-                        'tlp_section'       => 'frontpage/useractivation_view.php',
-                        'tlp_title_section' => 'Cuenta Activada',
-                        'username'          => $user['username']
-                    ));
-                    $this->load->view('template_frontpage_view', $this->_data);
-
-                }else {
-                    $err = $this->email->print_debugger();
-                    log_message("error", $err);
-                    die($err);
-                }
-
+                $this->_data = $this->dataview->set_data(array(
+                    'tlp_section'       => 'frontpage/account_msg_welcome_view.php',
+                    'tlp_title_section' => "¡Bienvenido!",
+                    'username'          => $this->encpss->encode($res['email']),
+                    'pass'              => $res['password']
+                ));
+                $this->load->view('template_frontpage_view', $this->_data);
             }
         }else redirect('/index/');
     }

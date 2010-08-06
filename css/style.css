@@ -7,12 +7,28 @@
 .border{border:1px solid red !important;}
 .text-size-80{font-size: 80% !important;}
 .text-size-90{font-size: 90% !important;}
+.hide{display: none;}
 .trow{
     float:left;
     clear: both;
     width: 100%;
     margin: 5px 0 5px 0;
 }
+
+/* Success, notice and error boxes
+-------------------------------------------------------------- */
+
+.error,
+.notice,
+.success    { padding: 4px; margin-bottom: 1em; border: 2px solid #ddd; font-size: 90%; }
+
+.error      { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; font-size: 90%; }
+.notice     { background: #FFF6BF; color: #514721; border-color: #FFD324; }
+.success    { background: #E6EFC2; color: #264409; border-color: #C6D880; }
+.error a    { color: #8a1f11; }
+.notice a   { color: #514721; }
+.success a  { color: #264409; }
+
 
 /*------------------------------------------------------------------------------
  - ESTILO PARA MENSAJES DEL VALIDADOR
