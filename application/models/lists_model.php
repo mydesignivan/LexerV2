@@ -29,7 +29,7 @@ class lists_model extends Model {
     }
 
     public function get_tipodoc($elementDefault){
-        $this->db->select('name, tipodoc_id');
+        $this->db->select('name, name');
         $this->db->order_by('name', 'asc');
         $data = $this->db->get(TBL_LIST_TIPODOC)->result_array();
         return array_merge($elementDefault, $data);
@@ -43,14 +43,14 @@ class lists_model extends Model {
     }
 
     public function get_passport($elementDefault){
-        $this->db->select('name, passport_id');
+        $this->db->select('name, name');
         $this->db->order_by('name', 'asc');
         $data = $this->db->get(TBL_LIST_PASSPORT)->result_array();
         return array_merge($elementDefault, $data);
     }
 
     public function get_tipodisc($elementDefault){
-        $this->db->select('name, tipodisc_id');
+        $this->db->select('name, name');
         $this->db->order_by('name', 'asc');
         $data = $this->db->get(TBL_LIST_TIPODISC)->result_array();
         return array_merge($elementDefault, $data);

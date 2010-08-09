@@ -58,6 +58,21 @@ jQuery.fn.extend({
             }
         });
     },
+
+    setOptionOther : function(){
+        return this.each(function(){
+            var t = $(this);
+            if( t.is('select') ){
+                t.bind('change', function(){
+                    if( this.value.toLowerCase() == "otro" ){
+                        $(this).next('input').fadeIn('slow').focus();
+                    }else{
+                        $(this).next('input').fadeOut('slow').val('');
+                    }
+                });
+            }
+        });
+    }
     
 });
 

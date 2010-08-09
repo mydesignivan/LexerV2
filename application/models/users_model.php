@@ -53,8 +53,12 @@ class Users_model extends Model {
 
             $this->db->where('users_id', $users_id);
             if( !$this->db->update(TBL_USERS, array('active'=>1)) ) return false;
-            return $row;
-
+            else {
+                $this->db->insert($row['users_type'], array('users_id' => $users_id));
+                mkdir(UPLOAD_PATH_GALLERY . $users_id);
+                return $row;
+            }
+    
         }else return false;
     }
 

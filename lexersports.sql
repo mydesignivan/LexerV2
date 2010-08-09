@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.2.0.1
+-- version 3.2.4
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-08-2010 a las 19:28:34
--- Versión del servidor: 5.1.37
--- Versión de PHP: 5.3.0
+-- Tiempo de generación: 09-08-2010 a las 04:32:03
+-- Versión del servidor: 5.1.41
+-- Versión de PHP: 5.3.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
-('a616b4876ff16994fe9fca60144339b7', '127.0.0.1', 'Mozilla/5.0 (X11; U; Linux i686; es-AR; rv:1.9.1.9', 1281113809, 'a:2:{s:8:"users_id";s:1:"1";s:10:"users_type";s:9:"users_dep";}');
+('bec31cfb2d64c40edbf953bb47c7107f', '127.0.0.1', 'Mozilla/5.0 (X11; U; Linux i686; es-AR; rv:1.9.2.7', 1281320582, 'a:2:{s:8:"users_id";s:1:"1";s:10:"users_type";s:9:"users_dep";}');
 
 -- --------------------------------------------------------
 
@@ -441,7 +441,6 @@ CREATE TABLE IF NOT EXISTS `list_passport` (
 
 INSERT INTO `list_passport` (`passport_id`, `name`) VALUES
 (1, 'Sin Pasaporte'),
-(2, 'Sin Pasaporte'),
 (3, 'Comunitario'),
 (4, 'Extracomunitario');
 
@@ -4989,12 +4988,12 @@ CREATE TABLE IF NOT EXISTS `users_club` (
   `states_id` int(11) NOT NULL,
   `city` varchar(100) NOT NULL,
   `zipcode` varchar(10) NOT NULL,
-  `phone_area` int(5) NOT NULL,
-  `phone_city` int(5) NOT NULL,
-  `phone_num` int(15) NOT NULL,
-  `celu_area` int(5) NOT NULL,
-  `celu_city` int(5) NOT NULL,
-  `celu_num` int(15) NOT NULL,
+  `phone_area` varchar(5) NOT NULL,
+  `phone_city` varchar(5) NOT NULL,
+  `phone_num` varchar(15) NOT NULL,
+  `celu_area` varchar(5) NOT NULL,
+  `celu_city` varchar(5) NOT NULL,
+  `celu_num` varchar(15) NOT NULL,
   `categorie` varchar(200) NOT NULL,
   `titular_lastname` varchar(50) NOT NULL,
   `titular_firstname` varchar(50) NOT NULL,
@@ -5073,9 +5072,10 @@ CREATE TABLE IF NOT EXISTS `users_dep` (
   `image_width` int(4) NOT NULL,
   `image_height` int(4) NOT NULL,
   `sex` char(1) NOT NULL,
-  `nacimiento` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `nacimiento` char(10) NOT NULL,
   `estado_civil` varchar(20) NOT NULL,
   `documento_tipo` varchar(100) NOT NULL,
+  `documento_tipo_other` varchar(255) NOT NULL,
   `documento_num` varchar(20) NOT NULL,
   `documento_show` bit(1) NOT NULL DEFAULT b'0',
   `current_country` int(11) NOT NULL,
@@ -5088,23 +5088,25 @@ CREATE TABLE IF NOT EXISTS `users_dep` (
   `origin_zipcode` varchar(10) NOT NULL,
   `nacionalidad` varchar(255) NOT NULL,
   `passport` varchar(20) NOT NULL,
-  `phone_area` int(5) NOT NULL,
-  `phone_city` int(5) NOT NULL,
-  `phone_num` int(15) NOT NULL,
-  `celu_area` int(5) NOT NULL,
-  `celu_city` int(5) NOT NULL,
-  `celu_num` int(15) NOT NULL,
+  `phone_area` varchar(5) NOT NULL,
+  `phone_city` varchar(5) NOT NULL,
+  `phone_num` varchar(15) NOT NULL,
+  `celu_area` varchar(5) NOT NULL,
+  `celu_city` varchar(5) NOT NULL,
+  `celu_num` varchar(15) NOT NULL,
   `website` varchar(150) NOT NULL,
   `profesion` varchar(100) NOT NULL,
   `estudios` varchar(100) NOT NULL,
   `check_discapacidad` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`users_type_dep`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Volcar la base de datos para la tabla `users_dep`
 --
 
+INSERT INTO `users_dep` (`users_type_dep`, `users_id`, `lastname`, `firstname`, `image_thumb`, `image_width`, `image_height`, `sex`, `nacimiento`, `estado_civil`, `documento_tipo`, `documento_tipo_other`, `documento_num`, `documento_show`, `current_country`, `current_city`, `current_state`, `current_zipcode`, `origin_country`, `origin_city`, `origin_state`, `origin_zipcode`, `nacionalidad`, `passport`, `phone_area`, `phone_city`, `phone_num`, `celu_area`, `celu_city`, `celu_num`, `website`, `profesion`, `estudios`, `check_discapacidad`) VALUES
+(4, 1, 'Mattoni', 'Ivan', '12813206864c5f66eecff01__casas-california.jpg', 200, 127, 'm', '439268400', 'Casado/a', 'DNI', '', '30536404', b'1', 13, 'Mendoza', 180, '5500', 26, 'Dasd', 426, '5500', 'Argentino', 'Sin Pasaporte', '054', '0261', '4442192', '054', '0234', '4442198', 'http://www.google.com', 'Dfsdf', 'Dfsdf', b'1');
 
 -- --------------------------------------------------------
 
@@ -5119,12 +5121,15 @@ CREATE TABLE IF NOT EXISTS `users_dep_disc` (
   `type` varchar(10) NOT NULL,
   `detalle` text NOT NULL,
   PRIMARY KEY (`disc_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Volcar la base de datos para la tabla `users_dep_disc`
 --
 
+INSERT INTO `users_dep_disc` (`disc_id`, `users_id`, `type`, `detalle`) VALUES
+(1, 1, 'Mental', 'dsfsd'),
+(2, 1, 'Motora', 'fdfdf');
 
 -- --------------------------------------------------------
 
@@ -5140,12 +5145,15 @@ CREATE TABLE IF NOT EXISTS `users_dep_lang` (
   `level_oral` varchar(20) NOT NULL,
   `level_write` varchar(20) NOT NULL,
   PRIMARY KEY (`deplang_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Volcar la base de datos para la tabla `users_dep_lang`
 --
 
+INSERT INTO `users_dep_lang` (`deplang_id`, `users_id`, `lang_id`, `level_oral`, `level_write`) VALUES
+(1, 1, 3, 'Intermedio', 'Intermedio'),
+(2, 1, 17, 'Básico', 'Avanzado');
 
 -- --------------------------------------------------------
 
@@ -5219,12 +5227,12 @@ CREATE TABLE IF NOT EXISTS `users_prepfisico` (
   `origin_zipcode` varchar(10) NOT NULL,
   `nacionalidad` varchar(255) NOT NULL,
   `passport` varchar(20) NOT NULL,
-  `phone_area` int(5) NOT NULL,
-  `phone_city` int(5) NOT NULL,
-  `phone_num` int(15) NOT NULL,
-  `celu_area` int(5) NOT NULL,
-  `celu_city` int(5) NOT NULL,
-  `celu_num` int(15) NOT NULL,
+  `phone_area` varchar(5) NOT NULL,
+  `phone_city` varchar(5) NOT NULL,
+  `phone_num` varchar(15) NOT NULL,
+  `celu_area` varchar(5) NOT NULL,
+  `celu_city` varchar(5) NOT NULL,
+  `celu_num` varchar(15) NOT NULL,
   `website` int(150) NOT NULL,
   PRIMARY KEY (`users_type_prepfisico`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -5305,12 +5313,12 @@ CREATE TABLE IF NOT EXISTS `users_repr` (
   `origin_zipcode` varchar(10) NOT NULL,
   `nacionalidad` varchar(255) NOT NULL,
   `passport` varchar(20) NOT NULL,
-  `phone_area` int(5) NOT NULL,
-  `phone_city` int(5) NOT NULL,
-  `phone_num` int(15) NOT NULL,
-  `celu_area` int(5) NOT NULL,
-  `celu_city` int(5) NOT NULL,
-  `celu_num` int(15) NOT NULL,
+  `phone_area` varchar(5) NOT NULL,
+  `phone_city` varchar(5) NOT NULL,
+  `phone_num` varchar(15) NOT NULL,
+  `celu_area` varchar(5) NOT NULL,
+  `celu_city` varchar(5) NOT NULL,
+  `celu_num` varchar(15) NOT NULL,
   `website` varchar(150) NOT NULL,
   `profesion` varchar(100) NOT NULL,
   `trabajo` varchar(100) NOT NULL,
@@ -5407,12 +5415,12 @@ CREATE TABLE IF NOT EXISTS `users_sponsors` (
   `states_id` int(11) NOT NULL,
   `city` varchar(100) NOT NULL,
   `zipcode` varchar(10) NOT NULL,
-  `phone_area` int(5) NOT NULL,
-  `phone_city` int(5) NOT NULL,
-  `phone_num` int(15) NOT NULL,
-  `celu_area` int(5) NOT NULL,
-  `celu_city` int(5) NOT NULL,
-  `celu_num` int(15) NOT NULL,
+  `phone_area` varchar(5) NOT NULL,
+  `phone_city` varchar(5) NOT NULL,
+  `phone_num` varchar(15) NOT NULL,
+  `celu_area` varchar(5) NOT NULL,
+  `celu_city` varchar(5) NOT NULL,
+  `celu_num` varchar(15) NOT NULL,
   `rubro` varchar(100) NOT NULL,
   `titular_lastname` varchar(50) NOT NULL,
   `titular_firstname` varchar(50) NOT NULL,
@@ -5505,12 +5513,12 @@ CREATE TABLE IF NOT EXISTS `users_trainer` (
   `origin_zipcode` varchar(10) NOT NULL,
   `nacionalidad` varchar(255) NOT NULL,
   `passport` varchar(20) NOT NULL,
-  `phone_area` int(5) NOT NULL,
-  `phone_city` int(5) NOT NULL,
-  `phone_num` int(15) NOT NULL,
-  `celu_area` int(5) NOT NULL,
-  `celu_city` int(5) NOT NULL,
-  `celu_num` int(15) NOT NULL,
+  `phone_area` varchar(5) NOT NULL,
+  `phone_city` varchar(5) NOT NULL,
+  `phone_num` varchar(15) NOT NULL,
+  `celu_area` varchar(5) NOT NULL,
+  `celu_city` varchar(5) NOT NULL,
+  `celu_num` varchar(15) NOT NULL,
   `website` varchar(150) NOT NULL,
   `check_repr` bit(1) NOT NULL DEFAULT b'0',
   `sponsor` varchar(100) NOT NULL,

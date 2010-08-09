@@ -11,16 +11,25 @@ var JTable = new (function(){
         });
     };
 
-    this.add = function(sel, limit, callback){
+    this.add = function(sel, arg2, arg3){
+        var param={
+            limit    : false,
+            callback : arg3
+        };
+
+        if( typeof arg2=="number" ) param.limit = arg2;
+        if( typeof arg2=="function" ) param.callback = arg2;
+        if( typeof arg2=="object" ) param = arg2;
+
         var table = $(sel);
-        var tr = table.find('>tbody >tr:first');
+        var tr = table.find('>tbody >tr');
         if( tr.length>0 ){
-            if( limit && tr.length<limit ) return false;
+            if( param.limit && tr.length >= param.limit ) return false;
 
-            var ntr = !table.data('jtable-data') ? _set_table(table, tr) : table.data('jtable-data');
+            var ntr = !table.data('jtable-data') ? _set_table(table, tr.eq(0)) : table.data('jtable-data');
             table.find('>tbody >tr:last').after(ntr);
-
-            if( typeof callback=="function" ) callback(ntr);
+            _clear_tags(table);
+            if( typeof param.callback=="function" ) param.callback(table.find('>tbody >tr:last'));
         }
 
         return false;
@@ -44,13 +53,16 @@ var JTable = new (function(){
      **************************************************************************/
     var _set_table = function(table, tr){
         var ntr = tr.clone();
-        ntr.find('input:text').val('');
-        ntr.find('select').each(function(){this.selectedIndex=0;});
-
         var html = $('<div></div>').html(ntr).html();
         table.data('jtable-data', html);
 
         return html;
+    };
+
+    var _clear_tags = function(table){
+        var tr = table.find('>tbody >tr:last');
+        tr.find('input:text').val('');
+        tr.find('select').each(function(){this.selectedIndex=0});
     };
 
 

@@ -235,11 +235,11 @@ class CI_Input {
 	* @param	bool
 	* @return	string
 	*/
-	function _fetch_from_array(&$array, $index = '', $xss_clean = FALSE)
+	function _fetch_from_array(&$array, $index = '', $xss_clean = FALSE, $getdefault=FALSE)
 	{
 		if ( ! isset($array[$index]))
 		{
-			return FALSE;
+			return $getdefault;
 		}
 
 		if ($xss_clean === TRUE)
@@ -275,9 +275,9 @@ class CI_Input {
 	* @param	bool
 	* @return	string
 	*/
-	function post($index = '', $xss_clean = FALSE)
+	function post($index = '', $getdefault=FALSE, $xss_clean = FALSE)
 	{
-		return $this->_fetch_from_array($_POST, $index, $xss_clean);
+		return $this->_fetch_from_array($_POST, $index, $xss_clean, $getdefault);
 	}
 
 	// --------------------------------------------------------------------

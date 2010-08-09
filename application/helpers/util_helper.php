@@ -168,4 +168,34 @@ function normalize($text, $separator = "-"){
 
     return ($isUTF8) ? utf8_encode($text) : $text;
 }
+
+function get_def_post($val, $def){
+    $val = trim($_POST[$val]);
+    if( empty($val) ){
+        return trim($def);
+    }else{
+        return $val;
+    }
+}
+
+function getval($val, $def, $t=''){
+    return $val==$t ? $def : '';
+}
+
+function calc_age($date){
+    if( empty($date) || is_null($date) ) return '';
+
+    $day = date('d', $date);
+    $month = date('m', $date);
+    $year = date('Y', $date);
+
+    $year_dif = date("Y") - (int)$year;
+    $month_dif = date("m") - (int)$month;
+    $day_dif = date("d") - (int)$day;
+
+    if ($day_dif < 0 || $month_dif < 0) $year_dif--;
+
+    return $year_dif;
+}
+
 ?>

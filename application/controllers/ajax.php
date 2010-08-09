@@ -5,7 +5,6 @@ class Ajax extends Controller {
      **************************************************************************/
     function __construct(){
         parent::Controller();
-        $this->load->model('lists_model');
     }
 
     /* PRIVATE PROPERTIES
@@ -26,6 +25,7 @@ class Ajax extends Controller {
      */
     public function get_combo(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
+            $this->load->model('lists_model');
             $this->load->helper('form');
             
             $eval = '$list = $this->lists_model->get_'. $this->input->post('dataname') .'(';
@@ -43,18 +43,7 @@ class Ajax extends Controller {
      * Devuelve la edad
      */
     public function get_age(){
-        list($day, $month, $year) = explode("-", $this->input->post('date'));
-
-        $year_dif = date("Y") - (int)$year;
-        $month_dif = date("m") - (int)$month;
-        $day_dif = date("d") - (int)$day;
-
-        echo $year_dif;
-        die();
-
-        if ($day_dif < 0 || $month_dif < 0) $year_dif--;
-
-        echo $year_dif;
+        echo calc_age(strtotime($this->input->post('date')));
     }
 
 

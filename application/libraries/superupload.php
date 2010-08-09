@@ -16,7 +16,7 @@ class SuperUpload{
                 'opacity'       => isset($params['watermark_options']['opacity']) ? $params['watermark_options']['opacity'] : '30',
                 'overlay_path'  => isset($params['watermark_options']['overlay_path']) ? $params['watermark_options']['overlay_path'] : '',
              ),
-            'resize_image_original' => true,
+            'resize_image_original' => isset($params['resize_image_original']) ? $params['resize_image_original'] : true,
             'thumb_width'    => $params['thumb_width'], //Obligatorio
             'thumb_height'   => $params['thumb_height'], //Obligatorio
             'image_width'    => @$params['image_width'], //Obligatorio
@@ -89,7 +89,7 @@ class SuperUpload{
                 // Crea una copia y dimensiona la imagen  (THUMB)
                 $config = array();
                 $config['source_image'] = $this->_params['path'] . $filename;
-                $config['new_image'] = $this->_params['path'] . $filename_thumb;
+                if( $this->_params['resize_image_original'] ) $config['new_image'] = $this->_params['path'] . $filename_thumb;
                 $config['width'] = $this->_params['thumb_width'];
                 $config['height'] = $this->_params['thumb_height'];
 
@@ -97,7 +97,9 @@ class SuperUpload{
                 $this->CI->image_lib->initialize($config);
 
                 if( $this->CI->image_lib->resize() ) {
-                    $sizes_image_thumb = getimagesize($this->_params['path'] . $filename_thumb);
+                    $fn = $this->_params['resize_image_original'] ? $filename_thumb : $filename;
+                    $sizes_image_thumb = getimagesize($this->_params['path'] . $fn);
+                    
                     $output['thumb_width'] = $sizes_image_thumb[0];
                     $output['thumb_height'] = $sizes_image_thumb[1];
 
