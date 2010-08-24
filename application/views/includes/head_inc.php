@@ -5,6 +5,10 @@
 
 <link href="images/favicon.ico" rel="stylesheet icon" type="image/ico" />
 
+<!-- Framework CSS -->
+<link rel="stylesheet" href="css/blueprint/screen<?=$this->config->item('sufix_pack_css');?>.css" type="text/css" media="screen, projection"/>
+<link rel="stylesheet" href="css/print.css" type="text/css" media="print"/>
+<!--[if lt IE 8]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen, projection"/><![endif]-->
 
 <link href="css/style<?=$this->config->item('sufix_pack_css');?>.css" rel="stylesheet" type="text/css" />
 <!--[if IE 7]>

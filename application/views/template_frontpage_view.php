@@ -18,11 +18,45 @@
 </head>
 
 <body>
-    <?php if( isset($tlp_title_section) ){?>
-    <h1><?=$tlp_title_section?></h1>
-    <?php }?>
 
-    <?php require($tlp_section);?>
+    <!-- =============== HEADER =============== -->
+    <div class="header">
+        <div class="bg-header">
+            <div class="container"> 
+            <?php require('includes/header_inc.php');?>
+            </div>
+        </div>
+    </div>
+
+    <div class="clear container">
+        <div class="clear span-24 last main-container-top"></div>
+        <div class="clear span-24 last main-container-middle">
+            <!-- =============== MAIN CONTAINER =============== -->
+            <div class="cont-search">
+                <select name="cboCountry" class="select-search size-medium">
+                    <option>Pa&iacute;s</option>
+                </select>
+            </div>
+
+            <div class="clear content"> 
+                <?php if( isset($tlp_title_section) ){?>
+                <h1><?=$tlp_title_section?></h1>
+                <?php }?>
+
+                <?php require($tlp_section);?>
+            </div>
+            
+            <!-- =============== SIDEBAR =============== -->
+            <div class="sidebar"> 
+                asdasd asdjasdasdasd asdasdfsdf<br />
+                asdasd asdjasdasda asdasdfsdf<br />
+                asdasd asdjas dasdfsdf sdfsdassdasdfsdf<br />
+            </div>
+        </div>
+        <div class="clear span-24 last main-container-bottom"></div>
+    </div>
+
+    <!-- =============== FOOTER =============== -->
 
 </body>
 </html>
