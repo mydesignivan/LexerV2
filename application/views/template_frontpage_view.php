@@ -33,9 +33,7 @@
         <div class="clear span-24 last main-container-middle">
             <!-- =============== MAIN CONTAINER =============== -->
             <div class="cont-search">
-                <select name="cboCountry" class="select-search size-medium">
-                    <option>Pa&iacute;s</option>
-                </select>
+            <?php require('includes/search_inc.php');?>
             </div>
 
             <div class="clear content"> 
@@ -47,16 +45,24 @@
             </div>
             
             <!-- =============== SIDEBAR =============== -->
+            <?php if( !isset($tlp_siderbar_off) ){?>
             <div class="sidebar"> 
-                asdasd asdjasdasdasd asdasdfsdf<br />
-                asdasd asdjasdasda asdasdfsdf<br />
-                asdasd asdjas dasdfsdf sdfsdassdasdfsdf<br />
+                <?php require('includes/sidebar_vert_inc.php');?>
             </div>
+            <?php }?>
+
         </div>
         <div class="clear span-24 last main-container-bottom"></div>
     </div>
 
     <!-- =============== FOOTER =============== -->
+    <div class="footer">
+        <div class="bg-footer">
+            <div class="container"> 
+            <?php require('includes/footer_inc.php');?>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

@@ -79,8 +79,8 @@ p           { margin: 0 0 1.5em; }
 p img.left  { float: left; margin: 1.5em 1.5em 1.5em 0; padding: 0; }
 p img.right { float: right; margin: 1.5em 0 1.5em 1.5em; }
 
-/*a:focus,
-a:hover     { text-decoration: underline; }*/
+a:focus,
+a:hover     { text-decoration: underline; }
 a           { color: #000; text-decoration: none; }
 
 blockquote  { margin: 1.5em; color: #666; font-style: italic; }
@@ -428,12 +428,12 @@ legend      { font-weight: bold; font-size:1.2em; }
 /* Form fields
 -------------------------------------------------------------- */
 
-input[type=text], input[type=password],
+/*input[type=text], input[type=password],
 input.text, input.title, 
 textarea, select { 
   background-color:#fff; 
   border:1px solid #bbb; 
-}
+}*/
 /*input[type=text]:focus, input[type=password]:focus,
 input.text:focus, input.title:focus, 
 textarea:focus, select:focus { 
