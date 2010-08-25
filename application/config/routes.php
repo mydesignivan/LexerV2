@@ -46,5 +46,11 @@ $route['scaffolding_trigger'] = "";
 $route['account/success'] = "/account/showmsg/success";
 $route['account/error'] = "/account/showmsg/error";
 
+$route['como-funciona-lexersports'] = "/showcontent/index/como-funciona-lexersports";
+$route['acerca-de-lexersports'] = "/showcontent/index/acerca-de-lexersports";
+$route['como-recomendar-mi-cv'] = "/showcontent/index/como-recomendar-mi-cv";
+$route['preguntas-frecuentes'] = "/showcontent/index/preguntas-frecuentes";
+$route['ventajas-de-publicar-mi-cv'] = "/showcontent/index/ventajas-de-publicar-mi-cv";
+
 /* End of file routes.php */
 /* Location: ./system/application/config/routes.php */

@@ -76,6 +76,8 @@ define('TBL_LIST_SPORTS',   'list_sports');
 define('TBL_LIST_CARGO',    'list_cargo');
 define('TBL_LIST_RUBRO',    'list_rubro');
 
+define('TBL_CONTENT',  'content');
+
 
 /*
 |--------------------------------------------------------------------------
