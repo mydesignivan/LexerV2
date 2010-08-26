@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 25-08-2010 a las 19:41:10
+-- Tiempo de generación: 26-08-2010 a las 19:21:29
 -- Versión del servidor: 5.1.37
 -- Versión de PHP: 5.3.0
 
@@ -25,7 +25,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Estructura de tabla para la tabla `ci_sessions`
 --
 
-DROP TABLE IF EXISTS `ci_sessions`;
 CREATE TABLE IF NOT EXISTS `ci_sessions` (
   `session_id` varchar(40) NOT NULL DEFAULT '0',
   `ip_address` varchar(16) NOT NULL DEFAULT '0',
@@ -40,8 +39,7 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
-('394f3b2d5f947e9dc214e5633df65aa5', '192.168.0.2', 'Mozilla/5.0 (X11; U; Linux i686; es-AR; rv:1.9.1.9', 1282756939, ''),
-('b8c5363b60fe9712a76549aaeb7fca8a', '127.0.0.1', 'Mozilla/5.0 (X11; U; Linux i686; es-AR; rv:1.9.1.9', 1282757741, '');
+('7ed7c7d84f2f647b5d32fcfe1a6642f9', '192.168.0.2', 'Mozilla/5.0 (X11; U; Linux i686; es-AR; rv:1.9.1.9', 1282842658, '');
 
 -- --------------------------------------------------------
 
@@ -49,7 +47,6 @@ INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activ
 -- Estructura de tabla para la tabla `content`
 --
 
-DROP TABLE IF EXISTS `content`;
 CREATE TABLE IF NOT EXISTS `content` (
   `content_id` int(11) NOT NULL AUTO_INCREMENT,
   `reference` varchar(255) NOT NULL,
@@ -77,7 +74,6 @@ INSERT INTO `content` (`content_id`, `reference`, `title`, `content`, `date_adde
 -- Estructura de tabla para la tabla `list_cargo`
 --
 
-DROP TABLE IF EXISTS `list_cargo`;
 CREATE TABLE IF NOT EXISTS `list_cargo` (
   `cargo_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -105,7 +101,6 @@ INSERT INTO `list_cargo` (`cargo_id`, `name`) VALUES
 -- Estructura de tabla para la tabla `list_country`
 --
 
-DROP TABLE IF EXISTS `list_country`;
 CREATE TABLE IF NOT EXISTS `list_country` (
   `country_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -363,7 +358,6 @@ INSERT INTO `list_country` (`country_id`, `name`) VALUES
 -- Estructura de tabla para la tabla `list_lang`
 --
 
-DROP TABLE IF EXISTS `list_lang`;
 CREATE TABLE IF NOT EXISTS `list_lang` (
   `lang_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -457,7 +451,6 @@ INSERT INTO `list_lang` (`lang_id`, `name`) VALUES
 -- Estructura de tabla para la tabla `list_passport`
 --
 
-DROP TABLE IF EXISTS `list_passport`;
 CREATE TABLE IF NOT EXISTS `list_passport` (
   `passport_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -479,7 +472,6 @@ INSERT INTO `list_passport` (`passport_id`, `name`) VALUES
 -- Estructura de tabla para la tabla `list_rubro`
 --
 
-DROP TABLE IF EXISTS `list_rubro`;
 CREATE TABLE IF NOT EXISTS `list_rubro` (
   `rubro_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -546,7 +538,6 @@ INSERT INTO `list_rubro` (`rubro_id`, `name`) VALUES
 -- Estructura de tabla para la tabla `list_sports`
 --
 
-DROP TABLE IF EXISTS `list_sports`;
 CREATE TABLE IF NOT EXISTS `list_sports` (
   `sports_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -587,7 +578,6 @@ INSERT INTO `list_sports` (`sports_id`, `name`) VALUES
 -- Estructura de tabla para la tabla `list_states`
 --
 
-DROP TABLE IF EXISTS `list_states`;
 CREATE TABLE IF NOT EXISTS `list_states` (
   `state_id` int(11) NOT NULL AUTO_INCREMENT,
   `country_id` int(11) DEFAULT NULL,
@@ -4900,7 +4890,6 @@ INSERT INTO `list_states` (`state_id`, `country_id`, `name`) VALUES
 -- Estructura de tabla para la tabla `list_tipodisc`
 --
 
-DROP TABLE IF EXISTS `list_tipodisc`;
 CREATE TABLE IF NOT EXISTS `list_tipodisc` (
   `tipodisc_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -4924,7 +4913,6 @@ INSERT INTO `list_tipodisc` (`tipodisc_id`, `name`) VALUES
 -- Estructura de tabla para la tabla `list_tipodoc`
 --
 
-DROP TABLE IF EXISTS `list_tipodoc`;
 CREATE TABLE IF NOT EXISTS `list_tipodoc` (
   `tipodoc_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -4947,7 +4935,6 @@ INSERT INTO `list_tipodoc` (`tipodoc_id`, `name`) VALUES
 -- Estructura de tabla para la tabla `list_works`
 --
 
-DROP TABLE IF EXISTS `list_works`;
 CREATE TABLE IF NOT EXISTS `list_works` (
   `works_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -4970,7 +4957,6 @@ INSERT INTO `list_works` (`works_id`, `name`) VALUES
 -- Estructura de tabla para la tabla `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `users_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_type` varchar(30) NOT NULL COMMENT 'nombre de las tablas',
@@ -4998,7 +4984,6 @@ INSERT INTO `users` (`users_id`, `users_type`, `email`, `password`, `newsletter`
 -- Estructura de tabla para la tabla `users_club`
 --
 
-DROP TABLE IF EXISTS `users_club`;
 CREATE TABLE IF NOT EXISTS `users_club` (
   `users_type_club` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5050,7 +5035,6 @@ CREATE TABLE IF NOT EXISTS `users_club` (
 -- Estructura de tabla para la tabla `users_club_picgallery`
 --
 
-DROP TABLE IF EXISTS `users_club_picgallery`;
 CREATE TABLE IF NOT EXISTS `users_club_picgallery` (
   `picgallery_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5072,7 +5056,6 @@ CREATE TABLE IF NOT EXISTS `users_club_picgallery` (
 -- Estructura de tabla para la tabla `users_club_videogallery`
 --
 
-DROP TABLE IF EXISTS `users_club_videogallery`;
 CREATE TABLE IF NOT EXISTS `users_club_videogallery` (
   `vidgallery_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5091,7 +5074,6 @@ CREATE TABLE IF NOT EXISTS `users_club_videogallery` (
 -- Estructura de tabla para la tabla `users_dep`
 --
 
-DROP TABLE IF EXISTS `users_dep`;
 CREATE TABLE IF NOT EXISTS `users_dep` (
   `users_type_dep` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5143,7 +5125,6 @@ INSERT INTO `users_dep` (`users_type_dep`, `users_id`, `lastname`, `firstname`, 
 -- Estructura de tabla para la tabla `users_dep_disc`
 --
 
-DROP TABLE IF EXISTS `users_dep_disc`;
 CREATE TABLE IF NOT EXISTS `users_dep_disc` (
   `disc_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5166,7 +5147,6 @@ INSERT INTO `users_dep_disc` (`disc_id`, `users_id`, `type`, `detalle`) VALUES
 -- Estructura de tabla para la tabla `users_dep_lang`
 --
 
-DROP TABLE IF EXISTS `users_dep_lang`;
 CREATE TABLE IF NOT EXISTS `users_dep_lang` (
   `deplang_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5190,7 +5170,6 @@ INSERT INTO `users_dep_lang` (`deplang_id`, `users_id`, `lang_id`, `level_oral`,
 -- Estructura de tabla para la tabla `users_dep_picgallery`
 --
 
-DROP TABLE IF EXISTS `users_dep_picgallery`;
 CREATE TABLE IF NOT EXISTS `users_dep_picgallery` (
   `picgallery_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5212,7 +5191,6 @@ CREATE TABLE IF NOT EXISTS `users_dep_picgallery` (
 -- Estructura de tabla para la tabla `users_dep_videogallery`
 --
 
-DROP TABLE IF EXISTS `users_dep_videogallery`;
 CREATE TABLE IF NOT EXISTS `users_dep_videogallery` (
   `vidgallery_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5231,7 +5209,6 @@ CREATE TABLE IF NOT EXISTS `users_dep_videogallery` (
 -- Estructura de tabla para la tabla `users_prepfisico`
 --
 
-DROP TABLE IF EXISTS `users_prepfisico`;
 CREATE TABLE IF NOT EXISTS `users_prepfisico` (
   `users_type_prepfisico` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5277,7 +5254,6 @@ CREATE TABLE IF NOT EXISTS `users_prepfisico` (
 -- Estructura de tabla para la tabla `users_prepfisico_picgallery`
 --
 
-DROP TABLE IF EXISTS `users_prepfisico_picgallery`;
 CREATE TABLE IF NOT EXISTS `users_prepfisico_picgallery` (
   `picgallery_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5299,7 +5275,6 @@ CREATE TABLE IF NOT EXISTS `users_prepfisico_picgallery` (
 -- Estructura de tabla para la tabla `users_prepfisico_videogallery`
 --
 
-DROP TABLE IF EXISTS `users_prepfisico_videogallery`;
 CREATE TABLE IF NOT EXISTS `users_prepfisico_videogallery` (
   `vidgallery_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5318,7 +5293,6 @@ CREATE TABLE IF NOT EXISTS `users_prepfisico_videogallery` (
 -- Estructura de tabla para la tabla `users_repr`
 --
 
-DROP TABLE IF EXISTS `users_repr`;
 CREATE TABLE IF NOT EXISTS `users_repr` (
   `users_type_repr` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5369,7 +5343,6 @@ CREATE TABLE IF NOT EXISTS `users_repr` (
 -- Estructura de tabla para la tabla `users_repr_lang`
 --
 
-DROP TABLE IF EXISTS `users_repr_lang`;
 CREATE TABLE IF NOT EXISTS `users_repr_lang` (
   `reprlang_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5390,7 +5363,6 @@ CREATE TABLE IF NOT EXISTS `users_repr_lang` (
 -- Estructura de tabla para la tabla `users_repr_picgallery`
 --
 
-DROP TABLE IF EXISTS `users_repr_picgallery`;
 CREATE TABLE IF NOT EXISTS `users_repr_picgallery` (
   `picgallery_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5412,7 +5384,6 @@ CREATE TABLE IF NOT EXISTS `users_repr_picgallery` (
 -- Estructura de tabla para la tabla `users_repr_videogallery`
 --
 
-DROP TABLE IF EXISTS `users_repr_videogallery`;
 CREATE TABLE IF NOT EXISTS `users_repr_videogallery` (
   `vidgallery_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5431,7 +5402,6 @@ CREATE TABLE IF NOT EXISTS `users_repr_videogallery` (
 -- Estructura de tabla para la tabla `users_sponsors`
 --
 
-DROP TABLE IF EXISTS `users_sponsors`;
 CREATE TABLE IF NOT EXISTS `users_sponsors` (
   `users_type_sponsors` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5477,7 +5447,6 @@ CREATE TABLE IF NOT EXISTS `users_sponsors` (
 -- Estructura de tabla para la tabla `users_sponsors_picgallery`
 --
 
-DROP TABLE IF EXISTS `users_sponsors_picgallery`;
 CREATE TABLE IF NOT EXISTS `users_sponsors_picgallery` (
   `picgallery_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5499,7 +5468,6 @@ CREATE TABLE IF NOT EXISTS `users_sponsors_picgallery` (
 -- Estructura de tabla para la tabla `users_sponsors_videogallery`
 --
 
-DROP TABLE IF EXISTS `users_sponsors_videogallery`;
 CREATE TABLE IF NOT EXISTS `users_sponsors_videogallery` (
   `vidgallery_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5518,7 +5486,6 @@ CREATE TABLE IF NOT EXISTS `users_sponsors_videogallery` (
 -- Estructura de tabla para la tabla `users_trainer`
 --
 
-DROP TABLE IF EXISTS `users_trainer`;
 CREATE TABLE IF NOT EXISTS `users_trainer` (
   `users_type_trainer` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5566,7 +5533,6 @@ CREATE TABLE IF NOT EXISTS `users_trainer` (
 -- Estructura de tabla para la tabla `users_trainer_picgallery`
 --
 
-DROP TABLE IF EXISTS `users_trainer_picgallery`;
 CREATE TABLE IF NOT EXISTS `users_trainer_picgallery` (
   `picgallery_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
@@ -5588,7 +5554,6 @@ CREATE TABLE IF NOT EXISTS `users_trainer_picgallery` (
 -- Estructura de tabla para la tabla `users_trainer_videogallery`
 --
 
-DROP TABLE IF EXISTS `users_trainer_videogallery`;
 CREATE TABLE IF NOT EXISTS `users_trainer_videogallery` (
   `vidgallery_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,

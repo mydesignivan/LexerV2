@@ -175,6 +175,7 @@ define('IMAGE_GALLERY_ORIGINAL_HEIGHT', 300);
 */
 define('TITLE_GLOBAL', 'Lexer Sports');
 define('TITLE_INDEX', '');
+define('TITLE_CONTACTO', '');
 
 /*
 |--------------------------------------------------------------------------
@@ -183,6 +184,7 @@ define('TITLE_INDEX', '');
 */
 define('META_KEYWORDS_GLOBAL', '');
 define('META_KEYWORDS_INDEX', '');
+define('META_KEYWORDS_CONTACTO', '');
 
 
 /*
@@ -192,6 +194,7 @@ define('META_KEYWORDS_INDEX', '');
 */
 define('META_DESCRIPTION_GLOBAL', '');
 define('META_DESCRIPTION_INDEX', '');
+define('META_DESCRIPTION_CONTACTO', '');
 
 
 

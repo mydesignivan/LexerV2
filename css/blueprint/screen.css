@@ -399,14 +399,15 @@ next column, or to pull it into the previous column.  */
 
 /* Use this to create a horizontal ruler across a column. */
 hr {
-  background: #ddd; 
-  color: #ddd;
-  clear: both; 
-  float: none; 
-  width: 100%; 
-  height: .1em;
-  margin: 0 0 1.45em;
-  border: none; 
+    clear: both;
+    float: none;
+    border: none;
+    margin: 0 0 1.45em;
+    border-bottom-style: dashed;
+    background: #E2ECEB;
+    color: #8EA6AB !important;
+    height: 1px !important;
+    border-width: 1px;
 }
 hr.space {
   background: #fff;
