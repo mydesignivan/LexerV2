@@ -11,9 +11,14 @@ var Contact = new (function(){
                    email: true
                 },
                 txtSubject : 'required',
-                cboAsunto  : 'required',
-                txtMessage : 'required'                
+                cboArea  : 'required',
+                txtMessage : 'required'
             },
+            debug:true,
+            errorPlacement : function(error, element){
+                alert(element[0].nodeName);
+            },
+
 
             invalidHandler : function(){
             }
