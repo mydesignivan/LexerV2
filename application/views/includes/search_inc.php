@@ -11,13 +11,13 @@
         </select>
 
         <select name="cboCategorie" class="select-search size-medium">
-            <option>Catego&iacute;a</option>
+            <option>Categor&iacute;a</option>
         </select>
 
         <input type="text" name="txtSearch" class="input-search size-medium" />
     </div>
     <div class="fright">
-        <button type="submit" name="btnSubmit">Buscar</button>&nbsp;&nbsp;
-        <a href="<?=site_url('/advanced-search/')?>">B&uacute;squeda avanzada</a>
+        <button type="submit" name="btnSubmit" class="button-small">Buscar</button>&nbsp;&nbsp;
+        <a href="<?=site_url('/busqueda-avanzada/')?>">B&uacute;squeda avanzada</a>
     </div>
 </form>

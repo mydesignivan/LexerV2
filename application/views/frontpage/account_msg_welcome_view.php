@@ -2,7 +2,7 @@
 
 
 <form action="<?=site_url('/login/account_access/')?>" method="post" enctype="application/x-www-form-urlencoded">
-    <p>Ahora usted ya completar sus datos personales entrando a su cuenta</p>
+    <p>Ahora usted ya puede completar sus datos personales entrando a su cuenta</p>
 
     <input type="submit" value="Entrar a mi cuenta" />
 

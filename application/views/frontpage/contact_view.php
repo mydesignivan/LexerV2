@@ -1,5 +1,15 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
 
+<?php if( $this->session->flashdata('status_sendmail')=="ok" ){?>
+<div class="success">
+    Muchas Gracias por comunicarse con nosotros, nos comunicaremos con usted a la brevedad.
+</div>
+<?php }elseif( $this->session->flashdata('status_sendmail')=="error" ){?>
+<div class="error">
+    El formulario no ha podido ser enviado, porfavor, reintentelo nuevamente.
+</div>
+<?php }?>
+
 <form id="form1" action="<?=site_url('/contacto/send/');?>" method="post" enctype="application/x-www-form-urlencoded">
     <div class="trow">
         <label class="label label-contact" for="txtName"><span class="required">*</span>Nombre</label>
@@ -33,7 +43,7 @@
 
     <div class="trow" style="width:530px">
         <label class="label label-contact text-size-80"><b>(*) Campos Obligatorios</b></label>
-        <button type="submit" name="btnSubmit" class="fright button-send">Enviar</button>
+        <button type="submit" name="btnSubmit" class="fright button-small">Enviar</button>
     </div>
 </form>
 <br /><br /><br /><br />

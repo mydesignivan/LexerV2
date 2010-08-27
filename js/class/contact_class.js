@@ -3,7 +3,7 @@ var Contact = new (function(){
     /* PUBLIC METHODS
      **************************************************************************/
     this.initializer = function(){
-        var o = $.extend(true, {
+        var o = $.extend({}, jQueryValidatorOptDef,{
             rules : {
                 txtName  : 'required',
                 txtEmail : {
@@ -13,19 +13,10 @@ var Contact = new (function(){
                 txtSubject : 'required',
                 cboArea  : 'required',
                 txtMessage : 'required'
-            },
-            debug:true,
-            errorPlacement : function(error, element){
-                alert(element[0].nodeName);
-            },
-
-
-            invalidHandler : function(){
             }
-
-        }, jQueryValidatorOptDef);
+        });
         $('#form1').validate(o);
-
+        
     };
 
 

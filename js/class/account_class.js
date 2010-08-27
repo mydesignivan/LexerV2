@@ -3,7 +3,7 @@ var Account = new (function(){
     /* PUBLIC METHODS
      **************************************************************************/
     this.initializer = function(){
-        var o = $.extend(true, {
+        var o = $.extend(true, jQueryValidatorOptDef, {
             rules : {
                 cboUserType: 'required',
                 txtEmail: {
@@ -35,20 +35,22 @@ var Account = new (function(){
                     }
                 }
             },
-
+            submitHandler : function(){
+                loader.show();
+            },
             invalidHandler : function(){
+                eval($('#captchaReload').attr('href'));
                 loader.hide();
             }
 
-        }, jQueryValidatorOptDef);
-        $('#form1').submit(function(){loader.show();}).validate(o);
+        });
+        $('#form1').validate(o);
 
     };
 
 
     /* PRIVATE PROPERTIES
      **************************************************************************/
-
 
     /* PRIVATE METHODS
      **************************************************************************/

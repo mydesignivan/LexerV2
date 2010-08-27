@@ -36,11 +36,13 @@ class Contacto extends Controller {
             $message = EMAIL_CONTACT_MESSAGE;
             $message = str_replace('{name}', $_POST['txtName'], $message);
             $message = str_replace('{mail}', $_POST['txtEmail'], $message);
+            $message = str_replace('{subject}', $_POST['txtSubject'], $message);
             $message = str_replace('{message}', $_POST['txtMessage'], $message);
 
-            $datauser = $this->users_model->get_info(array('username'=>'mydesignadmin'));
-            //$datauser = $this->users_model->get_info(array('username'=>'admin'));
-            $to = $datauser['email'];
+            die($message);
+
+            //$to = $_POST['cboArea'];
+            $to = "ivan@mydesign.com.ar";
 
             $this->email->from($_POST['txtEmail'], $_POST['txtName']);
             $this->email->to($to);
@@ -49,7 +51,7 @@ class Contacto extends Controller {
             $status = $this->email->send();
             $this->session->set_flashdata('status_sendmail', $status ? "ok" : "error");
 
-            redirect('/contact-us/');
+            redirect('/contacto/');
         }
     }
 

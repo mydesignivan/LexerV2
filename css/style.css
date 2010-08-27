@@ -22,10 +22,13 @@
  - ESTILO PARA MENSAJES DEL VALIDADOR
  -----------------------------------------------------------------------------*/
 .valid-success{
-    background: transparent url(../images/icon_success.png) no-repeat !important;
+    background: transparent url(../images/icon_success.png) no-repeat left !important;
     width: 16px;
     height: 16px;
-    border: 1px solid !important;
+    padding: 0 0 0 18px !important;
+    color: #264409 !important;
+    border: none !important;
+    font-size: 100% !important;
 }
 .valid-error{
     background: #FBE3E4;
@@ -35,7 +38,12 @@
     margin-left: 5px;
     font-size: 90%;
     font-weight: normal;
+    min-width: 150px;
+    max-width: 330px;
+    text-align: left;
 }
+.valid-highlight{border-style: dashed !important;}
+.valid-unhighlight{border-style: solid !important;}
 
 /*------------------------------------------------------------------------------
  - ESTILOS PARA LINK
@@ -83,6 +91,14 @@ a.link-4{
     width: 220px;
     padding-top: 6px;
 }
+.label-account{
+    width: 220px;
+    padding-top: 6px;
+}
+.label-advsearch{
+    width: 220px;
+    padding-top: 6px;
+}
 
 
 /*------------------------------------------------------------------------------
@@ -95,6 +111,7 @@ input[type=text],input[type=password], textarea{
     background-color: #fff;
     padding: 2px;
     border: 1px solid #BED4D4;
+    font-size: 105%;
 }
 .input-login{
     margin-bottom: 2px !important;
@@ -108,8 +125,19 @@ input[type=text],input[type=password], textarea{
 .input-contact{
     width: 300px;
 }
-
-
+.input-account{
+    width: 300px;
+}
+.input-advsearch{
+    width: 300px;
+}
+.input-captcha{
+    font-size: 120% !important;
+    letter-spacing: 5px;
+    width: 105px;
+    text-align: center !important;
+    font-weight: bold;
+}
 /*------------------------------------------------------------------------------
  - ESTILOS PARA SELECT
  -----------------------------------------------------------------------------*/
@@ -144,8 +172,8 @@ button{
     padding: 3px 5px 3px 5px;
     font-weight: bold;
 }
-.button-send{
-    background: url(../images/button1.png) no-repeat transparent;
+.button-small{
+    background: url(../images/button-small.png) no-repeat transparent;
     width: 82px;
     height: 32px;
     border: none;
@@ -195,14 +223,14 @@ button{
     }
     .header .login{
         float: right;
-        margin-top: 10px;
+        margin-top: 2px;
     }
         .header .login .cell{
             float: left;
             margin-right: 10px;
         }
         .header .login button{
-            margin-top: 5px;
+            margin-top: 2px;
         }
         .header .rowbutton{
             float: left;
@@ -228,7 +256,7 @@ button{
 
     .header .slogan{
         float: left;
-        margin: 80px 0 0 5px;
+        margin-top:80px;
     }
 
 /*------------------------------------------------------------------------------
@@ -247,6 +275,7 @@ button{
         float: left;
         width: 730px;
         margin-left: 10px;
+        padding-bottom: 20px;
         /*border:1px solid red;*/
     }
 .main-container-bottom{

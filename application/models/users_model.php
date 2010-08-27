@@ -26,22 +26,13 @@ class Users_model extends Model {
         return array('id'=>$id, 'result'=>$res);
     }
 
-    public function rememberpass($field){
-        $result = $this->db->get_where(TBL_USERS, "(email = '".$field."' or username='".$field."') and active=0");
-        if( $result->num_rows >0 ) return array("status"=>"userinactive");
-
-        $result = $this->db->get_where(TBL_USERS, "(email = '".$field."' or username='".$field."') and active=1");
-        if( $result->num_rows==0 ) return array("status"=>"notexists");
-
-        $data = $result->row_array();
-        $data['token'] = uniqid(time());
-
-        $this->db->where('user_id', $data['user_id']);
-        if( !$this->db->update(TBL_USERS, array('token'=>$data['token'])) ){
-            display_error(__FILE__, "rememberpass", ERR_DB_UPDATE, array(TBL_USERS));
+    public function get_pass(){
+        $query = $this->db->get_where(TBL_USERS, array('email'=>$_POST['txtEmail'], 'active'=>1));
+        if( $query->num_rows==0 ) return false;
+        else{
+            $row = $query->row_array();
+            return $this->encpss->decode($row['password']);
         }
-
-        return array("status"=>"ok", "data"=>$data);
     }
 
     public function activate($users_id){

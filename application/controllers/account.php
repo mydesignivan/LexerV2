@@ -31,6 +31,15 @@ class Account extends Controller {
         $this->load->view('template_frontpage_view', $this->_data);
     }
 
+    public function remember(){
+        $this->_data = $this->dataview->set_data(array(
+            'tlp_section'       =>  'frontpage/account_remember_view.php',
+            'tlp_title_section' =>  '¿Olvidaste tu contrase&ntilde;a?',
+            'tlp_script'        =>  array('plugins_validator', 'class_account_remember')
+        ));
+        $this->load->view('template_frontpage_view', $this->_data);
+    }
+
     public function create(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
 
@@ -72,6 +81,36 @@ class Account extends Controller {
                 }                
                 
             }
+        }
+    }
+
+    public function rememberpassend(){
+        if( $_SERVER['REQUEST_METHOD']=="POST" ){
+            $pass = $this->users_data->get_pass();
+            if( $pass ){
+                $this->load->library('email');
+
+                $message = str_replace("{pass}", $pass, EMAIL_RP_MESSAGE);
+
+                $this->email->from(EMAIL_RP_FROM, EMAIL_RP_NAME);
+                $this->email->to($this->input->post('txtEmail'));
+                $this->email->subject(EMAIL_RP_SUBJECT);
+                $this->email->message($message);
+
+                if( $this->email->send() ){
+                    $this->session->set_flashdata('status', 'success');
+                    $this->session->set_flashdata('email', $_POST['txtEmail']);
+
+                }else {
+                    $this->session->set_flashdata('status', 'error');
+                    $this->session->set_flashdata('message', $this->email->print_debugger());
+                }
+
+            }else{
+                $this->session->set_flashdata('status', 'error');
+                $this->session->set_flashdata('message', 'El email ingresado no existe en nuestra base de dato.');
+            }
+            redirect('/olvidaste-tu-contrasenia/');
         }
     }
 

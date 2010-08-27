@@ -9,7 +9,6 @@
         <a href="<?=site_url('como-funciona-lexersports')?>" class="link-3">¿C&oacute;mo funciona LexerSports?</a><br />
         <a href="<?=site_url('como-recomendar-mi-cv')?>" class="link-3">¿C&oacute;mo recomendar mi CV?</a><br />
         <a href="<?=site_url('acerca-de-lexersports')?>" class="link-3">Acerca de LexerSports</a><br />
-        <a href="<?=site_url('ventajas-de-publicar-mi-cv')?>" class="link-3">Ventajas de publicar mi CV</a><br />
         <a href="<?=site_url('preguntas-frecuentes')?>" class="link-3">Preguntas Frecuentes</a><br />
     </div>
 </div>

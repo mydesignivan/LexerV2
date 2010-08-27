@@ -123,19 +123,17 @@ define('EMAIL_REG_MESSAGE', $msg);
 | EMAIL RECORDAR CONTRASEÑA
 |--------------------------------------------------------------------------
 */
-$msg = "Hola!<br /><br />";
-$msg.= "¿No recuerda su contrase&ntilde;a?<br />";
-$msg.= "Puede sucederle a cualquiera.<br /><br />";
-$msg.= "Por favor abra este link en su navegador:<br /><br />";
-$msg.= '<a href="{link}">{link}</a><br /><br />';
-$msg.= 'Esto resetear&aacute; su contrase&ntilde;a<br />';
-$msg.= 'Usted puede luego ingresar y cambiarla por alguna que recuerde.<br /><br />';
-$msg.= 'Atentamente,<br />';
-$msg.= 'LexerSports.com';
+$msg = '
+Hola!<br /><br />
+<p>Su contrase&ntilde;a es: <b>{pass}</b></p>
+
+Atentamente,<br />
+LexerSports.com
+';
 
 define('EMAIL_RP_FROM', 'no-reply@lexersports.com');
 define('EMAIL_RP_NAME', 'LexerSports.com');
-define('EMAIL_RP_SUBJECT', 'Resetear su contraseña de AlquileresTemporarios.org');
+define('EMAIL_RP_SUBJECT', 'Contraseña de LexerSports.org');
 define('EMAIL_RP_MESSAGE', $msg);
 
 /*
@@ -143,9 +141,12 @@ define('EMAIL_RP_MESSAGE', $msg);
 | EMAIL FORM CONTACTO
 |--------------------------------------------------------------------------
 */
-$msg = '<b>Nombre:</b> %s<br /><br />';
-$msg = '<b>Email:</b> %s<br /><br />';
-$msg.= '<b>Consulta:</b><hr color="#000000" />%s';
+$msg = '
+<b>Nombre:</b> {name}<br /><br />
+<b>Email:</b> {mail}<br /><br />
+<b>Asunto:</b> {subject}<br /><br />
+<b>Consulta:</b><hr color="#000000" />{message}
+';
 define('EMAIL_CONTACT_SUBJECT', 'Formulario de Consulta');
 define('EMAIL_CONTACT_MESSAGE', $msg);
 

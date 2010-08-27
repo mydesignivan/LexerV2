@@ -12,11 +12,11 @@
             <label for="chkRemember"><input type="checkbox" name="chkRemember" id="chkRemember" value="1" />&nbsp;No cerrar sesi&oacute;n</label>
         </div>
         <div class="cell">
-            <input type="text" name="txtLoginPass" class="input-login" value="Contraseña" onblur="set_input(event, 'Usuario')" onfocus="clear_input(event)" /><br />
-            <a href="" class="link-1">¿Olvidaste tu contrase&ntilde;a?</a>
+            <input type="text" name="txtLoginPass" class="input-login" value="Contraseña" onblur="set_input(event, 'Contrase&ntilde;a', true)" onfocus="clear_input(event, true)" /><br />
+            <a href="<?=site_url('/olvidaste-tu-contrasenia/')?>" class="link-1">¿Olvidaste tu contrase&ntilde;a?</a>
         </div>
         <div class="cell">
-            <button type="submit" name="btnSubmit">Entrar</button>
+            <button type="submit" name="btnSubmit" class="button-small">Entrar</button>
         </div>
 
         <div class="rowbutton"><a class="btnlogin" href="<?=site_url('/registrate-gratis/')?>">Registrate GRATIS</a></div>
