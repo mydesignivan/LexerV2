@@ -14,9 +14,17 @@
     width: 100%;
     margin: 5px 0 5px 0;
 }
-.size-small{width: 120px !important;}
-.size-medium{width: 180px !important;}
+.wsize0{width: 50px !important;}
+.wsize1{width: 100px !important;}
+.wsize2{width: 200px !important;}
 .required{font-size: 100%; font-weight: bold; color: red;}
+.picframe{
+    background: url(../images/picframe.png) no-repeat;
+    width:64px;
+    height: 64px;
+    padding: 8px;
+    /*border:1px solid red;*/
+}
 
 /*------------------------------------------------------------------------------
  - ESTILO PARA MENSAJES DEL VALIDADOR
@@ -86,18 +94,19 @@ a.link-4{
     font-weight: normal;
     font-size: 108%;
     font-style: italic;
+    padding-top: 6px;
 }
 .label-contact{
     width: 220px;
-    padding-top: 6px;
 }
 .label-account{
     width: 220px;
-    padding-top: 6px;
 }
 .label-advsearch{
     width: 220px;
-    padding-top: 6px;
+}
+.label-form{
+    width: 220px;
 }
 
 
@@ -125,7 +134,7 @@ input[type=text],input[type=password], textarea{
 .input-contact{
     width: 300px;
 }
-.input-account{
+.input-form{
     width: 300px;
 }
 .input-advsearch{
@@ -138,6 +147,11 @@ input[type=text],input[type=password], textarea{
     text-align: center !important;
     font-weight: bold;
 }
+.input-age{
+    width:45px;
+    text-align: center !important;
+}
+
 /*------------------------------------------------------------------------------
  - ESTILOS PARA SELECT
  -----------------------------------------------------------------------------*/
@@ -254,10 +268,39 @@ button{
                 margin: 0 auto;
             }
 
+            .header .login .passincorrect{
+                clear: left;
+                float: left;
+                font-size: 110%;
+                /*color:#8a1f11;*/
+                color:#fff;
+                font-weight: bold;
+                margin-top: 10px;
+                /*background-color: #FBE3E4;*/
+                text-align: center;
+                width: 100%;
+            }
+
     .header .slogan{
         float: left;
         margin-top:80px;
     }
+
+    .header .bg-login{
+        background: url(../images/bg-login.png) no-repeat;
+        width: 226px;
+        height: 120px;
+        margin: 10px auto;
+        text-align: center;
+        padding: 10px;
+    }
+    .header .bg-login .thumb{
+        float: left;
+        width: 212px;
+        border-bottom: 1px dashed #fff;
+        padding-bottom: 5px;
+    }
+
 
 /*------------------------------------------------------------------------------
  - ESTILO PARA EL "MAIN CONTAINER"
@@ -361,3 +404,48 @@ button{
     padding: 5px;
 }
     .cont-search .fleft{margin-top: -3px;}
+
+/*------------------------------------------------------------------------------
+ - ESTILO PARA EL "MENU"
+ -----------------------------------------------------------------------------*/
+.menu{
+    float:left;
+    margin-left: 10px;
+}
+    .menu ul{
+        margin: 0;
+        padding: 0;
+    }
+    .menu li{
+        float: left;
+        list-style-type: none;
+        display: inline;
+        border-right: 2px solid #707372;
+        padding: 2px 10px 2px 10px;
+        background-color: #B7D1D0;
+        text-align: center;
+    }
+
+/*------------------------------------------------------------------------------
+ - ESTILO PARA TABLAS
+ -----------------------------------------------------------------------------*/
+table{
+    background-color: #B7D1D0;
+    border:1px solid #707372;
+    color:#000;
+    margin-bottom: 5px;
+}
+    table thead td{
+        font-weight: bold !important;
+    }
+    table td{
+        border-right: 1px solid #707372;
+        border-bottom: 1px solid #707372;
+    }
+.table-lang{
+    width: 510px;
+}
+.table-lang .cell1{width: 160px;}
+.table-lang .cell2{width: 100px;}
+.table-lang .cell3{width: 100px;}
+.table-lang .cell4{width: 80px; text-align: center;}

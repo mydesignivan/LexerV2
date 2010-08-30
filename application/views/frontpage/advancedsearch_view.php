@@ -1,31 +1,21 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
 
-<form id="form1" action="<?=site_url('/advancedsearch/');?>" method="post" enctype="application/x-www-form-urlencoded">
+<form id="form1" action="<?=site_url('/advancedsearch/search/');?>" method="post" enctype="application/x-www-form-urlencoded">
+    <!-- ========== BUSCAR COMO =========== -->
     <div class="trow">
         <label class="label label-advsearch" for="cboCategory">Buscar como</label>
-        <select name="cboUserType">
-            <option value="<?=TBL_USERS_DEP?>">Deportista</option>
-            <option value="<?=TBL_USERS_CLUB?>">Club</option>
-            <option value="<?=TBL_USERS_REPR?>">Representante</option>
-            <option value="<?=TBL_USERS_SPONSORS?>">Sponsors</option>
-            <option value="<?=TBL_USERS_TRAINER?>">Entrenador</option>
-            <option value="<?=TBL_USERS_PREPFIS?>">Preparador F&iacute;sico</option>
+        <select name="cboUserType" id="cboCategory" onchange="Advsearch.showform(this)">
+            <option value="dep">Deportista</option>
+            <option value="club">Club</option>
+            <option value="repr">Representante</option>
+            <option value="sponsor">Sponsors</option>
+            <option value="entrenador">Entrenador</option>
+            <option value="prepfisico">Preparador F&iacute;sico</option>
         </select>
     </div>
-    <div class="trow">
-        <label class="label label-advsearch" for="cboSport">Deporte</label>
-        <select name="cboSport">
-            <option value="">Seleccione un Deporte</option>
-        </select>
-    </div>
-    <div class="trow">
-        <label class="label label-advsearch" for="txtName">Apellido/s y/o Nombre/s</label>
-        <input type="text" name="txtName" id="txtName" class="input-advsearch" />
-    </div>
-    <div class="trow">
-        <label class="label label-advsearch" for="cboSport">Peso</label>
-        <input type="text" name="txtPeso" id="txtPeso" class="input-advsearch" />
-        <div id="slider-range-peso"></div>
+
+    <div id="cont">
+    <?php require('advsearch/dep_view.php');?>
     </div>
 
     <hr style="width:530px" />

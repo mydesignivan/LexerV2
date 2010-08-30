@@ -46,6 +46,14 @@ class Ajax extends Controller {
         echo calc_age(strtotime($this->input->post('date')));
     }
 
+    /*
+     * Muestra Form para la busqueda avanzada
+     */
+    public function showform_advsearch(){
+        $this->load->view('frontpage/advsearch/'.$this->input->post('filename').'_view');
+    }
+
+
 
     /* PRIVATE FUNCTIONS
      **************************************************************************/

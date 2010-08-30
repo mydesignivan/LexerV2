@@ -32,9 +32,11 @@
         <div class="clear span-24 last main-container-top"></div>
         <div class="clear span-24 last main-container-middle">
             <!-- =============== MAIN CONTAINER =============== -->
+            <?php if( $this->uri->segment(1)!="busqueda-avanzada" && $this->uri->segment(1)!="advancedsearch" ) {?>
             <div class="cont-search">
-            <?php require('includes/search_inc.php');?>
+                <?php require('includes/search_inc.php');?>
             </div>
+            <?php }?>
 
             <div class="clear content"> 
                 <?php if( isset($tlp_title_section) ){?>

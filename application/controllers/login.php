@@ -17,12 +17,12 @@ class Login extends Controller{
             
             if( $statusLogin['status']=="error" ){
                 if( $statusLogin['error']=="loginfaild" ){
-                    $message = "El usuario y/o password son incorrectos.";
+                    $message = "El usuario y/o contrse&ntilde;a son incorrectos.";
                 }elseif( $statusLogin['error']=="userinactive" ){
-                    $message = "El usuario no esta activado.";
+                    $message = "El usuario esta inactivo.";
                 }
                 $this->session->set_flashdata('message_login', $message);                
-                redirect('/index/');
+                redirect($this->config->item('base_url'));
 
             }else{
 
@@ -37,19 +37,7 @@ class Login extends Controller{
 
     public function logout(){
         $this->simplelogin->logout();
-        redirect('/index/');
-    }
-
-    public function account_access(){
-        if( $_SERVER['REQUEST_METHOD']=="POST" ){
-            $this->load->library('encpss');
-            $user = $this->encpss->decode($this->input->post("p1"));
-            $pass = $this->encpss->decode($this->input->post("p2"));
-
-            if( $this->simplelogin->login($user, $pass) ){
-                redirect('/paneluser/myaccount/');
-            }
-        }
+        redirect($this->config->item('base_url'));
     }
 
 }

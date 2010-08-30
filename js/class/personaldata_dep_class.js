@@ -5,7 +5,7 @@ var PersonalData = new (function(){
     this.initializer = function(){
 
         // Configura el Validador
-        var o = $.extend(true, {
+        var o = $.extend({}, jQueryValidatorOptDef, {
             rules : {
                 txtLastName  : 'required',
                 txtFirstName : 'required',
@@ -21,9 +21,8 @@ var PersonalData = new (function(){
 
             invalidHandler : function(){
                 loader.hide();
-            },
-            onsubmit : false
-        }, jQueryValidatorOptDef);
+            }
+        });
 
         if( $('img.jq-imgpreview').length==0 ) o.rules.txtImage = 'required';
 

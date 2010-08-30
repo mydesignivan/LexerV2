@@ -16,11 +16,49 @@
 </head>
 
 <body>
-    <?php if( isset($tlp_title_section) ){?>
-    <h1><?=$tlp_title_section?></h1>
-    <?php }?>
+    <!-- =============== HEADER =============== -->
+    <div class="header">
+        <div class="bg-header">
+            <div class="container"> 
+            <?php require('includes/header_inc.php');?>
+            </div>
+        </div>
+    </div>
 
-    <?php require($tlp_section);?>
+    <div class="clear container">
+        <div class="clear span-24 last main-container-top"></div>
+        <div class="clear span-24 last main-container-middle">
+            <div class="menu">
+                <?php require('includes/menu_inc.php')?>
+            </div>
 
+            <!-- =============== MAIN CONTAINER =============== -->
+            <div class="clear content"> 
+                <?php if( isset($tlp_title_section) ){?>
+                <h1><?=$tlp_title_section?></h1>
+                <?php }?>
+
+                <?php require($tlp_section);?>
+            </div>
+
+            <!-- =============== SIDEBAR =============== -->
+            <?php if( !isset($tlp_siderbar_off) ){?>
+            <div class="sidebar"> 
+                <?php require('includes/sidebar_vert_inc.php');?>
+            </div>
+            <?php }?>
+
+        </div>
+        <div class="clear span-24 last main-container-bottom"></div>
+    </div>
+
+    <!-- =============== FOOTER =============== -->
+    <div class="footer">
+        <div class="bg-footer">
+            <div class="container"> 
+            <?php require('includes/footer_inc.php');?>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -6,7 +6,7 @@ class Personaldata extends Controller {
     function __construct(){
         parent::Controller();
 
-        //if( !$this->session->userdata('logged_in') || $this->session->userdata('level')==1 ) redirect('/index/');
+        if( !$this->session->userdata('logged_in') || $this->session->userdata('level')==1 ) redirect('/index/');
 
         $this->load->library('dataview', array(
             'tlp_title'            =>  TITLE_INDEX,
@@ -14,11 +14,6 @@ class Personaldata extends Controller {
             'tlp_meta_keywords'    => META_KEYWORDS_INDEX
         ));
         $this->_data = $this->dataview->get_data();
-
-        $this->session->set_userdata(array(
-            'users_id'   => 1,
-            'users_type' => TBL_USERS_DEP
-        ));
     }
 
     /* PRIVATE PROPERTIES

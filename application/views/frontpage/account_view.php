@@ -1,6 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
 
-<form id="form1" action="<?//=site_url('/account/create');?>" method="post" enctype="application/x-www-form-urlencoded">
+<form id="form1" action="<?=site_url('/account/create');?>" method="post" enctype="application/x-www-form-urlencoded">
     <div class="trow">
         <label for="cboIdUser" class="label label-account"><span class="required">*</span>Soy un</label>
         <select name="cboUserType">
@@ -16,22 +16,22 @@
 
     <div class="trow">
         <label for="txtEmail" class="label label-account"><span class="required">*</span>Email</label>
-        <input type="text" name="txtEmail" id="txtEmail" tabindex="2" class="input-account" />
+        <input type="text" name="txtEmail" id="txtEmail" tabindex="2" class="input-form" />
     </div>
 
     <div class="trow">
         <label for="txtConfirmEmail" class="label label-account"><span class="required">*</span>Repite tu Email</label>
-        <input type="text" id="txtConfirmEmail" name="txtConfirmEmail" tabindex="3" class="input-account" />
+        <input type="text" id="txtConfirmEmail" name="txtConfirmEmail" tabindex="3" class="input-form" />
     </div>
 
     <div class="trow">
         <label for="txtPass" class="label label-account"><span class="required">*</span>Contrase&ntilde;a</label>
-        <input type="password" name="txtPass" id="txtPass" tabindex="4" class="input-account" />
+        <input type="password" name="txtPass" id="txtPass" tabindex="4" class="input-form" />
     </div>
 
     <div class="trow">
         <label for="txtConfirmPass" class="label label-account"><span class="required">*</span>Confirmaci&oacute;n de Contrase&ntilde;a</label>
-        <input type="password" id="txtConfirmPass" name="txtConfirmPass" tabindex="5" class="input-account" />
+        <input type="password" id="txtConfirmPass" name="txtConfirmPass" tabindex="5" class="input-form" />
     </div>
 
     <div class="trow">

@@ -10,7 +10,7 @@ class Myaccount extends Controller {
         $this->load->model('users_model');
 
         $this->load->library('dataview', array(
-            'tlp_title'            =>  TITLE_INDEX,
+            'tlp_title'            => TITLE_INDEX,
             'tlp_meta_description' => META_DESCRIPTION_INDEX,
             'tlp_meta_keywords'    => META_KEYWORDS_INDEX
         ));
@@ -25,11 +25,11 @@ class Myaccount extends Controller {
      **************************************************************************/
     public function index(){
         $this->_data = $this->dataview->set_data(array(
-            'tlp_section'       =>  'paneluser/account_view.php',
-            'tlp_title_section' =>  'Mi Cuenta'/*,
-            'tlp_script'        =>  array('validator', 'account')*/
+            'tlp_section'       =>  'paneluser/myaccount_view.php',
+            'tlp_title_section' =>  'Mi Cuenta',
+            'tlp_script'        =>  array('plugins_validator', 'class_account')
         ));
-        $this->load->view('template_frontpage_view', $this->_data);
+        $this->load->view('template_paneluser_view', $this->_data);
     }
 
 

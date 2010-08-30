@@ -7,8 +7,8 @@ var LibForms = {
 
     estimated_age : function(a){
         $.post(baseURI+'ajax/get_age', 'date='+a, function(data){
-            $('#age span').html(data);
-            $('#age').show();
+            $('#txtAge').val(data);
+            $('#txtAge').parent().show();
         });
     },
 
