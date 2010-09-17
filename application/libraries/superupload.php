@@ -4,8 +4,31 @@ class SuperUpload{
 
     /* CONSTRUCTOR
      **************************************************************************/
-    function  __construct($params=array()) {
+    function  __construct($params=null) {
         $this->CI =& get_instance();
+        $this->CI->load->helper('form');
+        $this->CI->load->library('image_lib');
+        require_once(APPPATH.'config/mimes'.EXT);
+
+        if( is_array($params) ) $this->initialize($params);
+
+        $this->_output = $this->_error = array();
+        $this->_mimes = $mimes;
+    }
+
+    /* PRIVATE PROPERTIES
+     **************************************************************************/
+    private $CI;
+    private $_params;
+    private $_output;
+    private $_file;
+    private $_mimes;
+    private $_error;
+
+
+    /* PUBLIC FUNCTIONS
+     **************************************************************************/
+    public function initialize($params){
         $this->_params = array(
             'path' => $params['path'], //Obligatorio
             'watermark' => isset($params['watermark']) ? $params['watermark'] : false,
@@ -24,146 +47,157 @@ class SuperUpload{
             'maxsize'        => isset($params['maxsize']) ? $params['maxsize'] : 2048,
             'filetype'       => isset($params['filetype']) ? $params['filetype'] : 'gif|jpg|png',
             'error_uploaded' => isset($params['error_uploaded']) ? $params['error_uploaded'] : 'El archivo no ha podido llegar al servidor',
-            'error_maxsize'  => isset($params['error_maxsize']) ? $params['error_maxsize'] : 'El tamaño del archivo debe ser menor a %s MB.',
+            'error_maxsize'  => isset($params['error_maxsize']) ? $params['error_maxsize'] : 'El tamaño del archivo debe ser menor a {size} MB.',
             'error_filetype' => isset($params['error_filetype']) ? $params['error_filetype'] : 'El tipo de archivo es incompatible.'
         );
-
-        $this->_output = array();
-
-        $this->CI->load->helper('form');
-        $this->CI->load->library('image_lib');
     }
 
-    /* PRIVATE PROPERTIES
-     **************************************************************************/
-    private $CI;
-    private $_params;
-    private $_output;
+    public function upload($name){
+        if( $_SERVER['REQUEST_METHOD']!="POST" || !isset($_FILES[$name]) ) return false;
 
+        $this->_file = $_FILES[$name];
+        if( !is_array($this->_file['name']) ){
+            $this->_file['name'] = array($this->_file['name']);
+            $this->_file['type'] = array($this->_file['type']);
+            $this->_file['tmp_name'] = array($this->_file['tmp_name']);
+            $this->_file['error'] = array($this->_file['error']);
+            $this->_file['size'] = array($this->_file['size']);
+        }
 
-    /* PUBLIC FUNCTIONS
-     **************************************************************************/
-    public function upload(){
-        if( $_SERVER['REQUEST_METHOD']!="POST" ) return false;
+        for( $n=0; $n<=count($this->_file['name'])-1; $n++ ){
+            if( empty($this->_file['tmp_name'][$n]) ) continue;
+            
+            $output = array();
 
-        $files = $_FILES[key($_FILES)];
+            $resultValid = $this->_validate($n);
 
-        $output = array();
-        $output['status'] = 'success';
+            if( $resultValid===true ){
+                $filename = $this->_get_filename($this->_file['name'][$n]);
 
-        $resultValid = $this->_validate($files);
+                $ext = substr($filename, (strripos($filename, ".")-strlen($filename))+1);
+                $basename = substr($filename, 0, strripos($filename, "."));
+                $filename_thumb = $basename . "_thumb." . $ext;
 
-        if( $resultValid===true ){
-            $filename = $this->_get_filename($files['name']);
+                $output['href_image_full'] = $this->_params['path'] . $filename;
+                $output['href_image_thumb'] = $this->_params['path'] . $filename_thumb;
+                $output['path'] = $this->_params['path'];
+                $output['filename_image'] = $filename;
+                $output['filename_thumb'] = $filename_thumb;
 
-            $ext = substr($filename, (strripos($filename, ".")-strlen($filename))+1);
-            $basename = substr($filename, 0, strripos($filename, "."));
-            $filename_thumb = $basename . "_thumb." . $ext;
+                // Muevo la imagen original
+                move_uploaded_file($this->_file['tmp_name'][$n], $this->_params['path'] . $filename);
 
-            $output['href_image_full'] = $this->_params['path'] . $filename;
-            $output['href_image_thumb'] = $this->_params['path'] . $filename_thumb;
-            $output['path'] = $this->_params['path'];
-            $output['filename_image'] = $filename;
-            $output['filename_thumb'] = $filename_thumb;
+                // Crea una marca de agua en la imagen
+                if( $this->_params['watermark'] ){
+                    $config = array();
+                    $config['source_image'] = $this->_params['path'] . $filename;
+                    $config['wm_type'] = $this->_params['watermark_options']['type'];
+                    $config['wm_overlay_path'] = $this->_params['watermark_options']['overlay_path'];
+                    $config['wm_vrt_alignment'] = $this->_params['watermark_options']['vrt_alignment'];
+                    $config['wm_hor_alignment'] = $this->_params['watermark_options']['hor_alignment'];
+                    $config['wm_opacity'] = $this->_params['watermark_options']['opacity'];
+                    $this->CI->image_lib->initialize($config);
+                    if( !$this->CI->image_lib->watermark() ) $this->_show_error($this->CI->image_lib->display_errors());
+                }
 
-            // Muevo la imagen original
-            move_uploaded_file($files['tmp_name'], $this->_params['path'] . $filename);
+                $sizes_image_original = getimagesize($this->_params['path'] . $filename);
 
-            // Crea una marca de agua en la imagen
-            if( $this->_params['watermark'] ){
-                $config = array();
-                $config['source_image'] = $this->_params['path'] . $filename;
-                $config['wm_type'] = $this->_params['watermark_options']['type'];
-                $config['wm_overlay_path'] = $this->_params['watermark_options']['overlay_path'];
-                $config['wm_vrt_alignment'] = $this->_params['watermark_options']['vrt_alignment'];
-                $config['wm_hor_alignment'] = $this->_params['watermark_options']['hor_alignment'];
-                $config['wm_opacity'] = $this->_params['watermark_options']['opacity'];
-                $this->CI->image_lib->initialize($config);
-                if( !$this->CI->image_lib->watermark() ) $this->_show_error($this->CI->image_lib->display_errors());
-            }
+                if( $sizes_image_original[0] > $this->_params['thumb_width'] || $sizes_image_original[1] > $this->_params['thumb_height'] ){
 
-            $sizes_image_original = getimagesize($this->_params['path'] . $filename);
+                    // Crea una copia y dimensiona la imagen  (THUMB)
+                    $config = array();
+                    $config['source_image'] = $this->_params['path'] . $filename;
+                    if( $this->_params['resize_image_original'] ) $config['new_image'] = $this->_params['path'] . $filename_thumb;
+                    $config['width'] = $this->_params['thumb_width'];
+                    $config['height'] = $this->_params['thumb_height'];
 
-            if( $sizes_image_original[0] > $this->_params['thumb_width'] || $sizes_image_original[1] > $this->_params['thumb_height'] ){
+                    $this->CI->image_lib->clear();
+                    $this->CI->image_lib->initialize($config);
 
-                // Crea una copia y dimensiona la imagen  (THUMB)
-                $config = array();
-                $config['source_image'] = $this->_params['path'] . $filename;
-                if( $this->_params['resize_image_original'] ) $config['new_image'] = $this->_params['path'] . $filename_thumb;
-                $config['width'] = $this->_params['thumb_width'];
-                $config['height'] = $this->_params['thumb_height'];
+                    if( $this->CI->image_lib->resize() ) {
+                        $fn = $this->_params['resize_image_original'] ? $filename_thumb : $filename;
+                        $sizes_image_thumb = getimagesize($this->_params['path'] . $fn);
 
-                $this->CI->image_lib->clear();
-                $this->CI->image_lib->initialize($config);
+                        $output['thumb_width'] = $sizes_image_thumb[0];
+                        $output['thumb_height'] = $sizes_image_thumb[1];
 
-                if( $this->CI->image_lib->resize() ) {
-                    $fn = $this->_params['resize_image_original'] ? $filename_thumb : $filename;
-                    $sizes_image_thumb = getimagesize($this->_params['path'] . $fn);
-                    
-                    $output['thumb_width'] = $sizes_image_thumb[0];
-                    $output['thumb_height'] = $sizes_image_thumb[1];
+                        // Dimensiona la imagen original   (ORIGINAL)
+                        if( $this->_params['resize_image_original'] ){
+                            if( $sizes_image_original[0] > $this->_params['image_width'] || $sizes_image_original[1] > $this->_params['image_height'] ){
+                                $config = array();
+                                $config['source_image'] = $this->_params['path'] . $filename;
+                                if( $sizes_image_original[0] > $this->_params['image_width'] ) $config['width'] = $this->_params['image_width'];
+                                if( $sizes_image_original[1] > $this->_params['image_height'] ) $config['height'] = $this->_params['image_height'];
 
+                                $this->CI->image_lib->clear();
+                                $this->CI->image_lib->initialize($config);
 
-                    // Dimensiona la imagen original   (ORIGINAL)
-                    if( $this->_params['resize_image_original'] ){
-                        if( $sizes_image_original[0] > $this->_params['image_width'] || $sizes_image_original[1] > $this->_params['image_height'] ){
-                            $config = array();
-                            $config['source_image'] = $this->_params['path'] . $filename;
-                            if( $sizes_image_original[0] > $this->_params['image_width'] ) $config['width'] = $this->_params['image_width'];
-                            if( $sizes_image_original[1] > $this->_params['image_height'] ) $config['height'] = $this->_params['image_height'];
-
-                            $this->CI->image_lib->clear();
-                            $this->CI->image_lib->initialize($config);
-
-                            if( !$this->CI->image_lib->resize() ) $this->_save_error($output, $this->CI->image_lib->display_errors());
+                                if( !$this->CI->image_lib->resize() ) $this->_save_error($this->CI->image_lib->display_errors(), $n);
+                            }
                         }
-                    }
 
-                }else $this->_save_error($output, $this->CI->image_lib->display_errors());
+                    }else $this->_save_error($this->CI->image_lib->display_errors(), $n);
 
-            }else{
-                $output['thumb_width'] = $sizes_image_original[0];
-                $output['thumb_height'] = $sizes_image_original[1];
-                copy($this->_params['path'].$filename, $this->_params['path'].$filename_thumb);
-            }
+                }else{
+                    $output['thumb_width'] = $sizes_image_original[0];
+                    $output['thumb_height'] = $sizes_image_original[1];
+                    copy($this->_params['path'].$filename, $this->_params['path'].$filename_thumb);
+                }
 
-        }else $this->_save_error($output, $resultValid);
+            }else $this->_save_error($resultValid, $n);
 
-        $this->_output[] = $output;
+            $this->_output[] = $output;
 
-        return $this->_output;
+        }//end for
+
+        $ret['status'] = count($this->_error)>0 ? "error" : "success";
+        if( count($this->_error)>0 ) $ret['error'] = $this->_error;
+        $ret['output'] = $this->_output;
+
+        return $ret;
+    }
+
+    public function clear(){
+        $this->_output = $this->_error = array();
+    }
+
+    public function get_error($errors){
+        if( !isset($errors) || !is_array($errors) ) return false;
+
+        $output = "<ul>";
+        foreach( $errors as $error ){
+            $txt = "Nombre de Archivo: " . $error['file']['name'] ."<br />";
+            $txt.= "Mensaje: " . $error['message'];
+            $output.= "<li>". $txt ."</li>";
+        }
+        $output.="</ul>";
+        return $output;
     }
 
 
     /* PRIVATE FUNCTIONS
      **************************************************************************/
-    private function _validate($files){
-        if( !is_uploaded_file($files['tmp_name']) ) return $this->_params['error_uploaded'];
+    private function _validate($n){
+        if( !is_uploaded_file($this->_file['tmp_name'][$n]) ) return $this->_params['error_uploaded'];
 
         $size = (int)$this->_params['maxsize'];
-        if( round($files['size']/1024, 2) > $size ) {
-            $msg = $this->_params['error_maxsize'];
-            if( strpos($this->_params['error_maxsize']. '%s') ){
-                $msg = sprintf($this->_params['error_maxsize'], (string)($size/1024));
-            }
-            return $msg;
+        if( round($this->_file['size'][$n] / 1024, 2) > $size ) {
+            return str_replace("{size}", (string)($size/1024), $this->_params['error_maxsize']);
         }
-        if( !$this->_is_allowed_filetype($files) ) return $this->_params['error_filetype'];
+        if( !$this->_is_allowed_filetype($this->_file['type'][$n]) ) return $this->_params['error_filetype'];
 
         return true;
     }
 
-    private function _is_allowed_filetype($files){
-        require_once(APPPATH.'config/mimes'.EXT);
-
+    private function _is_allowed_filetype($type){
         $extention = explode("|", $this->_params['filetype']);
         foreach( $extention as $ext ){
-            $mime = $mimes[$ext];
+            $mime = $this->_mimes[$ext];
 
             if( is_array($mime) ){
-                if( in_array($files['type'], $mime) ) return true;
+                if( in_array($type, $mime) ) return true;
             }else{
-                if( $mime==$files['type'] ) return true;
+                if( $mime==$type ) return true;
             }
         }
         return false;
@@ -174,9 +208,17 @@ class SuperUpload{
         return uniqid(time()) ."__". $name;
     }
 
-    private function _save_error(&$output, $msg){
-        $this->_output['status'] = 'error';
-        $this->_output['error_msg'] = $msg;
+    private function _save_error($msg, $n){
+        $this->_error[] = array(
+            'message' => $msg,
+            'file'    => array(
+                'name'     => $this->_file['name'][$n],
+                'type'     => $this->_file['type'][$n],
+                'tmp_name' => $this->_file['tmp_name'][$n],
+                'error'    => $this->_file['error'][$n],
+                'size'     => $this->_file['size'][$n]
+            )
+        );
     }
 
 }
