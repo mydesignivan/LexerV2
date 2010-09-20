@@ -61,6 +61,7 @@ a.link-1{
     font-style: italic;
     /*color:#A4E4E0;*/
     color:#fff;
+    display: block;
 }
     a.link-1:hover{text-decoration: underline;}
 a.link-2{
@@ -237,7 +238,7 @@ button{
     }
     .header .login{
         float: right;
-        margin-top: 2px;
+        margin-top: 10px;
     }
         .header .login .cell{
             float: left;
@@ -249,11 +250,12 @@ button{
         .header .rowbutton{
             float: left;
             clear: left;
-            width: 390px;
+            width: 395px;
             margin-top: 20px;
             /*border:1px solid red;*/
         }
             .header .login .rowbutton a.btnlogin {
+                float: right;
                 background:transparent url(../images/button-register.png) no-repeat scroll 0 0;
                 color:#1A171B;
                 display:block;
@@ -265,7 +267,6 @@ button{
                 text-align:center;
                 text-decoration:underline;
                 width:261px;
-                margin: 0 auto;
             }
 
             .header .login .passincorrect{
@@ -280,10 +281,10 @@ button{
                 text-align: center;
                 width: 100%;
             }
-
-    .header .slogan{
-        float: left;
-        margin-top:80px;
+    .header .rowflag{
+        float: right;
+        clear: both;
+        margin: 5px 12px 0 0;
     }
 
     .header .bg-login{

@@ -6,17 +6,13 @@ var Account = new (function(){
         var o = $.extend({}, jQueryValidatorOptDef, {
             rules : {
                 cboUserType: 'required',
-                txtEmail: {
-                   required: true,
-                   email: true,
-                   remote : {
+                txtUser : {
+                    required : true,
+                    remote : {
                        url  : baseURI+'account/ajax_check_exists/',
                        type : "post"
-                   }
-                },
-                txtConfirmEmail: {
-                    required: true,
-                    equalTo: "#txtEmail"
+                    },
+                    username : true
                 },
                 txtPass: {
                     required: true,
@@ -25,6 +21,14 @@ var Account = new (function(){
                 txtConfirmPass: {
                     required: true,
                     equalTo: "#txtPass"
+                },
+                txtEmail: {
+                   required: true,
+                   email: true
+                },
+                txtConfirmEmail: {
+                    required: true,
+                    equalTo: "#txtEmail"
                 },
                 chkPolitic: 'required',
                 txtCaptcha: {
@@ -35,8 +39,9 @@ var Account = new (function(){
                     }
                 }
             },
-            submitHandler : function(){
+            submitHandler : function(form){
                 loader.show();
+                //form.submit();
             },
             invalidHandler : function(){
                 eval($('#captchaReload').attr('href'));

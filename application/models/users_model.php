@@ -15,6 +15,7 @@ class Users_model extends Model {
         $data = array(
             'users_type' => $this->input->post('cboUserType'),
             'email'      => $this->input->post('txtEmail'),
+            'username'   => $this->input->post('txtUser'),
             'password'   => $this->encpss->encode($this->input->post('txtPass')),
             'newsletter' => $this->input->post('chkNewsletter'),
             'date_added' => date('Y-m-d H:i:s')
@@ -56,7 +57,7 @@ class Users_model extends Model {
     /* PUBLIC FUNCTIONS (LLAMADAS POR AJAX)
      **************************************************************************/
      public function check_exists($v, $id=null){
-         $where = is_null($id) ? array('email'=>$v) : array('id<>'=>$id, 'email'=>$v);
+         $where = is_null($id) ? array('username'=>$v) : array('users_id<>'=>$id, 'username'=>$v);
          return $this->db->get_where(TBL_USERS, $where)->num_rows>0;
      }
     

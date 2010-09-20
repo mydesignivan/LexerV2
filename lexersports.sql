@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 17-09-2010 a las 14:56:16
+-- Tiempo de generación: 20-09-2010 a las 14:06:12
 -- Versión del servidor: 5.1.37
 -- Versión de PHP: 5.3.0
 
@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
+('91d8d115f62d762913a3e31553b30ee7', '127.0.0.1', 'Mozilla/5.0 (X11; U; Linux i686; es-AR; rv:1.9.2.9', 1284742955, ''),
 ('21f859cc973c35ca23b1caaa5c85c395', '192.168.0.2', 'Mozilla/5.0 (X11; U; Linux i686; es-AR; rv:1.9.1.9', 1282945360, '');
 
 -- --------------------------------------------------------

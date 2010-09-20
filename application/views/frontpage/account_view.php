@@ -2,8 +2,8 @@
 
 <form id="form1" action="<?//=site_url('/account/create');?>" method="post" enctype="application/x-www-form-urlencoded">
     <div class="trow">
-        <label for="cboIdUser" class="label label-account"><span class="required">*</span>Soy un</label>
-        <select name="cboUserType">
+        <label for="cboUserType" class="label label-account"><span class="required">*</span>Soy un</label>
+        <select name="cboUserType" tabindex="2">
             <option value="">Seleccione un tipo</option>
             <option value="<?=TBL_USERS_DEP?>">Deportista</option>
             <option value="<?=TBL_USERS_CLUB?>">Club</option>
@@ -15,13 +15,8 @@
     </div>
 
     <div class="trow">
-        <label for="txtEmail" class="label label-account"><span class="required">*</span>Email</label>
-        <input type="text" name="txtEmail" id="txtEmail" tabindex="2" class="input-form" />
-    </div>
-
-    <div class="trow">
-        <label for="txtConfirmEmail" class="label label-account"><span class="required">*</span>Repite tu Email</label>
-        <input type="text" id="txtConfirmEmail" name="txtConfirmEmail" tabindex="3" class="input-form" />
+        <label for="txtUser" class="label label-account"><span class="required">*</span>Usuario</label>
+        <input type="text" name="txtUser" id="txtUser" tabindex="3" class="input-form" />
     </div>
 
     <div class="trow">
@@ -35,11 +30,17 @@
     </div>
 
     <div class="trow">
+        <label for="txtEmail" class="label label-account"><span class="required">*</span>Email</label>
+        <input type="text" name="txtEmail" id="txtEmail" tabindex="6" class="input-form" />
+    </div>
+
+
+    <div class="trow">
         <label class="label label-account">&nbsp;</label>
         <div class="fleft">
             <img id="imgCaptcha" src="<?=site_url('/captcha/index/'.md5(time()));?>" align="left" width="180" height="65" alt="" class="img-captcha" style="margin-right: 5px" />
             <div class="fleft">
-                <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="19" height="19" id="SecurImage_as3" align="middle" tabindex="5">
+                <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="19" height="19" id="SecurImage_as3" align="middle" tabindex="7">
                     <param name="allowScriptAccess" value="sameDomain" />
                     <param name="allowFullScreen" value="false" />
                     <param name="movie" value="images/securimage_play.swf?audio=<?=site_url('/captcha/play/');?>&bgColor1=#777&bgColor2=#fff&iconColor=#000&roundedCorner=5" />
@@ -54,20 +55,20 @@
     </div>
     <div class="trow">
         <label class="label label-account" for="txtCaptcha"><span class="required">*</span>Ingrese C&oacute;digo:</label>
-        <input type="text" id="txtCaptcha" name="txtCaptcha" maxlength="6" class="input-captcha" tabindex="7" />
+        <input type="text" id="txtCaptcha" name="txtCaptcha" maxlength="6" class="input-captcha" tabindex="8" />
     </div>
 
 
     <div class="trow">
-        <label class="label">Deseo Recibir Novedades de LexerSports: <input type="checkbox" name="chkNewsletter" checked tabindex="8" value="1" /></label>
+        <label class="label">Deseo Recibir Novedades de LexerSports: <input type="checkbox" name="chkNewsletter" checked tabindex="9" value="1" /></label>
     </div>
     <div class="trow">
-        <label class="label"><span class="asterisco">*</span>Acepto las pol&iacute;ticas de Privacidad de LexerSports: <input type="checkbox" name="chkPolitic" tabindex="9" /></label>
+        <label class="label"><span class="required">*</span>Acepto las pol&iacute;ticas de Privacidad de LexerSports: <input type="checkbox" name="chkPolitic" tabindex="10" /></label>
     </div>
 
     <div class="trow prepend-top" style="width:530px;">
         <label class="label label-contact text-size-80"><b>(*) Campos Obligatorios</b></label>
-        <button type="submit" tabindex="10" class="fright">Registrarme</button>
+        <button type="submit" tabindex="11" class="fright">Registrarme</button>
     </div>
 </form>
 

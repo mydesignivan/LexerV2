@@ -45,6 +45,9 @@ class Account extends Controller {
 
             $res = $this->users_model->create();
 
+            var_dump($res);
+            die();
+
             if( $res ){
                 $this->load->library('email');
 
@@ -53,7 +56,7 @@ class Account extends Controller {
 
                 $message = EMAIL_REG_MESSAGE;
                 $message = str_replace('{link}', $link, $message);
-                $message = str_replace('{email}', $this->input->post('txtEmail'), $message);
+                $message = str_replace('{username}', $this->input->post('txtUser'), $message);
                 $message = str_replace('{password}', $this->input->post('txtPass'), $message);
 
                 $this->email->from(EMAIL_REG_FROM_MAIL, EMAIL_REG_FROM_NAME);
@@ -65,7 +68,7 @@ class Account extends Controller {
                     if( $res['result'] ){
                         $this->session->set_flashdata('status', 'success');
                         $this->session->set_flashdata('suffix', 'success');
-                        $this->session->set_flashdata('data', array('username' => $this->input->post('txtEmail')));
+                        $this->session->set_flashdata('data', array('username' => $this->input->post('txtUser')));
                         redirect('/account/success/');
                     }else{
                         $this->session->set_flashdata('status', 'error');
@@ -153,8 +156,8 @@ class Account extends Controller {
     /* AJAX FUNCTIONS
      **************************************************************************/
     public function ajax_check_exists(){
-        if( $_SERVER['REQUEST_METHOD']=="POST" && $_POST['txtEmail'] ){
-            echo json_encode(!$this->users_model->check_exists($_POST['txtEmail']));
+        if( $_SERVER['REQUEST_METHOD']=="POST" && $_POST['txtUser'] ){
+            echo json_encode(!$this->users_model->check_exists($_POST['txtUser']));
         }
     }
 
