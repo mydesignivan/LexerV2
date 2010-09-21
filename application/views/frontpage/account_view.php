@@ -1,6 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
 
-<form id="form1" action="<?//=site_url('/account/create');?>" method="post" enctype="application/x-www-form-urlencoded">
+<form id="form1" action="<?=site_url('/account/create');?>" method="post" enctype="application/x-www-form-urlencoded">
     <div class="trow">
         <label for="cboUserType" class="label label-account"><span class="required">*</span>Soy un</label>
         <select name="cboUserType" tabindex="2">

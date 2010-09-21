@@ -1,0 +1,33 @@
+div.gf-content{display:none;float:right;width:550px}
+div.gf-content a,div.navigation a{text-decoration:none;color:#777}
+div.gf-content a:focus,div.gf-content a:hover,div.gf-content a:active{text-decoration:underline}
+div.controls{margin-top:5px;height:23px}
+div.controls a{padding:5px}
+div.ss-controls{float:left;display:none}
+div.nav-controls .prev,div.nav-controls .next{display:none}
+div.slideshow-container{position:relative;clear:both;height:355px}
+div.loader{position:absolute;top:0;left:0;background-image:url(loader.gif);background-repeat:no-repeat;background-position:center;width:550px;height:502px}
+div.slideshow span.image-wrapper{display:block;position:absolute;top:0;left:0}
+div.slideshow a.advance-link{display:block;width:535px;height:355px;line-height:355px;text-align:center}
+div.slideshow a.advance-link:hover,div.slideshow a.advance-link:active,div.slideshow a.advance-link:visited{text-decoration:none}
+div.slideshow img{vertical-align:middle;border:8px solid #fff}
+div.caption-container{position:relative;clear:left;height:75px}
+span.image-caption{display:block;position:absolute;width:550px;top:0;left:0}
+div.caption{padding:12px}
+div.image-title{font-weight:700;font-size:1.4em}
+div.image-desc{line-height:1.3em;padding-top:12px}
+div.navigation{float:left;width:265px}
+ul.thumbs{clear:both;margin:0;padding:0}
+ul.thumbs li{float:left;list-style:none;margin:5px 10px 5px 0;padding:0}
+a.thumb{display:block;border:1px solid #ccc;padding:2px}
+ul.thumbs li.selected a.thumb{background:#E5B0A2}
+a.thumb:focus{outline:none}
+ul.thumbs img{border:none;display:block}
+div.pagination{clear:both}
+div.navigation div.top{margin-bottom:12px;height:11px}
+div.navigation div.bottom{margin-top:12px}
+div.pagination a,div.pagination span.current,div.pagination span.ellipsis{display:block;float:left;margin-right:2px;border:1px solid #E5B0A2;background-color:#F3DBC3;color:#AC3C45;padding:4px 7px 2px}
+div.pagination a:hover{background-color:#BD5B5C;text-decoration:none;color:#fff}
+div.pagination span.current{font-weight:700;background-color:#BD5B5C;color:#fff;border-color:#E5B0A2}
+div.pagination span.ellipsis{border:none;padding:5px 0 3px 2px}
+div.nav-controls,div.download{float:right}

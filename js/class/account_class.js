@@ -6,14 +6,14 @@ var Account = new (function(){
         var o = $.extend({}, jQueryValidatorOptDef, {
             rules : {
                 cboUserType: 'required',
-                txtUser : {
+              txtUser : {
                     required : true,
                     remote : {
                        url  : baseURI+'account/ajax_check_exists/',
                        type : "post"
-                    },
-                    username : true
-                },
+                    }/*,
+                    username : true*/
+               },
                 txtPass: {
                     required: true,
                     password: true
@@ -41,7 +41,7 @@ var Account = new (function(){
             },
             submitHandler : function(form){
                 loader.show();
-                //form.submit();
+                form.submit();
             },
             invalidHandler : function(){
                 eval($('#captchaReload').attr('href'));
@@ -59,15 +59,22 @@ var Account = new (function(){
                    required: true,
                    email: true
                 },
+                txtPassOld: {
+                    remote : {
+                       url  : baseURI+'paneluser/myaccount/ajax_check_exists_pass/',
+                       type : "post"
+                    }
+                },
                 txtPass: {
-                    password: true
+                  password: true
                 },
                 txtConfirmPass: {
                     equalTo: "#txtPass"
                 }
             },
-            submitHandler : function(){
+            submitHandler : function(form){
                 loader.show();
+                form.submit();
             },
             invalidHandler : function(){
                 loader.hide();

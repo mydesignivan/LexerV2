@@ -18,7 +18,10 @@ var PersonalData = new (function(){
                 cboPassport         : 'required',
                 txtPhoneNum         : 'required'
             },
-
+            submitHandler : function(form){
+                loader.show();
+                form.submit();
+            },
             invalidHandler : function(){
                 loader.hide();
             }

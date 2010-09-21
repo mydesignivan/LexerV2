@@ -12,6 +12,7 @@ class Login extends Controller{
     /* PUBLIC FUNCTIONS
      **************************************************************************/
     public function index(){
+
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
             $statusLogin = $this->simplelogin->login($_POST["txtLoginUser"], $_POST["txtLoginPass"]);
             
@@ -27,9 +28,9 @@ class Login extends Controller{
             }else{
 
                 if( $this->session->userdata('level')==0 ){
-                    redirect('/paneluser/myaccount/');
+                   redirect('/paneluser/myaccount/');
                 }else{
-                    redirect('/paneladmin/index/');
+                   redirect('/paneladmin/index/');
                 }
             }
         }

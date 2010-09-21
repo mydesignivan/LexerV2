@@ -40,16 +40,16 @@ class Account extends Controller {
         $this->load->view('template_frontpage_view', $this->_data);
     }
 
+
+
     public function create(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
-
             $res = $this->users_model->create();
 
-            var_dump($res);
-            die();
+        //    var_dump($res);
 
             if( $res ){
-                $this->load->library('email');
+   /*             $this->load->library('email');
 
                 $id = $this->encpss->urlsafe_base64_encode($res['id']);
                 $link = site_url('/account/confirm_email/'.$id);
@@ -72,7 +72,7 @@ class Account extends Controller {
                         redirect('/account/success/');
                     }else{
                         $this->session->set_flashdata('status', 'error');
-                        $this->session->set_flashdata('suffix', 'errorsave');
+                        $this->session->set_flashdata('suffix', 'errorsavaccounte');
                         redirect('/account/error/');
                     }
 
@@ -81,8 +81,10 @@ class Account extends Controller {
                     $this->session->set_flashdata('suffix', 'errormail');
                     $this->session->set_flashdata('message', $this->email->print_debugger());
                     redirect('/account/error/');
-                }                
+                }   */
                 
+            
+            
             }
         }
     }

@@ -10,6 +10,15 @@ class Users_model extends Model {
 
     /* PUBLIC FUNCTIONS
      **************************************************************************/
+
+    public function get_info($where=array()){
+        $query = $this->db->get_where(TBL_USERS, $where);
+        if( $query->num_rows>0 ){
+            $row = $query->row_array();
+            return $row;
+        }else return false;
+     }
+     
     public function create(){
 
         $data = array(
@@ -21,11 +30,63 @@ class Users_model extends Model {
             'date_added' => date('Y-m-d H:i:s')
         );
 
+
+
+
         $res = $this->db->insert(TBL_USERS, $data);
         $id = $this->db->insert_id();
 
+        $id_where=array("users_id"=>$id);
+        switch($this->input->post('cboUserType')){
+            case TBL_USERS_DEP:
+                $this->db->insert(TBL_USERS_DEP, $id_where);
+                $this->db->insert(TBL_USERS_DEP_DISC, $id_where);
+                $this->db->insert(TBL_USERS_DEP_LANG, $id_where);
+                $this->db->insert(TBL_USERS_DEP_PIC, $id_where);
+                $this->db->insert(TBL_USERS_DEP_VID, $id_where);
+            break;
+            case TBL_USERS_PREPFIS:
+                $this->db->insert(TBL_USERS_PREPFIS, $id_where);
+                $this->db->insert(TBL_USERS_PREPFIS_PIC, $id_where);
+                $this->db->insert(TBL_USERS_PREPFIS_VID, $id_where);
+            break;
+            case TBL_USERS_REPR:
+                $this->db->insert(TBL_USERS_REPR, $id_where);
+                $this->db->insert(TBL_USERS_REPR_LANG, $id_where);
+                $this->db->insert(TBL_USERS_REPR_PIC, $id_where);
+                $this->db->insert(TBL_USERS_REPR_VID, $id_where);
+            break;
+            case TBL_USERS_SPONSORS:
+                $this->db->insert(TBL_USERS_SPONSORS, $id_where);
+                $this->db->insert(TBL_USERS_SPONSORS_PIC, $id_where);
+                $this->db->insert(TBL_USERS_SPONSORS_VID, $id_where);
+            break;
+            case TBL_USERS_TRAINER:
+                $this->db->insert(TBL_USERS_TRAINER, $id_where);
+                $this->db->insert(TBL_USERS_TRAINER_PIC, $id_where);
+                $this->db->insert(TBL_USERS_TRAINER_VID, $id_where);
+            break;
+        }
+
         return array('id'=>$id, 'result'=>$res);
     }
+
+     public function save(){
+        $data = array(
+            'email'   => $_POST['txtEmail'],
+            'last_modified' => date('Y-m-d H:i:s'),
+            'newsletter'=> $this->input->post('chkNewsletter')?1:0,
+        );
+
+        if( !empty($_POST['txtPass']) ){
+            $data['password'] = $this->encpss->encode($_POST['txtPass']);
+        }
+
+        $this->db->where('users_id',$this->session->userdata('users_id'));
+        return $this->db->update(TBL_USERS, $data);
+     }
+
+
 
     public function get_pass(){
         $query = $this->db->get_where(TBL_USERS, array('email'=>$_POST['txtEmail'], 'active'=>1));
@@ -60,6 +121,17 @@ class Users_model extends Model {
          $where = is_null($id) ? array('username'=>$v) : array('users_id<>'=>$id, 'username'=>$v);
          return $this->db->get_where(TBL_USERS, $where)->num_rows>0;
      }
+     public function check_exists_pass(){
+       $users_id=$this->session->userdata('users_id');
+     
+        $info=$this->db->get_where(TBL_USERS, array("users_id"=>$users_id))->row_array();
+        $passold=$this->encpss->decode($info["password"]);
+
+        return $_POST['txtPassOld']==$passold;
+
+     }
+
+
     
 }
 ?>

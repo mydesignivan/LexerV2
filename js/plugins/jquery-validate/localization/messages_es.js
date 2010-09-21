@@ -27,6 +27,10 @@ jQuery.validator.setDefaults({
         txtEmail: {
             remote : 'La direcci&oacute;n de email ya existe.'
         },
+        txtPassOld: {
+            remote : 'La contraseña es incorrecta.'
+        },
+
         chkPolitic:{
             required : 'Debe aceptar las pol&iacute;ticas de Privacidad para poder continuar.'
         },

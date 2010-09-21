@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 20-09-2010 a las 14:06:12
+-- Tiempo de generación: 21-09-2010 a las 13:46:45
 -- Versión del servidor: 5.1.37
 -- Versión de PHP: 5.3.0
 
@@ -40,8 +40,7 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
-('91d8d115f62d762913a3e31553b30ee7', '127.0.0.1', 'Mozilla/5.0 (X11; U; Linux i686; es-AR; rv:1.9.2.9', 1284742955, ''),
-('21f859cc973c35ca23b1caaa5c85c395', '192.168.0.2', 'Mozilla/5.0 (X11; U; Linux i686; es-AR; rv:1.9.1.9', 1282945360, '');
+('d190753fe92282fd5842659c1f8293cb', '192.168.0.2', 'Mozilla/5.0 (X11; U; Linux i686; es-AR; rv:1.9.2.9', 1284999857, 'a:11:{s:8:"users_id";s:1:"5";s:10:"users_type";s:9:"users_dep";s:8:"username";s:7:"damianx";s:5:"email";s:16:"fede@hotmail.com";s:10:"newsletter";s:1:"1";s:5:"token";s:0:"";s:6:"active";s:1:"1";s:5:"level";s:1:"0";s:10:"date_added";s:19:"2010-09-20 12:13:40";s:13:"last_modified";s:19:"0000-00-00 00:00:00";s:9:"logged_in";s:1:"1";}');
 
 -- --------------------------------------------------------
 
@@ -4974,8 +4973,9 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `users_id` int(11) NOT NULL AUTO_INCREMENT,
   `users_type` varchar(30) NOT NULL COMMENT 'nombre de las tablas',
-  `email` varchar(100) NOT NULL COMMENT 'Este es el nombre de usuario',
+  `username` varchar(255) NOT NULL,
   `password` char(64) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `newsletter` bit(1) NOT NULL DEFAULT b'1',
   `token` char(23) DEFAULT NULL,
   `active` bit(1) NOT NULL DEFAULT b'0',
@@ -4983,14 +4983,18 @@ CREATE TABLE IF NOT EXISTS `users` (
   `date_added` datetime NOT NULL,
   `last_modified` datetime NOT NULL,
   PRIMARY KEY (`users_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Volcar la base de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`users_id`, `users_type`, `email`, `password`, `newsletter`, `token`, `active`, `level`, `date_added`, `last_modified`) VALUES
-(1, 'users_dep', 'ivan@mydesign.com.ar', 'gXHphNha+nJz9ODhM7fUM6TbmPQ=', b'0', NULL, b'1', 0, '2010-08-05 12:32:57', '0000-00-00 00:00:00');
+INSERT INTO `users` (`users_id`, `users_type`, `username`, `password`, `email`, `newsletter`, `token`, `active`, `level`, `date_added`, `last_modified`) VALUES
+(1, 'users_dep', 'deportista', 'gXHphNha+nJz9ODhM7fUM6TbmPQ=', 'federico@mydesign.com.ar', b'0', NULL, b'1', 0, '2010-08-05 12:32:57', '0000-00-00 00:00:00'),
+(2, 'users_dep', 'fede', '9nGszPqSZo0Prp72xEI9yIHZJVcraiBoAwA=', 'xda@sa.com', b'1', NULL, b'1', 0, '2010-09-20 09:39:01', '0000-00-00 00:00:00'),
+(3, 'users_dep', 'fedefff', 'KukYc4a0op4/sithJzh3UC4zKFRxyJ/ZGi8=', 'xda@sa.com', b'1', NULL, b'1', 0, '2010-09-20 09:41:47', '0000-00-00 00:00:00'),
+(4, 'users_dep', 'damian', 'IpN3dP92121n5l1BmH2KUsvSIQ9n9QFoMWFHYA==', 'xdam@gmail.comm', b'0', NULL, b'1', 0, '2010-09-20 10:01:24', '2010-09-20 11:49:20'),
+(5, 'users_dep', 'damianx', 'qHgUU9TaKfkDQeso51XX2xwXdV7ld4rB7u5nHg==', 'fede@hotmail.com', b'1', NULL, b'1', 0, '2010-09-20 12:13:40', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -5128,14 +5132,15 @@ CREATE TABLE IF NOT EXISTS `users_dep` (
   `estudios` varchar(100) NOT NULL,
   `check_discapacidad` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`users_type_dep`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Volcar la base de datos para la tabla `users_dep`
 --
 
 INSERT INTO `users_dep` (`users_type_dep`, `users_id`, `lastname`, `firstname`, `image_thumb`, `image_width`, `image_height`, `sex`, `nacimiento`, `estado_civil`, `documento_tipo`, `documento_tipo_other`, `documento_num`, `documento_show`, `current_country`, `current_city`, `current_state`, `current_zipcode`, `origin_country`, `origin_city`, `origin_state`, `origin_zipcode`, `nacionalidad`, `passport`, `phone_area`, `phone_city`, `phone_num`, `celu_area`, `celu_city`, `celu_num`, `website`, `profesion`, `estudios`, `check_discapacidad`) VALUES
-(4, 1, 'Mattoni', 'Ivan', '12813206864c5f66eecff01__casas-california.jpg', 200, 127, 'm', '439268400', 'Casado/a', 'DNI', '', '30536404', b'1', 13, 'Mendoza', 180, '5500', 26, 'Dasd', 426, '5500', 'Argentino', 'Sin Pasaporte', '054', '0261', '4442192', '054', '0234', '4442198', 'http://www.google.com', 'Dfsdf', 'Dfsdf', b'1');
+(4, 4, 'Mattoni', 'Ivan', '12813206864c5f66eecff01__casas-california.jpg', 200, 127, 'm', '439268400', 'Casado/a', 'DNI', '', '30536404', b'1', 13, 'Mendoza', 180, '5500', 26, 'Dasd', 426, '5500', 'Argentino', 'Sin Pasaporte', '054', '0261', '4442192', '054', '0234', '4442198', 'http://www.google.com', 'Dfsdf', 'Dfsdf', b'1'),
+(5, 5, 'Ccccc', 'Aaaa', '', 0, 0, 'm', '505537200', 'Soltero/a', 'DNI', '', '30123456', b'1', 13, 'Gcruz', 174, '5501', 13, 'Nose', 179, '6600', 'Argentino', 'Sin Pasaporte', '000', '111', '22222222222222', '021', '21241', '123456', 'http://www.fulbofulbo.com', 'Fulbo', 'Lic En Fulbo', b'1');
 
 -- --------------------------------------------------------
 
@@ -5150,15 +5155,16 @@ CREATE TABLE IF NOT EXISTS `users_dep_disc` (
   `type` varchar(10) NOT NULL,
   `detalle` text NOT NULL,
   PRIMARY KEY (`disc_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Volcar la base de datos para la tabla `users_dep_disc`
 --
 
 INSERT INTO `users_dep_disc` (`disc_id`, `users_id`, `type`, `detalle`) VALUES
-(1, 1, 'Mental', 'dsfsd'),
-(2, 1, 'Motora', 'fdfdf');
+(1, 4, 'Mental', 'dsfsd'),
+(2, 4, 'Motora', 'fdfdf'),
+(3, 5, 'Auditiva', 'no escucho nada');
 
 -- --------------------------------------------------------
 
@@ -5174,15 +5180,16 @@ CREATE TABLE IF NOT EXISTS `users_dep_lang` (
   `level_oral` varchar(20) NOT NULL,
   `level_write` varchar(20) NOT NULL,
   PRIMARY KEY (`deplang_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Volcar la base de datos para la tabla `users_dep_lang`
 --
 
 INSERT INTO `users_dep_lang` (`deplang_id`, `users_id`, `lang_id`, `level_oral`, `level_write`) VALUES
-(1, 1, 3, 'Intermedio', 'Intermedio'),
-(2, 1, 17, 'Básico', 'Avanzado');
+(1, 4, 3, 'Intermedio', 'Intermedio'),
+(2, 4, 17, 'Básico', 'Avanzado'),
+(4, 5, 3, 'Intermedio', 'Intermedio');
 
 -- --------------------------------------------------------
 
@@ -5198,13 +5205,16 @@ CREATE TABLE IF NOT EXISTS `users_dep_picgallery` (
   `thumb` varchar(255) NOT NULL,
   `width` tinyint(4) NOT NULL,
   `height` tinyint(5) NOT NULL,
+  `order` int(11) NOT NULL,
   PRIMARY KEY (`picgallery_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Volcar la base de datos para la tabla `users_dep_picgallery`
 --
 
+INSERT INTO `users_dep_picgallery` (`picgallery_id`, `users_id`, `image`, `thumb`, `width`, `height`, `order`) VALUES
+(1, 5, '', '', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -5218,12 +5228,14 @@ CREATE TABLE IF NOT EXISTS `users_dep_videogallery` (
   `users_id` int(11) NOT NULL,
   `code` text NOT NULL,
   PRIMARY KEY (`vidgallery_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Volcar la base de datos para la tabla `users_dep_videogallery`
 --
 
+INSERT INTO `users_dep_videogallery` (`vidgallery_id`, `users_id`, `code`) VALUES
+(1, 5, '');
 
 -- --------------------------------------------------------
 
