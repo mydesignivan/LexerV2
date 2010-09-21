@@ -14,8 +14,11 @@ class Users_dep_model extends Model {
 
     /* PUBLIC FUNCTIONS
      **************************************************************************/
-    public function save($datUpload){
+    public function save(){
         $extra_post = json_decode($this->input->post('extra_post'));
+        $json = json_decode($_POST['json']);
+
+        
 
         //print_array($extra_post, true);
 
@@ -49,14 +52,17 @@ class Users_dep_model extends Model {
             'website'         => $this->input->post('txtWebSite'),
             'profesion'       => $this->input->post('txtProfesion'),
             'estudios'        => $this->input->post('txtEstudios'),
-            'check_discapacidad' => $this->input->post('chkDisc')
+            'check_discapacidad' => $this->input->post('chkDisc'),
+            'image_thumb'    => $json->filename_image,
+            'image_width'   => $json->thumb_width,
+            'image_height'  => $json->thumb_height,
         );
 
-        if( isset($datUpload['filename_image']) ){
+  /*      if( isset($datUpload['filename_image']) ){
             $data['image_thumb'] = $datUpload['filename_image'];
             $data['image_width'] = $datUpload['thumb_width'];
             $data['image_height'] = $datUpload['thumb_height'];
-        }
+        }*/
 
         $this->db->trans_start(); // INICIO TRANSACCION
 
@@ -153,9 +159,10 @@ class Users_dep_model extends Model {
 
         // ELIMINA LA IMAGEN ANTERIOR
         $filename = $this->input->post('filename_image_old');
-        if( isset($datUpload['filename_image']) && !empty($filename) ) {
-            unlink(UPLOAD_PATH_CV . $filename);
-        }
+        if( !@copy($json->href_image_full, UPLOAD_PATH_CV.$json->filename_image) ) return false;
+        
+        @unlink(UPLOAD_PATH_CV . $filename);
+        @unlink($json->href_image_full);
 
         $this->db->trans_complete(); // COMPLETO LA TRANSACCION
 

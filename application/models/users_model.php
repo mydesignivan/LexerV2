@@ -42,29 +42,19 @@ class Users_model extends Model {
                 $this->db->insert(TBL_USERS_DEP, $id_where);
                 $this->db->insert(TBL_USERS_DEP_DISC, $id_where);
                 $this->db->insert(TBL_USERS_DEP_LANG, $id_where);
-                $this->db->insert(TBL_USERS_DEP_PIC, $id_where);
-                $this->db->insert(TBL_USERS_DEP_VID, $id_where);
             break;
             case TBL_USERS_PREPFIS:
                 $this->db->insert(TBL_USERS_PREPFIS, $id_where);
-                $this->db->insert(TBL_USERS_PREPFIS_PIC, $id_where);
-                $this->db->insert(TBL_USERS_PREPFIS_VID, $id_where);
             break;
             case TBL_USERS_REPR:
                 $this->db->insert(TBL_USERS_REPR, $id_where);
                 $this->db->insert(TBL_USERS_REPR_LANG, $id_where);
-                $this->db->insert(TBL_USERS_REPR_PIC, $id_where);
-                $this->db->insert(TBL_USERS_REPR_VID, $id_where);
             break;
             case TBL_USERS_SPONSORS:
                 $this->db->insert(TBL_USERS_SPONSORS, $id_where);
-                $this->db->insert(TBL_USERS_SPONSORS_PIC, $id_where);
-                $this->db->insert(TBL_USERS_SPONSORS_VID, $id_where);
             break;
             case TBL_USERS_TRAINER:
                 $this->db->insert(TBL_USERS_TRAINER, $id_where);
-                $this->db->insert(TBL_USERS_TRAINER_PIC, $id_where);
-                $this->db->insert(TBL_USERS_TRAINER_VID, $id_where);
             break;
         }
 

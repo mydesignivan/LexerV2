@@ -3,24 +3,52 @@ var PictureGallery = new (function(){
    /* CONSTRUCTOR
     **************************************************************************/
    this.initializer = function(_params){
-       params = _params;
+       params = $.extend({}, {
+           sel_input      : '',
+           sel_button     : '',
+           sel_ajaxloader : '',
+           sel_gallery    : '',
+           sel_msgerror   : '',
+           action         : '',
+           href_remove    : '',
+           defined_size   : false,
+           callback       : Function()
+       }, _params);
 
-       $(params.sel_iframe).bind('load', _iframe_load);
+       //Crea el form
+       _form = $('<form action="'+params.action+'" method="post" enctype="multipart/form-data" target="picgalifr" style="border:1px solid red"></form>').hide();
+       _iframe = $('<iframe id="picgalifr" name="picgalifr" src="about:blank"></iframe>').bind('load', _iframe_load);
+       _form.append(_iframe);
+
+       $('body').append(_form);
+
        $(params.sel_gallery+' li a.jq-removeimg').bind('click', _remove_image);
-   };
+  };
 
   /* PUBLIC METHODS
    **************************************************************************/
    this.upluad = function(){
-        if( $(params.sel_input).val() ){
-            $(params.sel_button).hide();
+        var input = $(params.sel_input);
+        var parent = input.parent();
+        if( input.val() ){
+            var ext = input.val().replace(/^([\W\w]*)\./gi, '').toLowerCase();
+
+            if( !(ext && /^(jpg|png|jpeg|gif)$/.test(ext)) ){
+                alert('Error: Solo se permiten imagenes');
+                return false;
+            }
+
+            $(params.sel_button)[0].disabled=true;
             $(params.sel_ajaxloader).show();
 
-            $(params.sel_form).attr('action', baseURI+'ajax_upload')
-                              .attr('enctype', 'multipart/form-data')
-                              .attr('target', params.sel_iframe.substr(1))
-                              .submit();
+            var inputclone = input.clone(true);
+
+            _form.find(':file').remove();
+            input.prependTo(_form);
+            parent.prepend(inputclone);
+            _form.submit();
         }
+        return false;
    };
 
    this.get_images_new = function(){
@@ -31,7 +59,7 @@ var PictureGallery = new (function(){
             var tagImg = tagA.find('img');
 
             if( li.data('au-newimg') ){
-                var newImg = Image();
+                var newImg = new Image();
                 newImg.src = tagImg.attr('src');
 
                 data.push({
@@ -40,8 +68,6 @@ var PictureGallery = new (function(){
                     width       : newImg.width,
                     height      : newImg.height
                 });
-
-
             }
         });
        return data;
@@ -64,12 +90,14 @@ var PictureGallery = new (function(){
         });
         return data;
    };
-      
+
 
    /* PRIVATE PROPERTIES
     **************************************************************************/
     var params;
     var array_images_del = new Array();
+    var _form=false;
+    var _iframe=false;
 
    /* PRIVATE METHODS
     **************************************************************************/
@@ -82,40 +110,57 @@ var PictureGallery = new (function(){
         $(params.sel_button).show();
         $(params.sel_ajaxloader).hide();
 
+        var data;
         try{
-            var data = JSON.decode(content);
+            eval('data = '+content);
 
         }catch(err){
             alert(content);
+            return false;
         }
 
-        if( typeof(data)!="undefined" ){
-            if( !data.error ){
-                var ul = $(params.sel_gallery);
-                var li = ul.find('li:first');
+        if( data['status']=="success" ){
+            $(params.sel_msgerror).hide();
+            var ul = $(params.sel_gallery);
+            var li = ul.find('li:first');
 
-                if( ul.is(':visible') ) li = li.clone();
+            if( ul.is(':visible') ) li = li.clone();
 
-                li.find('a.jq-image').attr('href', data.image.href_image_full);
-                li.find('img:first').attr('src', data.image.href_image_thumb);
-                var audata = {width : data.image.thumb_width, height : data.image.thumb_height};
+            var output = data['output'][0];
 
-                if( !ul.is(':visible') ){
-                    //li.find('a.jq-removeimg').bind('click', _remove_image);
-                    li.data('au-data', audata);
-                    li.data('au-newimg', true);
-                    ul.show();
-                }else{
-                    ul.find('li:last').after('<li>'+li.html()+'</li>');
-                    ul.find('li:last').find('a.jq-removeimg').bind('click', _remove_image);
-                    ul.find('li:last').data('au-data', audata);
-                    ul.find('li:last').data('au-newimg', true);
-                }
+            li.find('a.jq-image').attr('href', output['href_image_full']);
+            var img = li.find('img:first');
+                img.attr('src', output['href_image_thumb']);
 
-                $(params.sel_input).val('');
-                params.callback();
+            if( !params.defined_size ){
+                img.attr('width', output['thumb_width']).attr('height', output['thumb_height']);
+            }else{
+                img.attr('width', params.defined_size.width).attr('height', params.defined_size.height);
+            }
 
-            }else alert(data.message);
+            var audata = {width : output['thumb_width'], height : output['thumb_height']};
+
+            if( !ul.is(':visible') ){
+                //li.find('a.jq-removeimg').bind('click', _remove_image);
+                li.data('au-data', audata);
+                li.data('au-newimg', true);
+                ul.show();
+            }else{
+                ul.find('li:last').after('<li>'+li.html()+'</li>');
+                ul.find('li:last').find('a.jq-removeimg').bind('click', _remove_image);
+                ul.find('li:last').data('au-data', audata);
+                ul.find('li:last').data('au-newimg', true);
+            }
+
+            $(params.sel_input).val('');
+            $(params.sel_button)[0].disabled=false;
+            $(params.sel_ajaxloader).hide();
+            params.callback();
+           
+        }else {
+            var d=$(params.sel_msgerror);
+            if( d.length>0 ) d.html(data['error'][0]['message']);
+            else alert(data['error'][0]['message']);
         }
 
         return false;
@@ -146,7 +191,7 @@ var PictureGallery = new (function(){
 
             if( li.data('au-newimg') ){
 
-                $.post(baseURI+'ajax_upload/delete', {au_filename_image : image_full, au_filename_thumb : image_thumb}, function(data){
+                $.post(params.href_remove, {au_filename_image : image_full, au_filename_thumb : image_thumb}, function(data){
                     if( data=="ok" ){
                         remove();
 

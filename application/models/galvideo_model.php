@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Galeria_model extends Model {
+class galvideo_model extends Model {
 
     /* CONSTRUCTOR
      **************************************************************************/

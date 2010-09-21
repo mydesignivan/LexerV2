@@ -198,6 +198,61 @@ button{
  - ESTILOS PARA FORMULARIO FIELDSET
  -----------------------------------------------------------------------------*/
 
+fieldset{
+    padding: 10px;
+    border:2px solid #501B23;
+}
+    fieldset legend{
+        font-size: 100%;
+        padding: 0 5px 0 5px;
+    }
+
+fieldset.gallery-panel{
+    float:left;
+    width: 640px;
+    height: 250px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+    fieldset.gallery-panel .cont{
+        float: left;
+        width: 640px;
+        height: 250px;
+        position: relative;
+        overflow: auto;
+        /*border: 1px solid red;*/
+    }
+
+    fieldset.gallery-panel ul{
+        margin:0;
+        padding:0;
+    }
+        fieldset.gallery-panel ul li{
+            list-style-type: none;
+            display: inline;
+            float:left;
+            width: 120px;
+            height: 100px;
+            margin: 0 8px 8px 0;
+            padding:5px;
+            background-color: #EEF3F6;
+            border: 2px solid #A5A5A5;
+            text-align: center;
+        }
+            fieldset.gallery-panel ul li .d1{
+                clear: both;
+                margin-top: 5px;
+            }
+
+
+fieldset.gallery-panel2{
+    width:500px !important;
+}
+    fieldset.gallery-panel2 .cont{
+        width:500px !important;
+    }
+
+
 /*------------------------------------------------------------------------------
  - ESTILOS PARA AJAX LOADER
  -----------------------------------------------------------------------------*/

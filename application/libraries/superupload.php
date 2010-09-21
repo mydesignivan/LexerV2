@@ -33,22 +33,24 @@ class SuperUpload{
             'path' => $params['path'], //Obligatorio
             'watermark' => isset($params['watermark']) ? $params['watermark'] : false,
             'watermark_options' => array(
-                'type'          => isset($params['watermark_options']['type']) ? $params['watermark_options']['type'] : 'overlay',
-                'vrt_alignment' => isset($params['watermark_options']['vrt_alignment']) ? $params['watermark_options']['vrt_alignment'] : 'bottom',
-                'hor_alignment' => isset($params['watermark_options']['hor_alignment']) ? $params['watermark_options']['hor_alignment'] : 'right',
-                'opacity'       => isset($params['watermark_options']['opacity']) ? $params['watermark_options']['opacity'] : '30',
-                'overlay_path'  => isset($params['watermark_options']['overlay_path']) ? $params['watermark_options']['overlay_path'] : '',
+                'type'          => !isset($params['watermark_options']['type']) ? 'overlay' : $params['watermark_options']['type'],
+                'vrt_alignment' => !isset($params['watermark_options']['vrt_alignment']) ? 'bottom' : $params['watermark_options']['vrt_alignment'],
+                'hor_alignment' => !isset($params['watermark_options']['hor_alignment']) ? 'right' : $params['watermark_options']['hor_alignment'],
+                'opacity'       => !isset($params['watermark_options']['opacity']) ? '30' : $params['watermark_options']['opacity'],
+                'overlay_path'  => !isset($params['watermark_options']['overlay_path']) ? '' : $params['watermark_options']['overlay_path'],
              ),
             'resize_image_original' => isset($params['resize_image_original']) ? $params['resize_image_original'] : true,
-            'thumb_width'    => $params['thumb_width'], //Obligatorio
-            'thumb_height'   => $params['thumb_height'], //Obligatorio
-            'image_width'    => @$params['image_width'], //Obligatorio
-            'image_height'   => @$params['image_height'], //Obligatorio
-            'maxsize'        => isset($params['maxsize']) ? $params['maxsize'] : 2048,
-            'filetype'       => isset($params['filetype']) ? $params['filetype'] : 'gif|jpg|png',
-            'error_uploaded' => isset($params['error_uploaded']) ? $params['error_uploaded'] : 'El archivo no ha podido llegar al servidor',
-            'error_maxsize'  => isset($params['error_maxsize']) ? $params['error_maxsize'] : 'El tamaño del archivo debe ser menor a {size} MB.',
-            'error_filetype' => isset($params['error_filetype']) ? $params['error_filetype'] : 'El tipo de archivo es incompatible.'
+            'thumb_width'     => $params['thumb_width'], //Obligatorio
+            'thumb_height'    => $params['thumb_height'], //Obligatorio
+            'image_width'     => @$params['image_width'], //Obligatorio
+            'image_height'    => @$params['image_height'], //Obligatorio
+            'master_dim'      => !isset($params['master_dim']) ? 'auto' : $params['master_dim'],  // auto, width, height
+            'maxsize'         => !isset($params['maxsize']) ? 2048 : $params['maxsize'],
+            'filetype'        => !isset($params['filetype']) ? 'gif|jpg|png' : $params['filetype'],
+            'error_uploaded'  => !isset($params['error_uploaded']) ? 'El archivo no ha podido llegar al servidor' : $params['error_uploaded'],
+            'error_maxsize'   => !isset($params['error_maxsize']) ? 'El tamaño del archivo debe ser menor a {size} MB.' : $params['error_maxsize'],
+            'error_filetype'  => !isset($params['error_filetype']) ? 'El tipo de archivo es incompatible.' : $params['error_filetype'],
+            'filename_prefix' => !isset($params['filename_prefix']) ? '' : $params['filename_prefix']
         );
     }
 
@@ -86,6 +88,7 @@ class SuperUpload{
 
                 // Muevo la imagen original
                 move_uploaded_file($this->_file['tmp_name'][$n], $this->_params['path'] . $filename);
+                chmod($this->_params['path'] . $filename, 0777);
 
                 // Crea una marca de agua en la imagen
                 if( $this->_params['watermark'] ){
@@ -110,6 +113,7 @@ class SuperUpload{
                     if( $this->_params['resize_image_original'] ) $config['new_image'] = $this->_params['path'] . $filename_thumb;
                     $config['width'] = $this->_params['thumb_width'];
                     $config['height'] = $this->_params['thumb_height'];
+                    $config['master_dim'] = $this->_params['master_dim'];
 
                     $this->CI->image_lib->clear();
                     $this->CI->image_lib->initialize($config);
@@ -128,6 +132,7 @@ class SuperUpload{
                                 $config['source_image'] = $this->_params['path'] . $filename;
                                 if( $sizes_image_original[0] > $this->_params['image_width'] ) $config['width'] = $this->_params['image_width'];
                                 if( $sizes_image_original[1] > $this->_params['image_height'] ) $config['height'] = $this->_params['image_height'];
+                                $config['master_dim'] = $this->_params['master_dim'];
 
                                 $this->CI->image_lib->clear();
                                 $this->CI->image_lib->initialize($config);
@@ -150,7 +155,12 @@ class SuperUpload{
 
         }//end for
 
-        $ret['status'] = count($this->_error)>0 ? "error" : "success";
+        $ret['status'] = count($this->_error)>0 || count($this->_output)==0 ? "error" : "success";
+
+        if( count($this->_output)==0 ){
+            $this->_save_error('El servidor no ha resivido ningun archivo.', 0);
+        }
+
         if( count($this->_error)>0 ) $ret['error'] = $this->_error;
         $ret['output'] = $this->_output;
 
@@ -203,9 +213,41 @@ class SuperUpload{
         return false;
     }
 
-    private function _get_filename($name){
-        $name = preg_replace("/\s+/", "_", strtolower($name));
-        return uniqid(time()) ."__". $name;
+    private function _get_filename($text){
+        $separator = "_";
+
+        $isUTF8 = (mb_detect_encoding($text." ",'UTF-8,ISO-8859-1') == 'UTF-8');
+
+        $text = ($isUTF8) ? utf8_decode($text) : $text;
+        $text = trim($text);
+
+        $_a = utf8_decode("ÁÀãâàá");
+        $_e = utf8_decode("ÉÈéè");
+        $_i = utf8_decode("ÍÌíì");
+        $_o = utf8_decode("ÓÒóò");
+        $_u = utf8_decode("ÚÙúù");
+        $_n = utf8_decode("Ññ");
+        $_c = utf8_decode("Çç");
+        $_b = utf8_decode("ß");
+        $_dash = "\,_ ";
+
+        $text = preg_replace("/[$_a]/", "a", $text );
+        $text = preg_replace("/[$_e]/", "e", $text );
+        $text = preg_replace("/[$_i]/", "i", $text );
+        $text = preg_replace("/[$_o]/", "o", $text );
+        $text = preg_replace("/[$_u]/", "u", $text );
+        $text = preg_replace("/[$_n]/", "n", $text );
+        $text = preg_replace("/[$_c]/", "c", $text );
+        $text = preg_replace("/[$_b]/", "ss", $text );
+
+        $text = preg_replace("/[$_dash]/", $separator, $text );
+        $text = preg_replace("/[^a-zA-Z0-9\-]!=./", "", $text );
+
+        $text = strtolower($text);
+
+        $text = ($isUTF8) ? utf8_encode($text) : $text;
+
+        return $this->_params['filename_prefix'].uniqid(time()) ."__". $text;
     }
 
     private function _save_error($msg, $n){

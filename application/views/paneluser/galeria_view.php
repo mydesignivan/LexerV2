@@ -13,7 +13,8 @@
 <form id="form1" action="<?=site_url('/paneluser/galeria/save/')?>" method="post" enctype="application/x-www-form-urlencoded">
     <div class="trow">
         <fieldset class="gallery-panel">
-            <div class="gf-content">
+            <legend></legend>
+            <div class="cont">
                 <ul id="gallery-image" <?php if( count($info['gallery'])==0 ){?>class="hide"<?php }?>>
         <?php if( count($info['gallery'])>0 ){?>
             <?php foreach( $info['gallery'] as $row ){?>
@@ -57,6 +58,8 @@
 
     <input type="hidden" name="json" id="json" />
 </form>
+
+
 
 <script type="text/javascript">
 <!--

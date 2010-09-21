@@ -1,1 +1,2 @@
-<script type="text/javascript" src="js/class/gallery_class<?=$this->config->item('sufix_pack_js');?>.js"></script>
+<script type="text/javascript" src="js/class/gallery_class.js"></script>
+<script type="text/javascript" src="js/plugins/picturegallery/picturegallery.js"></script>

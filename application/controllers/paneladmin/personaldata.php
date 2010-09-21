@@ -35,14 +35,15 @@ class Personaldata extends Controller {
                 $info = $this->users_dep_model->get_info();
             
                 $data = array(
-                    'tlp_section'       => 'paneluser/personaldata/dep_view.php',
+                    'tlp_section'       => 'paneladmin/personaldata/dep_view.php',
                     'tlp_title_section' => 'Datos Personales',
-                    'tlp_script'        => array('plugins_validator', 'helpers_json', 'plugins_datepicker', 'class_personaldata'),
                     'comboTipoDoc'      => $this->lists_model->get_tipodoc(array(""=>"Seleccione un Documento")),
                     'comboCountry'      => $this->lists_model->get_country(array(""=>"Seleccione un Pa&iacute;s")),
                     'comboPassport'     => $this->lists_model->get_passport(array(""=>"Seleccione un Pasaporte")),
                     'comboLang'         => $this->lists_model->get_lang(array(""=>"Seleccione un Idioma")),
                     'comboTipoDisc'     => $this->lists_model->get_tipodisc(array(""=>"Seleccione Discapacidad")),
+                    'comboCurrentState' => $this->lists_model->get_states($info['current_country']),
+                    'comboOriginState'  => $this->lists_model->get_states($info['origin_country']),
                     'info'              => $info['info_dep'],
                     'infoLang'          => $info['info_lang'],
                     'infoDisc'          => $info['info_disc']
@@ -55,52 +56,10 @@ class Personaldata extends Controller {
         $this->load->view('template_paneluser_view', $this->_data);
     }
 
-    public function save(){
-        if( $_SERVER['REQUEST_METHOD']=="POST" ){
-
-            switch ($this->session->userdata('users_type')){
-                case TBL_USERS_DEP:
-                    $this->load->model('users_dep_model');
-                    $res = $this->users_dep_model->save();
-                break;
-            }
-
-            if( $res ){
-                $status = "success";
-                $message = "Los datos fueron guardados con &eacute;xito.";
-            }else{
-                $status = "error";
-                $message = "Los datos no pudieron ser guardados.";
-            }
-
-            $this->session->set_flashdata('status', $status);
-            $this->session->set_flashdata('message', $message);
-            redirect('/paneluser/personaldata/');
-        }
-    }
-
 
 
     /* AJAX FUNCTIONS
      **************************************************************************/
-    public function ajax_upload_image(){
-        if( $_SERVER['REQUEST_METHOD']=="POST" ){
-
-            $this->load->library('superupload', array(
-                'path'          => UPLOAD_PATH_CV.'.tmp/',
-                'thumb_width'   => IMAGE_CV_THUMB_WIDTH,
-                'thumb_height'  => IMAGE_CV_THUMB_HEIGHT,
-                'maxsize'       => UPLOAD_MAXSIZE,
-                'filetype'      => UPLOAD_FILETYPE,
-                'resize_image_original' => false,
-                'filename_prefix'       => $this->session->userdata('users_id')."_"
-            ));
-
-
-
-             echo json_encode($this->superupload->upload('txtImage'));
-        }
-    }
 
 
     /* PRIVATE FUNCTIONS

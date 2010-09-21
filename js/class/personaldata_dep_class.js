@@ -20,7 +20,8 @@ var PersonalData = new (function(){
             },
             submitHandler : function(form){
                 loader.show();
-                form.submit();
+                 $("#json").val(JSON.encode(_ajaxupload_output));
+                 form.submit();
             },
             invalidHandler : function(){
                 loader.hide();
@@ -62,6 +63,44 @@ var PersonalData = new (function(){
         // Define los eventos change para las tablas dinamicas
         LibForms.tbldinamic_set('#tblLang tbody tr, #tblDisc tbody tr');
 
+
+      // ESTO ES PARA EL UPLOAD SIMPLE
+        $('#ajaxupload-form iframe').load(function(){
+            if( this.src=="about:blank" ) return false;
+
+            var content = this.contentDocument || this.contentWindow.document;
+                content = content.body.innerHTML;
+
+            $('#btnUpload2')[0].disabled=false;
+
+            $('#ajaxupload-load').hide();
+
+            var result;
+            try{
+                eval('result = '+content);
+            }catch(e){
+                alert('ERROR:\n\n'+content);
+                return false;
+            }
+
+            if( result['status']=="success" ) {
+                $('#ajaxupload-error').hide();
+                var output = result['output'][0];
+
+                $('#ajaxupload-thumb').attr('src', output['href_image_full'])
+                                      .attr('alt', output['filename_image'])
+                                      .attr('width', output['thumb_width'])
+                                      .attr('height', output['thumb_height'])
+                                      .show();
+
+                _ajaxupload_output = output;
+            }
+            else $('#ajaxupload-error').html(result['error'][0]['message']).show();
+
+            return false;
+        });
+        //-----
+
     };
 
     this.get_combo_states = function(el, sel){
@@ -102,10 +141,39 @@ var PersonalData = new (function(){
         });
     };
 
+    this.upload = function(){
+        var input = $('#txtImage');
+        if( !input.val() ) return false;
+        var parent = input.parent();
+        var ext = input.val().replace(/^([\W\w]*)\./gi, '').toLowerCase();
+
+        if( !(ext && /^(jpg|png|jpeg|gif)$/.test(ext)) ){
+            alert('Error: Solo se permiten imagenes');
+            return false;
+        }
+
+        var inputclone = input.clone(true);
+
+        var form = $('#ajaxupload-form');
+
+        $('#btnUpload2')[0].disabled=true;
+        $('#ajaxupload-load').show();
+
+        form.find('input:file').remove();
+        input.prependTo(form);
+        parent.prepend(inputclone);
+
+        $('#ajaxupload-form iframe').attr('src', '');
+        form.submit();
+
+        return false;
+    };
+
 
     /* PRIVATE PROPERTIES
      **************************************************************************/
      var _attr=[];
+     var _ajaxupload_output=[];
      var _arrDel={lang:[], disc:[]}
 
     /* PRIVATE METHODS

@@ -6,7 +6,7 @@ var Galeria = new (function(){
         _mode_edit = mode_edit;
 
         $('#form1').bind('submit', _on_submit);
-        
+
         // ESTO ES PARA LA GALERIA DE IMAGEN
         $(document).ready(function(){
             PictureGallery.initializer({
@@ -15,8 +15,8 @@ var Galeria = new (function(){
                 sel_ajaxloader : '#ajax-loader1',
                 sel_gallery    : '#gallery-image',
                 sel_msgerror   : '#pg-msgerror',
-                action         : baseURI+'paneladmin/galeria/ajax_upload_gallery',
-                href_remove    : baseURI+'paneladmin/galeria/ajax_upload_delete',
+                action         : baseURI+'paneluser/galeria/ajax_upload_gallery',
+                href_remove    : baseURI+'paneluser/galeria/ajax_upload_delete',
                 defined_size   : {
                     width  : 108,
                     height : 70
