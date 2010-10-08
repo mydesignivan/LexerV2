@@ -13,7 +13,9 @@
 <form id="form1" action="<?=site_url('/paneluser/galeria_video/save/')?>" method="post" enctype="application/x-www-form-urlencoded">
 
     <div class="trow" id="output">
-        
+        <ul>
+            
+        </ul>
     </div>
     <div class="trow">
         <label class="label label2" for="txtImage"><span class="required">*</span>Enlace video</label>
@@ -21,7 +23,7 @@
         <div class="fleft">
             <div class="fleft">
                 <input type="text" id="txtVideo" name="txtVideo" size="20" />&nbsp;
-                <button id="btnUpload2" type="button" onclick="Videos.guardarEnlace();" class="float-left">Agregar</button>
+                <button id="btnUpload2" type="button" onclick="Videos.addLink();" class="float-left">Agregar</button>
             </div>
             <label class="clear fleft label-leyend">Enace youtube</label>
             <div id="ajaxupload-error" class="clear error span-7 hide">Este campo es obligatorio.</div>
@@ -33,6 +35,6 @@
 
 <script type="text/javascript">
 <!--
-    Videos.initializer(<?=count($info['gallery'])>0 ? "true" : "false"?>);
+    Videos.initializer(<?=json_encode(OBJECT_CODE_VIDEO)?>);
 -->
 </script>

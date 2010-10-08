@@ -56,7 +56,45 @@ var LibForms = {
             dataNew  : dataNew,
             dataEdit : dataEdit
         };
-     }
+     },
+
+// hace visible el siguiente elemento dom de su contenedor(si elem no esta definido)  si en el actual select
+//  el valor es -1 u "otro"
+
+    isOther : function (select, elem){
+        
+        if(typeof(elem)=='undefined'){
+            elem=$(select).parent().next();
+        }
+        if($(select).val() < 0 || $(select).val().toLowerCase()=='otro'){
+            $(elem).fadeIn("slow");
+        }else $(elem).fadeOut("slow");
+    },
+
+// hace visible el siguiente elemento dom de su contenedor (si elem no esta definido)  si el actual chek esta
+//  checked
+    isChecked : function (chk, elem, inv){
+
+        if(typeof(inv)=='undefined') inv=0;
+        if(typeof(elem)=='undefined') elem=$(chk).parent().next();
+        
+
+        if($("#"+chk.id+":checked").length>0 && inv==0){
+            $(elem).fadeIn("slow");
+        }else {$(elem).fadeOut("slow");}
+    },
+
+// addItem  agrega elementos a list select 2 (id2) desde list select 1(id1)
+
+    addItem : function (id, id2){
+        var sel=( $("#"+id+" :selected"));
+        if($("#"+id2+" option[value="+sel.val()+"]").length==0)
+            $("#"+id2).append("<option value='"+sel.val()+"'>"+sel.html()+"</option>");
+    },
+// removeItem quita elementos de seleccionados en list select 2(id2)
+    removeItem : function (id2){
+        $("#"+id2+" option:selected").remove();
+    }
 
 }
 

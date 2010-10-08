@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Personaldata extends Controller {
+class Cv extends Controller {
 
     /* CONSTRUCTOR
      **************************************************************************/
@@ -32,7 +32,7 @@ class Personaldata extends Controller {
             case TBL_USERS_DEP: 
                 $this->load->model('users_dep_model');
 
-                $info = $this->users_dep_model->get_info();
+                $info = $this->users_dep_model->get_info_personaldata();
             
                 $data = array(
                     'tlp_section'       => 'paneladmin/personaldata/dep_view.php',
@@ -42,8 +42,6 @@ class Personaldata extends Controller {
                     'comboPassport'     => $this->lists_model->get_passport(array(""=>"Seleccione un Pasaporte")),
                     'comboLang'         => $this->lists_model->get_lang(array(""=>"Seleccione un Idioma")),
                     'comboTipoDisc'     => $this->lists_model->get_tipodisc(array(""=>"Seleccione Discapacidad")),
-                    'comboCurrentState' => $this->lists_model->get_states($info['current_country']),
-                    'comboOriginState'  => $this->lists_model->get_states($info['origin_country']),
                     'info'              => $info['info_dep'],
                     'infoLang'          => $info['info_lang'],
                     'infoDisc'          => $info['info_disc']

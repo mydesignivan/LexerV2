@@ -6,7 +6,6 @@
     </div>
 <?php }?>
 
-<form id="form1" action="<?=site_url('/paneluser/personaldata/save');?>" method="post" enctype="multipart/form-data">
 
     <!-- ========== APELLIDO =========== -->
     <div class="trow">
@@ -66,12 +65,12 @@
     <!-- ========== PAIS ACTUAL =========== -->
     <div class="trow">
         <label class="label label-form" for="cboCurrentCountry"><span class="required">*</span>Pa&iacute;s Actual</label>
-         <label class="label label-form" for="cboCurrentCountry"><span class="required">*</span><?=$comboCountry[$info['current_country']]['name'];?></label>
+         <label class="label label-form" for="cboCurrentCountry"><span class="required">*</span><?=$info['current_country_name'];?></label>
     </div>
     <!-- ========== PROVINCIA ACTUAL =========== -->
     <div id="contCurrentStates" class="trow ">
         <label class="label label-form" for="cboCurrentStates"><span class="required">*</span>Provincia Actual</label>
-        <label class="label label-form" for="cboCurrentStates"><?=$info['current_state']['name'];?></label>
+        <label class="label label-form" for="cboCurrentStates"><?=$info['current_state_select'][0]['name'];?></label>
     </div>
     <!-- ========== CIUDAD ACTUAL =========== -->
     <div class="trow">
@@ -86,7 +85,7 @@
     <!-- ========== PAIS ORIGEN =========== -->
     <div class="trow">
         <label class="label label-form" for="cboOriginCountry">Pa&iacute;s Origen</label>
-        <label class="label label-form" for="cboOriginCountry"> <?=$comboCountry[$info['origin_country']]['name'];?></label>
+        <label class="label label-form" for="cboOriginCountry"> <?=$info['origin_country_name'];?></label>
       
        
         <img src="images/ajax-loader.gif" alt="Loading" width="16" height="16" class="jq-loader hide" />
@@ -94,12 +93,7 @@
     <!-- ========== PROVINCIA ORIGEN =========== -->
     <div id="contOriginStates" class="trow <?=getval($info['origin_state'], 'hide', 0)?>">
         <label class="label label-form" for="cboOriginStates">Provincia Origen</label>
-        <label class="label label-form" for="cboOriginStates"><?=$comboOriginState[$info['origin_state']]['name'];?></label>
-        <?php if( $info['origin_state']!=0 ){
-                echo form_dropdown('cboOriginStates', $info['comboOriginState'], $info['origin_state'], 'id="cboOriginStates" class="jq-select" tabindex="15"');
-              }else{?>
-                <select name="cboOriginStates" id="cboOriginStates" class="jq-select" tabindex="15"></select>
-        <?php }?>
+        <label class="label label-form" for="cboOriginStates"><?=$info['origin_state_select'][0]['name'];?></label>
     </div>
     <!-- ========== CIUDAD ORIGEN =========== -->
     <div class="trow">
@@ -118,9 +112,10 @@
     </div>
     <!-- ========== PASAPORTE =========== -->
     <div class="trow">
-        <label class="label label-form" for="cboPassport"><span class="required">*</span>Pasaporte</label>
+        <label class="label label-form" for="cboPassport">Pasaporte</label>
+        <label class="label label-form" for="cboPassport"><?=$info['passport'];?></label>
 
-        <?=form_dropdown('cboPassport', $comboPassport, $info['passport'], 'id="cboPassport" tabindex="19"');?>
+      
     </div>
     <!-- ========== TELEFONO FIJO =========== -->
     <div class="trow">
@@ -174,7 +169,6 @@
                 </tbody>
             </table>
             <br />
-            <input type="button" value="Agregar otro" name="btn" onclick="PersonalData.addRow('#tblLang')" />
         </div>
     </div>
 
@@ -190,8 +184,7 @@
     </div>
     <!-- ========== POSEE ELGUNA DISCAPACIDAD =========== -->
     <div class="trow">
-        <label for="chkDisc">Posee alguna Discapacidad <input type="checkbox" name="chkDisc" id="chkDisc" value="1" tabindex="30" onclick="showhide(this, '#contDisc')" <?=getval($info['check_discapacidad'], 'checked', 1)?> /></label>
-        <label for="chkDisc">Posee alguna Discapacidad </label>
+        <label for="chkDisc"><?=$info['check_discapacidad']?"Posee alguna Discapacidad":"sin discapacidad";?> </label>
     </div>
     <!-- ========== DATOS DISCAPACIDAD =========== -->
     <div id="contDisc" class="trow <?=getval($info['check_discapacidad'], 'hide', 0)?>">
@@ -223,23 +216,4 @@
    
     </div>
 
-    <div class="trow prepend-top" style="width:530px;">
-        <label class="label label-contact text-size-80"><b>(*) Campos Obligatorios</b></label>
-        <button type="submit" tabindex="10" class="fright">Guardar</button>
-    </div>
 
-    <input type="hidden" name="extra_post" id="extra_post" />
-    <input type="hidden" name="filename_image_old" value="<?=$info['image_thumb']?>" />
-    <input type="hidden" name="json" id="json">
-</form>
-
-
-<form id="ajaxupload-form" action="<?=site_url('/paneluser/personaldata/ajax_upload_image')?>" method="post" enctype="multipart/form-data" target="ifr" class="hide">
-    <iframe name="ifr" id="ifr" src="about:blank" frameborder="1" style="width:800px; height: 100px; border: 1px solid red;"></iframe>
-</form>
-
-<script type="text/javascript">
-<!--
-    PersonalData.initializer();
--->
-</script>

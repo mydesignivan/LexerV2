@@ -42,6 +42,7 @@ class Users_model extends Model {
                 $this->db->insert(TBL_USERS_DEP, $id_where);
                 $this->db->insert(TBL_USERS_DEP_DISC, $id_where);
                 $this->db->insert(TBL_USERS_DEP_LANG, $id_where);
+                $this->db->insert(TBL_PERFIL, $id_where);
             break;
             case TBL_USERS_PREPFIS:
                 $this->db->insert(TBL_USERS_PREPFIS, $id_where);
@@ -57,7 +58,6 @@ class Users_model extends Model {
                 $this->db->insert(TBL_USERS_TRAINER, $id_where);
             break;
         }
-
         return array('id'=>$id, 'result'=>$res);
     }
 

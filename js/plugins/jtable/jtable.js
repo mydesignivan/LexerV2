@@ -3,11 +3,11 @@ var JTable = new (function(){
 
     /* PUBLIC METHODS
      **************************************************************************/
-    this.init = function(sel){
+    this.init = function(sel, callback){
         $(sel).each(function(){
             var table = $(this);
             var tr = table.find('>tbody >tr:first');
-            if( tr.length>0 ) _set_table(table, tr)
+            if( tr.length>0 ) _set_table(table, tr, callback);
         });
     };
 
@@ -35,11 +35,23 @@ var JTable = new (function(){
         return false;
     };
 
-    this.remove = function(el, cnf){
-        if( !cnf ) cnf=true;
+    this.remove = function(el, param){
+        if( typeof(param)=="function" ){
+            var f=param;
+            param = {};
+            param.callback = f;
+            param.confirm = true;
+        }else{
+            param = $.extend(true, {
+                confirm  : true,
+                callback : Function()
+            }, param);
+        }
+        
         if( $(el).parent().parent().parent().find('>tr').length>1 ){
-            if( cnf && confirm(This.msg_confirm) ){
+            if( param.confirm && confirm(This.msg_confirm) ){
                 $(el).parent().parent().remove();
+                param.callback();
             }
         }
     };
@@ -51,8 +63,11 @@ var JTable = new (function(){
 
     /* PRIVATE METHODS
      **************************************************************************/
-    var _set_table = function(table, tr){
+    var _set_table = function(table, tr, callback){
         var ntr = tr.clone();
+
+        if( typeof(callback)=="function" ) callback(ntr);
+
         var html = $('<div></div>').html(ntr).html();
         table.data('jtable-data', html);
 
@@ -61,7 +76,7 @@ var JTable = new (function(){
 
     var _clear_tags = function(table){
         var tr = table.find('>tbody >tr:last');
-        tr.find('input:text').val('');
+        tr.find('input:text, input:file, textarea').val('');
         tr.find('select').each(function(){this.selectedIndex=0});
     };
 

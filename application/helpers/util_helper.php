@@ -162,7 +162,8 @@ function normalize($text, $separator = "-"){
     $text = preg_replace("/[$_b]/", "ss", $text );
 
     $text = preg_replace("/[$_dash]/", $separator, $text );
-    $text = preg_replace("/[^a-zA-Z0-9\-]/", "", $text );
+//    $text = preg_replace("/[^a-zA-Z0-9\-]/", "", $text );
+   
 
     $text = strtolower($text);
 

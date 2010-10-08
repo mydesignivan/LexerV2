@@ -68,7 +68,7 @@
 
     <div class="trow prepend-top" style="width:530px;">
         <label class="label label-contact text-size-80"><b>(*) Campos Obligatorios</b></label>
-        <button type="submit" tabindex="11" class="fright">Registrarme</button>
+        <button type="submit" tabindex="11" class="button-medium fright">Registrarme</button>
     </div>
 </form>
 

@@ -57,6 +57,7 @@ class Users_dep_model extends Model {
             'image_width'   => $json->thumb_width,
             'image_height'  => $json->thumb_height,
         );
+//        print_array($data,true);
 
   /*      if( isset($datUpload['filename_image']) ){
             $data['image_thumb'] = $datUpload['filename_image'];
@@ -169,23 +170,54 @@ class Users_dep_model extends Model {
         return true;
     }
 
-    public function get_info(){
+    public function get_info_personaldata(){
         $this->load->model('lists_model');
+/*
+ SELECT `users_dep`.*, `list_origin_country`.`name` as origin_country_name, list_current_country.name as current_country_name
+FROM (`users_dep`)
+LEFT JOIN `list_country` list_origin_country ON `list_origin_country`.`country_id` =`users_dep`.`origin_country`
+LEFT JOIN `list_country` list_current_country ON `list_current_country`.`country_id` =`users_dep`.`current_country`
+WHERE `users_id` = '5'
+ */
+         $this->db->select(TBL_USERS_DEP.".*, `list_origin_country`.`name` as origin_country_name, list_current_country.name as current_country_name, list_tipodoc.name as tipodoc_name");
+         $this->db->join(TBL_LIST_COUNTRY." as list_origin_country", "list_origin_country.country_id =".TBL_USERS_DEP. ".origin_country","left");
+         $this->db->join(TBL_LIST_COUNTRY." as list_current_country","list_current_country.country_id =".TBL_USERS_DEP. ".origin_country","left");
+         $this->db->join(TBL_LIST_TIPODOC." as list_tipodoc","list_tipodoc.tipodoc_id =".TBL_USERS_DEP. ".documento_tipo","left");
+         $infoDep = $this->db->get_where(TBL_USERS_DEP, array('users_id' => $this->_users_id))->row_array();
 
-        $infoDep = $this->db->get_where(TBL_USERS_DEP, array('users_id' => $this->_users_id))->row_array();
+
+
         $infoLang = $this->db->get_where(TBL_USERS_DEP_LANG, array('users_id' => $this->_users_id));
         $infoDisc = $this->db->get_where(TBL_USERS_DEP_DISC, array('users_id' => $this->_users_id));
 
         $infoDep['age'] = calc_age($infoDep['nacimiento']);
         $infoDep['comboCurrentState']  = $this->lists_model->get_states($infoDep['current_country'], array(""=>"Seleccione una Provincia"));
-        if( $infoDep['origin_country']!=0 ) $infoDep['comboOriginState'] = $this->lists_model->get_states($infoDep['origin_country'], array(""=>"Seleccione una Provincia"));
+
+
+
+        if( $infoDep['origin_country']!=0 ) {
+
+            $infoDep['comboOriginState'] = $this->lists_model->get_states($infoDep['origin_country'], array(""=>"Seleccione una Provincia"));
+            $infoDep['origin_state_select'] = $this->lists_model->get_states(false, null,$infoDep['origin_state']);
+            $infoDep['current_state_select'] = $this->lists_model->get_states(false, null,$infoDep['current_state']);
+            
+        }
+
         if( !empty($infoDep['nacimiento']) ) $infoDep['nacimiento'] = date('d-m-Y', $infoDep['nacimiento']);
 
         return array(
             'info_dep'  => $infoDep,
             'info_lang' => $infoLang,
-            'info_disc' => $infoDisc
+            'info_disc' => $infoDisc,
+            
         );
+    }
+
+    function get_info_recomendacion(){
+        $this->db->select(TBL_USERS_DEP.".*, ".TBL_USERS.".email ");
+        $this->db->join(TBL_USERS,TBL_USERS.".users_id=".TBL_USERS_DEP.".users_id");
+        $info = $this->db->get_where(TBL_USERS_DEP, array(TBL_USERS.'.users_id' => $this->_users_id))->row_array();
+        return $info?$info:false;
     }
 
     public function getval($val, $def){

@@ -58,7 +58,7 @@ var PersonalData = new (function(){
         formatNumber.init('#txtNumDoc, #txtCurrentZipCode, #txtOriginZipCode, #txtPhoneArea, #txtPhoneCity, #txtPhoneNum, #txtCeluArea, #txtCeluCity, #txtCeluNum');
 
         // Configura los campos con opcion otro
-        $('#cboTipoDoc').setOptionOther();
+     //   $('#cboTipoDoc').setOptionOther();
 
         // Define los eventos change para las tablas dinamicas
         LibForms.tbldinamic_set('#tblLang tbody tr, #tblDisc tbody tr');

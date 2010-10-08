@@ -76,16 +76,16 @@ $src = isset($info) ? UPLOAD_PATH_CV . $info['image_thumb'] : '';
     <div class="trow">
         <label class="label label-form" for="cboEstadoCivil">Estado Civil</label>
         <select name="cboEstadoCivil" id="cboEstadoCivil" tabindex="6">
-            <option value="Soltero/a" <?=getval($info['estado_civil'], 'selected="selected"', "Soltero/a")?>>Soltero/a</option>
-            <option value="Casado/a" <?=getval($info['estado_civil'], 'selected="selected"', "Casado/a")?>>Casado/a</option>
-            <option value="Viudo/a" <?=getval($info['estado_civil'], 'selected="selected"', "Viudo/a" )?>>Viudo/a</option>
-            <option value="Divorciado/a" <?=getval($info['estado_civil'], 'selected="selected"', "Divorciado/a")?>>Divorciado/a</option>
+            <option value="0" <?=getval($info['estado_civil'], 'selected="selected"', "0")?>>Soltero/a</option>
+            <option value="1" <?=getval($info['estado_civil'], 'selected="selected"', "1")?>>Casado/a</option>
+            <option value="2" <?=getval($info['estado_civil'], 'selected="selected"', "2" )?>>Viudo/a</option>
+            <option value="3" <?=getval($info['estado_civil'], 'selected="selected"', "3")?>>Divorciado/a</option>
         </select>
     </div>
     <!-- ========== TIPO DE DOCUMENTO =========== -->
     <div class="trow">
         <label class="label label-form" for="cboTipoDoc">Tipo de Documento</label>
-        <?=form_dropdown('cboTipoDoc', $comboTipoDoc, $info['documento_tipo'], 'id="cboTipoDoc" tabindex="7"');?>
+        <?=form_dropdown('cboTipoDoc', $comboTipoDoc, $info['documento_tipo'], 'id="cboTipoDoc" tabindex="7" onchange="LibForms.isOther(this,\'#txtTipoDocOther\')"');?>
         <input type="text" name="txtTipoDocOther" id="txtTipoDocOther" class="<?=getval($info['documento_tipo_other'], 'hide')?>" value="<?=$info['documento_tipo_other']?>" />
     </div>
     <!-- ========== NRO DOCUMENTO =========== -->
@@ -153,6 +153,14 @@ $src = isset($info) ? UPLOAD_PATH_CV . $info['image_thumb'] : '';
     <div class="trow">
         <label class="label label-form" for="txtNacionalidad"><span class="required">*</span>Nacionalidad</label>
         <input type="text" name="txtNacionalidad" id="txtNacionalidad" tabindex="18" class="wsize2" value="<?=$info['nacionalidad']?>" />
+    </div>
+    <div class="trow">
+        <label class="label label-form" for="txtNacionalidad2">Nacionalidad</label>
+        <input type="text" name="txtNacionalidad2" id="txtNacionalidad2" tabindex="18" class="wsize2" value="<?=$info['nacionalidad2']?>" />
+    </div>
+    <div class="trow">
+        <label class="label label-form" for="txtNacionalidad3">Nacionalidad</label>
+        <input type="text" name="txtNacionalidad3" id="txtNacionalidad3" tabindex="18" class="wsize2" value="<?=$info['nacionalidad3']?>" />
     </div>
     <!-- ========== PASAPORTE =========== -->
     <div class="trow">

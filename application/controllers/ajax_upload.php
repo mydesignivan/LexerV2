@@ -15,7 +15,7 @@ class Ajax_upload extends Controller {
             'maxsize'       => UPLOAD_MAXSIZE_IMG,
             'filetype'      => UPLOAD_FILETYPE_IMG
         ));
-
+        
         $this->_ajax = array();
     }
 

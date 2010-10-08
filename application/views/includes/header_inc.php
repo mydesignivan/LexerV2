@@ -2,8 +2,6 @@
 
 <div class="span-7 prepend-top"><a href="<?=$this->config->item('base_url');?>"><img src="images/logo.png" alt="LexerSports" width="279" height="150" /></a></div>
 
-<img src="images/slogan.png" alt="Te conecta con todo el mundo deportivo" width="324" height="37" class="slogan" />
-
 <!-- =============== LOGIN (LOGOUT) =============== -->
 <div class="login">
 <?php if( $this->session->userdata('logged_in') ){?>
@@ -46,4 +44,8 @@ $login_error = $this->session->flashdata('message_login');
     </form>
 <?php }?>
 </div>
-
+<div class="header-flags">
+    <img src="images/flag_spanish.png" alt="" width="24" height="24" />&nbsp;
+    <img src="images/flag_english.png" alt="" width="24" height="24" />&nbsp;
+    <img src="images/flag_italy.png" alt="" width="24" height="24" />
+</div>

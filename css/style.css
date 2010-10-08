@@ -4,6 +4,7 @@
 .fleft{float:left !important;}
 .fright{float:right !important;}
 .align-center{text-align: center !important;}
+.align-right{text-align: right !important;}
 .border{border:1px solid red !important;}
 .text-size-80{font-size: 80% !important;}
 .text-size-90{font-size: 90% !important;}
@@ -25,6 +26,7 @@
     padding: 8px;
     /*border:1px solid red;*/
 }
+
 
 /*------------------------------------------------------------------------------
  - ESTILO PARA MENSAJES DEL VALIDADOR
@@ -125,7 +127,7 @@ input[type=text],input[type=password], textarea{
 }
 .input-login{
     margin-bottom: 2px !important;
-    width: 120px;
+    width: 130px;
 }
 .input-search{
     background-color: #E2ECEB;
@@ -192,6 +194,13 @@ button{
     width: 82px;
     height: 32px;
     border: none;
+}
+.button-medium{
+    background: url(../images/button-medium.png) no-repeat transparent;
+    width: 140px;
+    height: 46px;
+    border: none;
+    /*border: 1px solid red;*/
 }
 
 /*------------------------------------------------------------------------------
@@ -293,7 +302,7 @@ fieldset.gallery-panel2{
     }
     .header .login{
         float: right;
-        margin-top: 10px;
+        margin: 20px 10px 0 0;
     }
         .header .login .cell{
             float: left;
@@ -314,7 +323,7 @@ fieldset.gallery-panel2{
                 background:transparent url(../images/button-register.png) no-repeat scroll 0 0;
                 color:#1A171B;
                 display:block;
-                font-size:160%;
+                font-size:150%;
                 font-style:italic;
                 font-weight:bold;
                 height:46px;
@@ -355,6 +364,13 @@ fieldset.gallery-panel2{
         width: 212px;
         border-bottom: 1px dashed #fff;
         padding-bottom: 5px;
+    }
+    .header-flags{
+        float: right;
+        clear: both;
+        width: 300px;
+        text-align: right;
+        margin: -10px 22px 0 0;
     }
 
 
