@@ -19,7 +19,7 @@ var PerfilDeportivo = new (function(){
         });
         $('#form1').validate(o);
 
-        $("#txtLesion, #txtRecuperacion").datepicker({
+        $(".cfecha").datepicker({
             showOn          : 'both',
             buttonImage     : 'images/icon_calendar.png',
             buttonImageOnly : true,

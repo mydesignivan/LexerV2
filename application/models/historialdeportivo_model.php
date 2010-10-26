@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Users_repr_model extends Model {
+class historialdeportivo_model extends Model {
 
     /* CONSTRUCTOR
      **************************************************************************/
@@ -170,60 +170,98 @@ class Users_repr_model extends Model {
         return true;
     }
 
-    public function get_info_personaldata(){
-        $this->load->model('lists_model');
-         
-/*
- SELECT `users_dep`.*, `list_origin_country`.`name` as origin_country_name, list_current_country.name as current_country_name
-FROM (`users_dep`)
-LEFT JOIN `list_country` list_origin_country ON `list_origin_country`.`country_id` =`users_dep`.`origin_country`
-LEFT JOIN `list_country` list_current_country ON `list_current_country`.`country_id` =`users_dep`.`current_country`
-WHERE `users_id` = '5'
- */
-         $this->db->select(TBL_USERS_REPR.".*, `list_origin_country`.`name` as origin_country_name, list_current_country.name as current_country_name, list_tipodoc.name as tipodoc_name");
-         $this->db->join(TBL_LIST_COUNTRY." as list_origin_country", "list_origin_country.country_id =".TBL_USERS_REPR. ".origin_country","left");
-         $this->db->join(TBL_LIST_COUNTRY." as list_current_country","list_current_country.country_id =".TBL_USERS_REPR. ".origin_country","left");
-         $this->db->join(TBL_LIST_TIPODOC." as list_tipodoc","list_tipodoc.tipodoc_id =".TBL_USERS_REPR. ".documento_tipo","left");
-         $infoRep = $this->db->get_where(TBL_USERS_REPR, array('users_id' => $this->_users_id))->row_array();
- 
+    public function get_info(){
+        $info = $this->db->get_where(TBL_HISTORIAL, array('users_id' => $this->_users_id))->row_array();
 
-
-        $infoLang = $this->db->get_where(TBL_USERS_REPR_LANG, array('users_id' => $this->_users_id));
-        $infoPic = $this->db->get_where(TBL_USERS_REPR_PIC, array('users_id' => $this->_users_id));
-        $infoVid = $this->db->get_where(TBL_USERS_REPR_VID, array('users_id' => $this->_users_id));
-
-        $infoRep['age'] = strlen($infoRep['nacimiento'])<9?calc_age($infoRep['nacimiento']):"0";
-        $infoRep['comboCurrentState']  = $this->lists_model->get_states($infoRep['current_country'], array(""=>"Seleccione una Provincia"));
-
-        $infoRepSports = $this->db->get_where(TBL_USERS_REPR_DEP,  array('users_id' => $this->_users_id));
-
-        if( $infoRep['origin_country']!=0 ) {
-            $infoRep['comboOriginState'] = $this->lists_model->get_states($infoRep['origin_country'], array(""=>"Seleccione una Provincia"));
-            $infoRep['origin_state_select'] = $this->lists_model->get_states(false, null,$infoRep['origin_state']);
-            $infoRep['current_state_select'] = $this->lists_model->get_states(false, null,$infoRep['current_state']);
-        }
-
-        if( !empty($infoDep['nacimiento']) ) $infoDep['nacimiento'] = date('d-m-Y', $infoDep['nacimiento']);
-     
         return array(
-            'info_rep'  => $infoRep,
-            'info_lang' => $infoLang,
-            'info_pic' => $infoPic,
-            'info_vid' => $infoVid,
-            'info_dep' => $infoRepSports
+            'historial'  => $info
         );
-    }
-
-    function get_info_recomendacion(){
-        $this->db->select(TBL_USERS_DEP.".*, ".TBL_USERS.".email ");
-        $this->db->join(TBL_USERS,TBL_USERS.".users_id=".TBL_USERS_DEP.".users_id");
-        $info = $this->db->get_where(TBL_USERS_DEP, array(TBL_USERS.'.users_id' => $this->_users_id))->row_array();
-        return $info?$info:false;
     }
 
     public function getval($val, $def){
         return empty($val) ? $def : '';
     }
+
+    public function get_info_dep($sports_id, $historial_id){
+        $this->db->select(TBL_REL_SPORTS.".*, ".TBL_LIST_SPORTS.".name as name_deporte");
+        $this->db->join(TBL_LIST_SPORTS,TBL_LIST_SPORTS.".sports_id = ".TBL_REL_SPORTS.".sports_id");
+        $row=$this->db->get_where(TBL_REL_SPORTS,array(TBL_REL_SPORTS.".sports_id"=>$sports_id))->row_array();
+
+
+
+        $pref_historial=$row['historial'];
+        $tablas = $this->db->list_tables();
+        //selecciona todas las tablas con prefijo de tabla historial.
+        //ej: historial_marciales, historial_marciales_palmares, historial_marciales_torneos
+        $tablas_sport=array();
+        for($i=0;$i<count($tablas);$i++){
+            if(strpos($tablas[$i], $pref_historial )!==false)   {
+                //cada tabla con sus datos la inserta con la clave correspondiente al nombre de la tabla
+                $tablas_sport[$tablas[$i]]= $this->db->get_where($tablas[$i],array("historial_id"=>$historial_id))->result_array();
+
+                //si la tabla es vacia se inserta un row vacio
+                
+               if (count( $tablas_sport[$tablas[$i]])==0){
+                    $columns=$this->db->list_fields($tablas[$i]);
+                    foreach($columns as $column)
+                        $tablas_sport[$tablas[$i]][0][$column]="";
+
+                }
+            }
+        }
+
+
+        $tablas_sport['sport_name']=normalize($row['name_deporte'],"_");
+
+        return $tablas_sport;
+    }
+
+    public function getCombo($tabla, $msg=false){
+
+        list($field_id,$field_name)=$this->db->list_fields($tabla);
+        $data=array();
+        if($msg)
+            $data[] = array($field_name=>$msg, $field_id=>'');
+
+        $this->db->select($field_name.", ". $field_id);
+
+        $data=array_merge($data, $this->db->get($tabla)->result_array());
+
+        return $data;
+   }
+
+   function getComboSubCat($tabla, $msg="",$cat){
+        list($field_id,$field_level,$field_name)=$this->db->list_fields($tabla);
+        $data[] = array($field_name=>$msg, $field_id=>'');
+
+        $this->db->select($field_name.", ". $field_id);
+        $data=array_merge($data, $this->db->get_where($tabla,array($field_level=>$cat))->result_array());
+
+        return $data;
+   }
+
+   function getBoxeoLicencia($perfil_id){
+        $rtn=$this->db->get_where(TBL_PERFIL_BEXEO_LICENCIA,array("perfil_id"=>$perfil_id));
+        return $rtn;
+       
+   }
+
+    public function getComboSeleccionado($deporte){
+        $this->db->select(TBL_LIST_SELECCIONADO.".name, ".TBL_LIST_SELECCIONADO.".seleccionado_id");
+        $this->db->join(TBL_REL_SELECCIONADO,TBL_REL_SELECCIONADO.".sport_id = ".TBL_LIST_SPORTS.".sports_id");
+        $this->db->join(TBL_LIST_SELECCIONADO,TBL_LIST_SELECCIONADO.".seleccionado_id = ".TBL_REL_SELECCIONADO.".seleccionado_id");
+        $result=$this->db->get_where(TBL_LIST_SPORTS,array(TBL_LIST_SPORTS.".sports_id"=>$deporte, TBL_LIST_SELECCIONADO.".seleccionado_id >"=>0))->result_array();
+
+        $this->db->select(TBL_LIST_SELECCIONADO.".name, ".TBL_LIST_SELECCIONADO.".seleccionado_id");
+        $this->db->join(TBL_REL_SELECCIONADO,TBL_REL_SELECCIONADO.".sport_id = ".TBL_LIST_SPORTS.".sports_id");
+        $this->db->join(TBL_LIST_SELECCIONADO,TBL_LIST_SELECCIONADO.".seleccionado_id = ".TBL_REL_SELECCIONADO.".seleccionado_id");
+        $tmp=$this->db->get_where(TBL_LIST_SPORTS,array(TBL_LIST_SPORTS.".sports_id"=>$deporte, TBL_LIST_SELECCIONADO.".seleccionado_id <"=>0))->row_array();
+
+        if ($tmp) $result[]=$tmp;
+        return $result;
+    }
+
+
 
 
    /* PRIVATE FUNCTIONS

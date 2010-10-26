@@ -10,26 +10,32 @@ var JTable = new (function(){
             if( tr.length>0 ) _set_table(table, tr, callback);
         });
     };
-
-    this.add = function(sel, arg2, arg3){
+//arg 4: fila a copiar, por defecto 0
+    this.add = function(sel, arg2, arg3, arg4){
+        
+        if( typeof arg4=="undefined" ) arg4 = ".fixed";
+        
         var param={
             limit    : false,
-            callback : arg3
+            callback : arg3,
+            fixed_class : arg4
         };
 
-        if( typeof arg2=="number" ) param.limit = arg2;
-        if( typeof arg2=="function" ) param.callback = arg2;
-        if( typeof arg2=="object" ) param = arg2;
+        
+        var type = typeof(arg2).toString().toLowerCase();
+        if( type=="number" ) param.limit = arg2;
+        if( type=="function" ) param.callback = arg2;
+        if( type=="object" ) param = arg2;
 
         var table = $(sel);
-        var tr = table.find('>tbody >tr');
+        var tr = table.find('>tbody >tr:not('+param.fixed_class+') ');
         if( tr.length>0 ){
             if( param.limit && tr.length >= param.limit ) return false;
 
             var ntr = !table.data('jtable-data') ? _set_table(table, tr.eq(0)) : table.data('jtable-data');
-            table.find('>tbody >tr:last').after(ntr);
+            table.find('>tbody >tr:not('+param.fixed_class+'):last').after(ntr);
             _clear_tags(table);
-            if( typeof param.callback=="function" ) param.callback(table.find('>tbody >tr:last'));
+            if( typeof param.callback=="function" ) param.callback(table.find('>tbody >tr:not('+param.fixed_class+'):last'));
         }
 
         return false;
@@ -49,12 +55,23 @@ var JTable = new (function(){
         }
         
         if( $(el).parent().parent().parent().find('>tr').length>1 ){
-            if( param.confirm && confirm(This.msg_confirm) ){
+
+            if( !param.confirm || confirm(This.msg_confirm) ){
+
+
                 $(el).parent().parent().remove();
                 param.callback();
             }
         }
     };
+
+    this.resetJtable = function(el){
+        var index = el.find(".fixed").length;
+        el.find("tbody").find("tr").first().find('input:text, input:file, textarea').val('');
+        el.find("tbody").find("tr").first().find('select').each(function(){this.selectedIndex=0});
+
+        el.find("tbody").find("tr:not(.fixed):gt(0)").remove();
+    }
 
 
     /* PRIVATE PROPERTIES

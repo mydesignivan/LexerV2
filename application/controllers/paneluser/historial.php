@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Perfildeportivo extends Controller {
+class Historial extends Controller {
 
     /* CONSTRUCTOR
      **************************************************************************/
@@ -7,7 +7,7 @@ class Perfildeportivo extends Controller {
         parent::Controller();
         $this->load->helper('form');
         if( !$this->session->userdata('logged_in') || $this->session->userdata('level')==1 ) redirect('/index/');
-        $this->load->model('perfildeportivo_model');
+        $this->load->model('historialdeportivo_model');
         $this->load->library('dataview', array(
             'tlp_title'            =>  TITLE_INDEX,
             'tlp_meta_description' => META_DESCRIPTION_INDEX,
@@ -27,30 +27,18 @@ class Perfildeportivo extends Controller {
         $this->load->helper('form');
 
 
-        switch ($this->session->userdata('users_type')){
             //=============== DEPORTISTA ==============//
-            case TBL_USERS_DEP: 
-                
+    
 
-                $info = $this->perfildeportivo_model->get_info();
-            
-                $data = array(
-                    'tlp_section'       => 'paneluser/perfildeportivo/perfildeportivo_view.php',
-                    'tlp_title_section' => 'Perfil Deportivo',
-                    'tlp_script'        => array('plugins_validator', 'helpers_json', 'plugins_datepicker', 'class_perfildeportivo'),
-                    'comboCountry'      => $this->lists_model->get_country(),
-                    'comboDeportes'     => $this->lists_model->get_sports(array(""=>"Seleccione un Deporte")),
-                    'comboLesion'       => $this->lists_model->get_lesiones(array(""=>"Seleccione una lesion")),
-                    'comboRep'          => $this->lists_model->get_representantes(array(""=>"Seleccione un Representante")),
-                    'comboSponsor'      => $this->lists_model->get_sponsors(array(""=>"Seleccione un Sponsor")),
-                    'info'              => $info['info'],
-                    'infoBecas'         => $info['info_becas'],
-                    'infoExperiencia'   => $info['info_experiencia'],
-                    'infoLesion'   => $info['info_lesion']
-                );
-            break;
+        $info = $this->historialdeportivo_model->get_info();
 
-        }
+        $data = array(
+            'tlp_section'       => 'paneluser/historial/historial_view.php',
+            'tlp_title_section' => 'Historial Deportivo',
+            'comboDeportes'     => $this->lists_model->get_sports(array(""=>"Seleccione un Deporte")),
+            'tlp_script'        => array('plugins_validator', 'plugins_tabs', 'helpers_json', 'plugins_datepicker', 'class_historial'),
+            'info'              => $info['historial']
+        );
 
         $this->_data = $this->dataview->set_data($data);
         $this->load->view('template_paneluser_view', $this->_data);
@@ -108,34 +96,134 @@ class Perfildeportivo extends Controller {
          if( $_SERVER['REQUEST_METHOD']=="POST" ){
            
             $deporte= $this->input->post("deporte");
-            $perfil_id= $this->input->post("perfil_id");
+            $historial_id= $this->input->post("historial_id");
             $perfil_deporte_id= $this->input->post("perfil_deporte_id");
-            
-            $row=$this->perfildeportivo_model->get_info_dep($deporte, $perfil_deporte_id);
+            $data = $this->_data_historial($deporte, $historial_id);
+
+
+            $path='/paneluser/historial/ajax/'.strtolower($data['sports_name']).'_view';
            
+             $this->load->view($path, $data);
+         }
+    }
+
+
+
+
+
+    /* PRIVATE FUNCTIONS
+     **************************************************************************/
+    private function _data_historial($deporte, $historial_id){
+         $this->load->model("lists_model");
+            $row=$this->historialdeportivo_model->get_info_dep($deporte, $historial_id);
+
+/*Anios temporadas*/
+            $cboTemporada = array();
+            for($i=1966;$i<date("Y",time());$i++) $cboTemporada[]=array("name"=>$i,"value"=>$i);
+/*Combo Pais*/
+            $cboCountry=$this->lists_model->get_country(array(""=>"Seleccione un Pa&iacute;s"));
+            
+
+            $data['sports_name'] = $row['sport_name'];
 
             switch ($deporte){
-                case 1:
-                    $data['cboDisciplina']=$this->perfildeportivo_model->getCombo("list_atletismo_disciplina","Seleccione una disciplina");
-                    $data['cboCategoria']=$this->perfildeportivo_model->getCombo("list_atletismo_categoria","Seleccione una categoria");
-                    break;
-                case 2:
-                    $data['cboModalidad']=$this->perfildeportivo_model->getCombo("list_marciales_modalidad","Seleccione una modalidad");
-                    $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
+                case 1: //atetismo
+                    $disciplinas=$this->historialdeportivo_model->getCombo("list_atletismo_disciplina","Seleccione una disciplina");
+                    $categorias=$this->historialdeportivo_model->getCombo("list_atletismo_categoria","Seleccione una categoria");
+
+                    $data['categoria']=$row[TBL_HISTORIAL_ATLETISMO_CATEGORIA];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_ATLETISMO_CATEGORIA]);$i++){
+                        $data['categoria'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['categoria'][$i]['cboCategoria'] = $categorias;
+                        $data['categoria'][$i]['categorias']=$row[TBL_HISTORIAL_ATLETISMO_CATEGORIA_PRUEBA];
+
+                        for($n=0;$n<count($row[TBL_HISTORIAL_ATLETISMO_CATEGORIA_PRUEBA]);$n++){
+                            $data['categoria'][$i]['cboCountry'] = $cboCountry;
+                            $data['categoria'][$i]['categorias'][$n]['cboPrueba'] = $disciplinas;
+                            $data['categoria'][$i]['categorias'][$n]['cboCountry'] = $cboCountry;
+                        }
+                    }
+                  
+                 //guarda en indices diferentes segun campo prueba_num para separar las tablas de las pruebas
+                    for($i=0;$i<count($row[TBL_HISTORIAL_ATLETISMO_EVOLUCION]);$i++){
+                        $row[TBL_HISTORIAL_ATLETISMO_EVOLUCION][$i]['cboPrueba'] = $disciplinas;
+                        $data['pruebas'][$row[TBL_HISTORIAL_ATLETISMO_EVOLUCION][$i]['prueba_num']][] = $row[TBL_HISTORIAL_ATLETISMO_EVOLUCION][$i];
+                    }
+
+                    $data['palmares'] = $row[TBL_HISTORIAL_ATLETISMO_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_ATLETISMO_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                         $data['palmares'][$i]['pruebas'] = $disciplinas;
+                    }
+                break;
+
+                case 2: //Artes Marciales
+                    $data['historial']=$row[TBL_HISTORIAL_MARCIALES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_MARCIALES]);$i++){
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+
+                        $data['historial'][$i]['torneos']=$row[TBL_HISTORIAL_MARCIALES_TORNEOS];
+
+                        for($n=0;$n<count($row[TBL_HISTORIAL_MARCIALES_TORNEOS]);$n++){
+                            $data['historial'][$i]['torneos'][$n]['cboCountry'] = $cboCountry;
+                        }
+                    }
+                    $data['palmares'] = $row[TBL_HISTORIAL_MARCIALES_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_MARCIALES_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                    }
+
+
                     break;
                 case 3: // basquet
-                    $data['cboPosicion']=$this->perfildeportivo_model->getCombo("list_basquet_posicion","Seleccione una posicion");
-                    $data['cboCategoria']=$this->perfildeportivo_model->getCombo("list_basquet_categoria","Seleccione una categoria");
-                    $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
+                    $categorias=$this->historialdeportivo_model->getCombo("list_basquet_categoria","Seleccione una categoria");
+                    $posicion=$this->historialdeportivo_model->getCombo("list_basquet_posicion","Seleccione una categoria");
+
+                    $data['historial'] = $row[TBL_HISTORIAL_BASQUET];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_BASQUET]) ; $i++){
+                        $data['historial'][$i]['cboCategoria'] = $categorias;
+                        $data['historial'][$i]['cboPosicion'] = $posicion;
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+
+                        $data['historial'][$i]['datos'] = $row[TBL_HISTORIAL_BASQUET_DATOS];
+
+                    }
+                    $data['palmares'] = $row[TBL_HISTORIAL_BASQUET_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_BASQUET_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                         $data['palmares'][$i]['cboCountry'] = $cboCountry;
+                    }
+                    
                     break;
                 case 4: //boxeo
-                    $data['list']=TBL_LIST_BOXEO_CATEGORIA;
-                    $data['cboCategoria']=array(array("name"=>"Seleccione una categoria","id"=>""),
+                    $list_cat=TBL_LIST_BOXEO_CATEGORIA;;
+                    $nivel=array(array("name"=>"Seleccione una categoria","id"=>""),
                                                 array("name"=>"profesional","id"=>1),
                                                 array("name"=>"Aficionado","id"=>2),
                                                 array("name"=>"Amateur","id"=>3));
 
-                    $data['infoLic']=$this->perfildeportivo_model->getBoxeoLicencia($perfil_id);
+                    $resultados=$this->historialdeportivo_model->getCombo(TBL_LIST_BOXEO_RESULTADO,"Seleccione resultado");
+
+                    $data['historial'] = $row[TBL_HISTORIAL_BOXEO];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_BOXEO]) ; $i++){
+                        $data['historial'][$i]['list'] = $list_cat;
+                        $data['historial'][$i]['cboNivel'] = $nivel;
+                        $data['historial'][$i]['peleas'] = $row[TBL_HISTORIAL_BOXEO_PELEAS];
+                        for($n=0;$n<count($row[TBL_HISTORIAL_BOXEO_PELEAS]);$n++){
+                            $data['historial'][$i]['peleas'][$n]['cboResultado'] = $resultados;
+                            $data['historial'][$i]['peleas'][$n]['cboCountry'] = $cboCountry;
+                        }
+                    }
+                    $data['palmares'] = $row[TBL_HISTORIAL_BOXEO_PALMARES];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_BOXEO_PALMARES]) ; $i++){
+                        $data['palmares'][$i]['cboYear'] = $cboTemporada;
+                    }
                     break;
                 case 5:
                     $data['cboEspecialidad']=$this->perfildeportivo_model->getCombo("list_ciclismo_especialidad","Seleccione una modalidad");
@@ -145,17 +233,60 @@ class Perfildeportivo extends Controller {
                     $data['cboModalidad']=$this->perfildeportivo_model->getCombo("list_escalada_modalidad","Seleccione una modalidad");
                     break;
                 case 7: //futbol
-                    $data['cboPosicion']=$this->perfildeportivo_model->getCombo("list_futbol_posicion","Seleccione una posicion");
-                    $data['cboCategoria']=$this->perfildeportivo_model->getCombo("list_futbol_categoria","Seleccione una categoria");
-                    $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
+                    $posicion=$this->historialdeportivo_model->getCombo("list_futbol_posicion","Seleccione una posicion");
+                    $categorias=$this->historialdeportivo_model->getCombo("list_futbol_categoria","Seleccione una categoria");
+
+                    $data['historial'] = $row[TBL_HISTORIAL_FUTBOL];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_FUTBOL]) ; $i++){
+                        $data['historial'][$i]['cboCategoria'] = $categorias;
+                        $data['historial'][$i]['cboPosicion'] = $posicion;
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+
+                        $data['historial'][$i]['datos'] = $row[TBL_HISTORIAL_FUTBOL_DATOS];
+
+                    }
+                    $data['palmares'] = $row[TBL_HISTORIAL_FUTBOL_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_FUTBOL_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                         $data['palmares'][$i]['cboCountry'] = $cboCountry;
+                    }
+
                     break;
                 case 8: //futbol sala
+                    $posicion=$this->historialdeportivo_model->getCombo("list_futsal_posicion","Seleccione una posicion");
+                    $categorias=$this->historialdeportivo_model->getCombo("list_futsal_categoria","Seleccione una categoria");
 
-                    $data['cboPosicion']=$this->perfildeportivo_model->getCombo("list_futsal_posicion","Seleccione una posicion");
-                    $data['cboCategoria']=$this->perfildeportivo_model->getCombo("list_futsal_categoria","Seleccione una categoria");
-                    $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
+                    $data['historial'] = $row[TBL_HISTORIAL_FUTBOLSALA];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_FUTBOLSALA]) ; $i++){
+                        $data['historial'][$i]['cboCategoria'] = $categorias;
+                        $data['historial'][$i]['cboPosicion'] = $posicion;
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+
+                        $data['historial'][$i]['datos'] = $row[TBL_HISTORIAL_FUTBOLSALA_DATOS];
+
+                    }
+                    $data['palmares'] = $row[TBL_HISTORIAL_FUTBOLSALA_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_FUTBOLSALA_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                         $data['palmares'][$i]['cboCountry'] = $cboCountry;
+                    }
+
                     break;
                 case 9: //golf
+                    $data['historial'] = $row[TBL_HISTORIAL_GOLF];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_GOLF]) ; $i++){
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+                        $data['historial'][$i]['tour'] = $row[TBL_HISTORIAL_GOLF_TOUR];
+                    }
                     break;
                 case 10: //heterofilia
                     $data['cboCategoria']=$this->perfildeportivo_model->getCombo("list_halterofilia_categoria","Seleccione una categoria");
@@ -234,31 +365,16 @@ class Perfildeportivo extends Controller {
                     $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
                     break;
                 }
-
-
-            $data['info']=$row;
-          
-            $path='/paneluser/perfildeportivo/ajax/'.strtolower($row['sport_name']).'_view';
-           
-             $this->load->view($path, $data);
-           
-            
-         }
+          return $data;
     }
-
+    
      public function ajax_get_subcat(){
         $list=$deporte= $this->input->post("list");
         $cat=$deporte= $this->input->post("cat");
 
-        $cboCategoria=$this->perfildeportivo_model->getComboSubCat($list,"Seleccione una categoria",$cat);
+        $cboCategoria=$this->historialdeportivo_model->getComboSubCat($list,"Seleccione una categoria",$cat);
 
         echo '<label class="label label-form" for="cboCategoria"><span class="required">*</span>Categoria</label>';
         echo form_dropdown('cboSubCat', $cboCategoria, $cat, 'id="cboSubCat" tabindex="1"  onchange="LibForms.isOther(this);"');
      }
-
-
-
-    /* PRIVATE FUNCTIONS
-     **************************************************************************/
-
 }

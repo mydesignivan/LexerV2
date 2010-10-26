@@ -54,7 +54,7 @@ $src = isset($info) ? UPLOAD_PATH_CV . $info['image_thumb'] : '';
     </div>
     <!-- ========== Domicilio Legal =========== -->
     <div class="trow">
-        <label class="label label-form" for="txtDomicilio"><span class="required">*</span>Razon Social</label>
+        <label class="label label-form" for="txtDomicilio"><span class="required">*</span>Domicilio Legal</label>
         <input type="text" name="txtDomicilio" id="txtDomicilio" class="wsize2" tabindex="2" value="<?=$info['address']?>" />
     </div>
 
@@ -100,9 +100,26 @@ $src = isset($info) ? UPLOAD_PATH_CV . $info['image_thumb'] : '';
         <input type="text" name="txtCeluCity" id="txtCeluCity" class="wsize0" tabindex="24" value="<?=$info['celu_city']?>" />
         <input type="text" name="txtCeluNum" id="txtCeluNum" class="wsize1" tabindex="25" value="<?=$info['celu_num']?>" />
     </div>
-
+     <!-- ========== RUBRO =========== -->
+    <div class="trow">
+        <label class="label label-form" for="txtRubro">Rubro</label>
+        <?=form_dropdown('cboRubro', $cboRubro, $info['rubro'], 'id="cboRubro" tabindex="7" onchange="LibForms.isOther(this,\'#txtRubroOther\')"');?>
+        <input type="text" name="txtRubroOther" id="txtRubroOther" class="<?=getval($info['rubro_other'], 'hide')?>" value="<?=$info['rubro_other']?>" />
+    </div>
 
     
+    <h5>
+DATOS DEL TITULAR O APODERADO
+    </h5>
+
+
+     <!-- ========== CARGO =========== -->
+    <div class="trow">
+        <label class="label label-form" for="txtCargo">Cargo</label>
+        <?=form_dropdown('cboCargo', $cboCargo, $info['titular_cargo'], 'id="cboCargo" tabindex="7" onchange="LibForms.isOther(this,\'#txtCargoOther\')"');?>
+        <input type="text" name="txtCargoOther" id="txtCargoOther" class="<?=getval($info['titular_cargo']>0, 'hide')?>" value="<?=$info['titular_cargo_other']?>" />
+    </div>
+
     <!-- ========== APELLIDO TITULAR =========== -->
     <div class="trow">
         <label class="label label-form" for="txtLastName"><span class="required">*</span>Apellido</label>

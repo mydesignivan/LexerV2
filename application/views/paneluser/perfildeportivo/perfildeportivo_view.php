@@ -218,11 +218,11 @@
                     <?=form_dropdown('cboLesiones', $comboLesion, $row['lesion'],' tabindex="20" class="jq-data"');?>
                     </td>
                     <td class="cell2">   
-        <input type="text" name="txtLesion" id="txtLesion" class="wsize1" tabindex="5" value="<?=date('d-m-Y', $row['fecha_lesion'])?>" />
+        <input type="text" name="txtLesion" class="wsize1 cfecha" tabindex="5" value="<?=date('d-m-Y', $row['fecha_lesion'])?>" />
                     </td>
    
                     <td class="cell3">
-                        <input type="text" id="txtRecuperacion" name="txtRecuperacion" value="<?=date('d-m-Y', $row['fecha_recuperacion'])?>" class="jq-data" tabindex="22" />
+                        <input type="text"  name="txtRecuperacion" value="<?=date('d-m-Y', $row['fecha_recuperacion'])?>" class="wsize1 cfecha" tabindex="22" />
                     </td>
                     <td class="cell4">
         <select name="cboRecuperacion" id="cboRecuperacion" tabindex="19">

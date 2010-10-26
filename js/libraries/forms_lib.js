@@ -62,10 +62,10 @@ var LibForms = {
 //  el valor es -1 u "otro"
 
     isOther : function (select, elem){
-        
         if(typeof(elem)=='undefined'){
             elem=$(select).parent().next();
         }
+        
         if($(select).val() < 0 || $(select).val().toLowerCase()=='otro'){
             $(elem).fadeIn("slow");
         }else $(elem).fadeOut("slow");

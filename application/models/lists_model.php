@@ -97,6 +97,38 @@ class lists_model extends Model {
         return array_merge($elementDefault, $data);
     }
 
+    public function get_rubros($elementDefault=false){
+        $this->db->select("name, rubro_id");
+        $data = $this->db->get(TBL_LIST_RUBRO)->result_array();
+
+        if ($elementDefault)
+            $data =  array_merge($elementDefault, $data);
+
+        return $data;
+    }
+    public function get_cargos($elementDefault=false){
+        $this->db->select("name, cargo_id");
+        $data = $this->db->get(TBL_LIST_CARGO)->result_array();
+
+        if ($elementDefault)
+            $data =  array_merge($elementDefault, $data);
+
+        return $data;
+    }
+
+    public function get_club_categorias($elementDefault=false){
+        $this->db->select("name, categoria_id");
+        $data = $this->db->get(TBL_LIST_CLUB_CATEGORIAS)->result_array();
+
+        if ($elementDefault)
+            $data =  array_merge($elementDefault, $data);
+
+        return $data;
+    }
+
+
+    //list_cargo
+
     
 
 }

@@ -57,6 +57,9 @@ class Users_model extends Model {
             case TBL_USERS_TRAINER:
                 $this->db->insert(TBL_USERS_TRAINER, $id_where);
             break;
+            case TBL_USERS_CLUB:
+                $this->db->insert(TBL_USERS_CLUB, $id_where);
+            break;
         }
         return array('id'=>$id, 'result'=>$res);
     }

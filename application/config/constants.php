@@ -44,8 +44,10 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',	'x+b');
 */
 define('TBL_USERS',              'users');
 define('TBL_USERS_CLUB',         'users_club');
+define('TBL_USERS_CLUB_SEDES',        'users_club_sedes');
 define('TBL_USERS_CLUB_PIC',     'users_club_picgallery');
 define('TBL_USERS_CLUB_VID',     'users_club_videogallery');
+define('TBL_USERS_MA_OBSERVACIONES',     'users_ma_observaciones');
 define('TBL_USERS_DEP',          'users_dep');
 define('TBL_USERS_DEP_DISC',     'users_dep_disc');
 define('TBL_USERS_DEP_LANG',     'users_dep_lang');
@@ -55,7 +57,8 @@ define('TBL_USERS_PREPFIS',      'users_prepfisico');
 define('TBL_USERS_PREPFIS_PIC',  'users_prepfisico_picgallery');
 define('TBL_USERS_PREPFIS_VID',  'users_prepfisico_videogallery');
 define('TBL_USERS_REPR',         'users_repr');
-define('TBL_USERS_REPR_DEP',          'users_repr_sports');
+define('TBL_USERS_REPR_DEP',     'users_repr_sports');
+define('TBL_USERS_CLUB_DEP',     'users_club_sports');
 define('TBL_USERS_REPR_LANG',    'users_repr_lang');
 define('TBL_USERS_REPR_PIC',     'users_repr_picgallery');
 define('TBL_USERS_REPR_VID',     'users_repr_videogallery');
@@ -71,6 +74,9 @@ define('TBL_PERFIL_EXPERIENCIA',  'perfil_experiencia');
 define('TBL_PERFIL_LESION',       'perfil_lesiones');
 define('TBL_PERFIL_BECAS',        'perfil_becas');
 define('TBL_PERFIL_BEXEO_LICENCIA' ,   'perfil_boxeo_licencia');
+
+define('TBL_HISTORIAL',              'historial');
+
 
 define('TBL_LIST_COUNTRY',  'list_country');
 define('TBL_LIST_STATES',   'list_states');
@@ -102,6 +108,9 @@ define('TBL_LIST_TEST_LEY',   'list_fuerza_testley');
 
 
 
+define('TBL_LIST_BOXEO_RESULTADO',   'list_boxeo_resultado');
+define('TBL_LIST_BOXEO_CATEGORIA',   'list_boxeo_categoria');
+
 define('TBL_LIST_ATLETISMO_DISCIPLINA',   'list_atletismo_disciplina');
 define('TBL_LIST_ATLETISMO_CATEGORIA',   'list_atletismo_categoria');
 define('TBL_LIST_MARCIALES_MODALIDAD',   'list_marciales_modalidad');
@@ -129,11 +138,42 @@ define('TBL_LIST_SOFTBOL_HABILIDAD_RECURSOS',   'list_softbol_habilidad_recursos
 define('TBL_LIST_VOLEY_POSICION',   'list_voley_posicion');
 define('TBL_LIST_VOLEY_CATEGORIA',   'list_voley_categoria');
 define('TBL_LIST_VOLEYPLAYA_CATEGORIA',   'list_voleyplaya_categoria');
+
+define('TBL_LIST_CLUB_CATEGORIAS', 'list_club_categoria');
+
+
 define('TBL_TEST',   'test');
 
 
+define('TBL_HISTORIAL_MARCIALES','historial_marciales');
+define('TBL_HISTORIAL_MARCIALES_TORNEOS','historial_marciales_torneos');
+define('TBL_HISTORIAL_MARCIALES_PALMARES','historial_marciales_palmares');
 
+define('TBL_HISTORIAL_ATLETISMO','historial_atletismo');
+define('TBL_HISTORIAL_ATLETISMO_CATEGORIA_PRUEBA','historial_atletismo_categoria_prueba');
+define('TBL_HISTORIAL_ATLETISMO_CATEGORIA','historial_atletismo_categoria');
+define('TBL_HISTORIAL_ATLETISMO_PALMARES','historial_atletismo_palmares');
+define('TBL_HISTORIAL_ATLETISMO_EVOLUCION','historial_atletismo_evolucion');
 
+define('TBL_HISTORIAL_BASQUET','historial_basquet');
+define('TBL_HISTORIAL_BASQUET_DATOS','historial_basquet_datos');
+define('TBL_HISTORIAL_BASQUET_PALMARES','historial_basquet_palmares');
+
+define('TBL_HISTORIAL_FUTBOL','historial_futbol');
+define('TBL_HISTORIAL_FUTBOL_DATOS','historial_futbol_datos');
+define('TBL_HISTORIAL_FUTBOL_PALMARES','historial_futbol_palmares');
+
+define('TBL_HISTORIAL_FUTBOLSALA','historial_futbolsala');
+define('TBL_HISTORIAL_FUTBOLSALA_DATOS','historial_futbolsala_datos');
+define('TBL_HISTORIAL_FUTBOLSALA_PALMARES','historial_futbolsala_palmares');
+
+define('TBL_HISTORIAL_GOLF','historial_golf');
+define('TBL_HISTORIAL_GOLF_TOUR','historial_golf_tour');
+define('TBL_HISTORIAL_GOLF_PALMARES','historial_golf_palmares');
+
+define('TBL_HISTORIAL_BOXEO','historial_boxeo');
+define('TBL_HISTORIAL_BOXEO_PELEAS','historial_boxeo_peleas');
+define('TBL_HISTORIAL_BOXEO_PALMARES','historial_boxeo_palmares');
 
 define('TBL_REL_SPORTS', 'rel_sports_perfil_historial');
 define('TBL_REL_SELECCIONADO', 'rel_sports_to_seleccionado');

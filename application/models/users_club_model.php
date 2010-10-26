@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Users_repr_model extends Model {
+class Users_club_model extends Model {
 
     /* CONSTRUCTOR
      **************************************************************************/
@@ -173,53 +173,41 @@ class Users_repr_model extends Model {
     public function get_info_personaldata(){
         $this->load->model('lists_model');
          
-/*
- SELECT `users_dep`.*, `list_origin_country`.`name` as origin_country_name, list_current_country.name as current_country_name
-FROM (`users_dep`)
-LEFT JOIN `list_country` list_origin_country ON `list_origin_country`.`country_id` =`users_dep`.`origin_country`
-LEFT JOIN `list_country` list_current_country ON `list_current_country`.`country_id` =`users_dep`.`current_country`
-WHERE `users_id` = '5'
- */
-         $this->db->select(TBL_USERS_REPR.".*, `list_origin_country`.`name` as origin_country_name, list_current_country.name as current_country_name, list_tipodoc.name as tipodoc_name");
-         $this->db->join(TBL_LIST_COUNTRY." as list_origin_country", "list_origin_country.country_id =".TBL_USERS_REPR. ".origin_country","left");
-         $this->db->join(TBL_LIST_COUNTRY." as list_current_country","list_current_country.country_id =".TBL_USERS_REPR. ".origin_country","left");
-         $this->db->join(TBL_LIST_TIPODOC." as list_tipodoc","list_tipodoc.tipodoc_id =".TBL_USERS_REPR. ".documento_tipo","left");
-         $infoRep = $this->db->get_where(TBL_USERS_REPR, array('users_id' => $this->_users_id))->row_array();
- 
+         $this->db->select("main.*, list_tipodoc.name as tipodoc_name");
+         $this->db->join(TBL_LIST_TIPODOC." as list_tipodoc","list_tipodoc.tipodoc_id = main.titular_documento_tipo","left");
+         $infoClub = $this->db->get_where(TBL_USERS_CLUB." main", array('users_id' => $this->_users_id))->row_array();
 
+        $infoRepSports = $this->db->get_where(TBL_USERS_CLUB_DEP,  array('users_id' => $this->_users_id));
 
-        $infoLang = $this->db->get_where(TBL_USERS_REPR_LANG, array('users_id' => $this->_users_id));
-        $infoPic = $this->db->get_where(TBL_USERS_REPR_PIC, array('users_id' => $this->_users_id));
-        $infoVid = $this->db->get_where(TBL_USERS_REPR_VID, array('users_id' => $this->_users_id));
-
-        $infoRep['age'] = strlen($infoRep['nacimiento'])<9?calc_age($infoRep['nacimiento']):"0";
-        $infoRep['comboCurrentState']  = $this->lists_model->get_states($infoRep['current_country'], array(""=>"Seleccione una Provincia"));
-
-        $infoRepSports = $this->db->get_where(TBL_USERS_REPR_DEP,  array('users_id' => $this->_users_id));
-
-        if( $infoRep['origin_country']!=0 ) {
-            $infoRep['comboOriginState'] = $this->lists_model->get_states($infoRep['origin_country'], array(""=>"Seleccione una Provincia"));
-            $infoRep['origin_state_select'] = $this->lists_model->get_states(false, null,$infoRep['origin_state']);
-            $infoRep['current_state_select'] = $this->lists_model->get_states(false, null,$infoRep['current_state']);
+        $this->db->select("tbl_sedes.*, tbl_country.name as country_name");
+        $this->db->join(TBL_LIST_COUNTRY." tbl_country", "tbl_country.country_id = tbl_sedes.country");
+        $infoSedes = $this->db->get_where(TBL_USERS_CLUB_SEDES." tbl_sedes",  array('users_id' => $this->_users_id))->result_array();
+     
+        if (count($infoSedes)==0){
+            $fields=$this->db->list_fields(TBL_USERS_CLUB_SEDES);
+            foreach($fields as $field)
+                $infoSedes[0][$field]="";
+        }
+        for($i=0;$i<count($infoSedes);$i++){
+            if( $infoSedes[$i]['country']!=0 ) {
+                $infoSedes[$i]['comboState'] = $this->lists_model->get_states($infoSedes[$i]['country'], array(""=>"Seleccione una Provincia"));
+                $infoSedes[$i]['state_select'] = $this->lists_model->get_states(false, null,$infoSedes[$i]['sedes']);
+            }
         }
 
-        if( !empty($infoDep['nacimiento']) ) $infoDep['nacimiento'] = date('d-m-Y', $infoDep['nacimiento']);
-     
+        $infoPic = $this->db->get_where(TBL_USERS_CLUB_PIC, array('users_id' => $this->_users_id));
+        $infoVid = $this->db->get_where(TBL_USERS_CLUB_VID, array('users_id' => $this->_users_id));
+
         return array(
-            'info_rep'  => $infoRep,
-            'info_lang' => $infoLang,
+            'info_sponsor'  => $infoClub,
             'info_pic' => $infoPic,
             'info_vid' => $infoVid,
-            'info_dep' => $infoRepSports
+            'info_dep' => $infoRepSports,
+            'info_sedes' => $infoSedes
         );
     }
 
-    function get_info_recomendacion(){
-        $this->db->select(TBL_USERS_DEP.".*, ".TBL_USERS.".email ");
-        $this->db->join(TBL_USERS,TBL_USERS.".users_id=".TBL_USERS_DEP.".users_id");
-        $info = $this->db->get_where(TBL_USERS_DEP, array(TBL_USERS.'.users_id' => $this->_users_id))->row_array();
-        return $info?$info:false;
-    }
+
 
     public function getval($val, $def){
         return empty($val) ? $def : '';

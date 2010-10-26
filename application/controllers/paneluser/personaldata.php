@@ -114,7 +114,7 @@ class Personaldata extends Controller {
 //                    'infoDeportes'      => $info['info_dep']
                 );
             break;
-                 //=============== Preparador Fisicor ==============//
+                 //=============== Sponsors ==============//
             case TBL_USERS_SPONSORS:
                 $this->load->model('users_sponsor_model');
                 $info = $this->users_sponsor_model->get_info_personaldata();
@@ -125,14 +125,33 @@ class Personaldata extends Controller {
                     'tlp_script'        => array('plugins_validator', 'helpers_json', 'plugins_datepicker', 'class_personalsponsordata'),
                     'comboTipoDoc'      => $this->lists_model->get_tipodoc(array(""=>"Seleccione un Documento")),
                     'comboCountry'      => $this->lists_model->get_country(array(""=>"Seleccione un Pa&iacute;s")),
-                    'comboPassport'     => $this->lists_model->get_passport(array(""=>"Seleccione un Pasaporte")),
-                    'comboLang'         => $this->lists_model->get_lang(array(""=>"Seleccione un Idioma")),
-                    'comboTipoDisc'     => $this->lists_model->get_tipodisc(array(""=>"Seleccione Discapacidad")),
-//                    'comboDeportes'     => $this->lists_model->get_sports(),
+                    'cboRubro'          => $this->lists_model->get_rubros(array(""=>"Seleccione Rubro")),
+                    'cboCargo'          => $this->lists_model->get_cargos(array(""=>"Seleccione Cargo")),
                     'info'              => $info['info_sponsor'],
-//                    'infoLang'          => $info['info_lang'],
                     'infoPic'           => $info['info_pic'],
                     'infoVid'           => $info['info_vid'],
+//                    'infoDeportes'      => $info['info_dep']
+                );
+                break;
+                 //=============== Clubes ==============//
+            case TBL_USERS_CLUB:
+                $this->load->model('users_club_model');
+                $info = $this->users_club_model->get_info_personaldata();
+
+                $data = array(
+                    'tlp_section'       => 'paneluser/personaldata/club_view.php',
+                    'tlp_title_section' => 'Datos Personales',
+                    'tlp_script'        => array('plugins_validator', 'helpers_json', 'plugins_datepicker', 'class_personalclubdata'),
+                    'comboTipoDoc'      => $this->lists_model->get_tipodoc(array(""=>"Seleccione un Documento")),
+                    'comboCountry'      => $this->lists_model->get_country(array(""=>"Seleccione un Pa&iacute;s")),
+                    'comboDeportes'     => $this->lists_model->get_sports(),
+                    'cboCargo'          => $this->lists_model->get_cargos(array(""=>"Seleccione Cargo")),
+                    'cboCategoria'      => $this->lists_model->get_club_categorias(array(""=>"Seleccione Cargo")),
+                    'info'              => $info['info_sponsor'],
+                    'infoPic'           => $info['info_pic'],
+                    'infoVid'           => $info['info_vid'],
+                    'infoDeportes'      => $info['info_dep'],
+                    'infoSedes'      => $info['info_sedes']
 //                    'infoDeportes'      => $info['info_dep']
                 );
             break;

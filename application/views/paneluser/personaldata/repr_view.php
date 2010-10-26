@@ -253,7 +253,7 @@ $src = isset($info) ? UPLOAD_PATH_CV . $info['image_thumb'] : '';
     </div>
     <!-- ========== DEPORTES  =========== -->
   
-    <div id="contPaises" class="trow  ">
+    <div id="contDeportes" class="trow  ">
 
         <label class="label label-form">Deportes</label>
         <table id="tblDeportes" cellpadding="0" cellspacing="0">
