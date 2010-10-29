@@ -132,6 +132,7 @@
 
                                 <td class="cell11"><input type="button" value="Eliminar" name="btn" onclick="Historial.removeRow(this, 'torneo')" /></td>
                             </tr>
+                              <?php }?>
                             <tr class="fixed" >
                                 <td class="cell1" colspan="3">
                                     <label class="label label-form" for="txtRanking">Totales</label>
@@ -161,7 +162,7 @@
 
                                 <td class="cell6"></td>
                             </tr>
-                    <?php }?>
+                  
                         </tbody>
                     </table>
                     <br />

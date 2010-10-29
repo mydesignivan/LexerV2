@@ -19,6 +19,7 @@ var Historial = new (function(){
         });
 
 
+
         $('#form1').validate(o);
         this.newRow();
         
@@ -26,7 +27,15 @@ var Historial = new (function(){
 
     };
 
+    this.initHist = function(){
+        this.newRow();
+        $(".cformatxy").mask("99/99");
+       
+    }
+
+
     this.newRow = function(sel){
+        
         var last=0;
         if (typeof(sel) =='undefined'){
             last=$(".cfecha");
@@ -59,7 +68,6 @@ var Historial = new (function(){
             $(elem).fadeOut("slow");
         }
         LibForms.isOther(dom);
-
     }
 
     this.addHistorial = function (el, div_table){
@@ -123,7 +131,8 @@ var Historial = new (function(){
                 $("#tabs_div_ajax").show();
                 $("#tabs_div_ajax").html(data);
                 $("#tabs").tabs();
-                Historial.newRow();
+                Historial.initHist();
+                
         });
 
     }
@@ -173,6 +182,7 @@ var Historial = new (function(){
         });
 
         this.newRow(sel);
+        $(".cformatxy").mask("99/99");
     };
 
 
@@ -186,6 +196,7 @@ var Historial = new (function(){
             tr.removeAttr('id');
 
         }, fix_class);
+        $(".cformatxy").mask("99/99");
     }
 
 

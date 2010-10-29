@@ -125,6 +125,7 @@ define('TBL_LIST_FUTSAL_CATEGORIA',   'list_futsal_categoria');
 define('TBL_LIST_HALTEROFILIA_CATEGORIA',   'list_halterofilia_categoria');
 define('TBL_LIST_HALTEROFILIA_DIVISION',   'list_halterofilia_division');
 define('TBL_LIST_HANDBALL_POSICION',   'list_handball_posicion');
+define('TBL_LIST_HANDBALL_CATEGORIA',   'list_handball_categoria');
 define('TBL_LIST_HOCKEYC_SUPERFICIE',   'list_hockeyc_superficie');
 define('TBL_LIST_HOCKEYC_CATEGORIAS',   'list_hockeyc_categoria');
 define('TBL_LIST_HOCKEYC_POSICION',   'list_hockeyc_posicion');
@@ -185,6 +186,17 @@ define('TBL_HISTORIAL_HOCKEY','historial_hockey');
 define('TBL_HISTORIAL_HOCKEY_PALMARES','historial_hockey_palmares');
 define('TBL_HISTORIAL_HOCKEY_DATOS','historial_hockey_datos');
 define('TBL_HISTORIAL_HOCKEY_TORNEOS','historial_hockey_torneos');
+
+
+define('TBL_HISTORIAL_HANDBALL','historial_handball');
+define('TBL_HISTORIAL_HANDBALL_PALMARES','historial_handball_palmares');
+define('TBL_HISTORIAL_HANDBALL_DATOS','historial_handball_datos');
+define('TBL_HISTORIAL_HANDBALL_LANZAMIENTOS','historial_handball_lanzamientos');
+
+define('TBL_HISTORIAL_RUGBY','historial_rugby');
+define('TBL_HISTORIAL_RUGBY_PALMARES','historial_rugby_palmares');
+define('TBL_HISTORIAL_RUGBY_DATOS','historial_rugby_datos');
+
 
 define('TBL_REL_SPORTS', 'rel_sports_perfil_historial');
 define('TBL_REL_SELECCIONADO', 'rel_sports_to_seleccionado');

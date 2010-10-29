@@ -36,7 +36,7 @@ class Historial extends Controller {
             'tlp_section'       => 'paneluser/historial/historial_view.php',
             'tlp_title_section' => 'Historial Deportivo',
             'comboDeportes'     => $this->lists_model->get_sports(array(""=>"Seleccione un Deporte")),
-            'tlp_script'        => array('plugins_validator', 'plugins_tabs', 'helpers_json', 'plugins_datepicker', 'class_historial'),
+            'tlp_script'        => array('plugins_validator', 'plugins_tabs', 'plugins_mask','helpers_json', 'plugins_datepicker', 'class_historial'),
             'info'              => $info['historial']
         );
 
@@ -311,8 +311,27 @@ class Historial extends Controller {
                     }
                     break;
                 case 11: //handball
+                    $posicion=$this->historialdeportivo_model->getCombo(TBL_LIST_HANDBALL_POSICION,"Seleccione una posicion");
+                    $categorias=$this->historialdeportivo_model->getCombo(TBL_LIST_HANDBALL_CATEGORIA,"Seleccione una categoria");
 
+                    $data['historial'] = $row[TBL_HISTORIAL_HANDBALL];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_HANDBALL]) ; $i++){
 
+                        $data['historial'][$i]['cboCategoria'] = $categorias;
+                        $data['historial'][$i]['cboPosicion'] = $posicion;
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+                        $data['historial'][$i]['datos'] = $row[TBL_HISTORIAL_HANDBALL_DATOS];
+                        $data['historial'][$i]['lanzamientos_lista'] = $row[TBL_HISTORIAL_HANDBALL_LANZAMIENTOS];
+                    }
+
+                    $data['palmares'] = $row[TBL_HISTORIAL_HANDBALL_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_HANDBALL_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                         $data['palmares'][$i]['cboCountry'] = $cboCountry;
+                    }
                     break;
                 case 12: //hockey
                     $posicion=$this->historialdeportivo_model->getCombo(TBL_LIST_HOCKEYC_POSICION,"Seleccione una posicion");
@@ -367,9 +386,6 @@ class Historial extends Controller {
 
                     }
 
-
-
-
                     $data['palmares'] = $row[TBL_HISTORIAL_HOCKEY_PALMARES];
                     for($i=0;$i<count($row[TBL_HISTORIAL_HOCKEY_PALMARES]);$i++){
                          $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
@@ -394,10 +410,25 @@ class Historial extends Controller {
                     $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
                     break;
                 case 16: //Rugby
-                    $data['cboCategoria']=$this->perfildeportivo_model->getCombo("list_rugbi_categoria","Seleccione una categoria");
-                    $data['cboPosicion']=$this->perfildeportivo_model->getCombo("list_rugbi_posicion","Seleccione una posicion");
-                    $data['cboGolpe']=$this->perfildeportivo_model->getCombo("list_rugbi_golpe","Seleccione un golpe");
-                    $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
+                    $categorias=$this->historialdeportivo_model->getCombo("list_rugbi_categoria","Seleccione una categoria");
+                    $posicion=$this->historialdeportivo_model->getCombo("list_rugbi_posicion","Seleccione una posicion");
+
+                    $data['historial'] = $row[TBL_HISTORIAL_RUGBY];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_RUGBY]) ; $i++){
+                        $data['historial'][$i]['cboCategoria'] = $categorias;
+                        $data['historial'][$i]['cboPosicion'] = $posicion;
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+                        $data['historial'][$i]['datos'] = $row[TBL_HISTORIAL_RUGBY_DATOS];
+                    }
+                    $data['palmares'] = $row[TBL_HISTORIAL_RUGBY_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_RUGBY_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                         $data['palmares'][$i]['cboCountry'] = $cboCountry;
+                    }
+
                     break;
                 case 17: //Softbol
                     $data['cboHabilidad']=$this->perfildeportivo_model->getCombo("list_softbol_habilidad","Seleccione una habilidad");
