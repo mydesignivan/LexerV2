@@ -21,13 +21,16 @@ var JTable = new (function(){
             fixed_class : arg4
         };
 
-        
-        var type = typeof(arg2).toString().toLowerCase();
+
+
+        var type = typeof(arg2);
+
         if( type=="number" ) param.limit = arg2;
-        if( type=="function" ) param.callback = arg2;
+        if( type=="function" ){param.callback = arg2;}
         if( type=="object" ) param = arg2;
 
         var table = $(sel);
+        
         var tr = table.find('>tbody >tr:not('+param.fixed_class+') ');
         if( tr.length>0 ){
             if( param.limit && tr.length >= param.limit ) return false;
@@ -35,6 +38,7 @@ var JTable = new (function(){
             var ntr = !table.data('jtable-data') ? _set_table(table, tr.eq(0)) : table.data('jtable-data');
             table.find('>tbody >tr:not('+param.fixed_class+'):last').after(ntr);
             _clear_tags(table);
+
             if( typeof param.callback=="function" ) param.callback(table.find('>tbody >tr:not('+param.fixed_class+'):last'));
         }
 

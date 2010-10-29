@@ -125,7 +125,9 @@ define('TBL_LIST_FUTSAL_CATEGORIA',   'list_futsal_categoria');
 define('TBL_LIST_HALTEROFILIA_CATEGORIA',   'list_halterofilia_categoria');
 define('TBL_LIST_HALTEROFILIA_DIVISION',   'list_halterofilia_division');
 define('TBL_LIST_HANDBALL_POSICION',   'list_handball_posicion');
-define('TBL_LIST_HOCKEYC_POSICION',   'list_hockey_posicion');
+define('TBL_LIST_HOCKEYC_SUPERFICIE',   'list_hockeyc_superficie');
+define('TBL_LIST_HOCKEYC_CATEGORIAS',   'list_hockeyc_categoria');
+define('TBL_LIST_HOCKEYC_POSICION',   'list_hockeyc_posicion');
 define('TBL_LIST_HOCKEYC_GOLPE',   'list_hockeyc_golpe');
 define('TBL_LIST_PADEL_GOLPE',   'list_padel_golpe');
 define('TBL_LIST_NATACION_MODALIDAD',   'list_natacion_modalidad');
@@ -171,9 +173,18 @@ define('TBL_HISTORIAL_GOLF','historial_golf');
 define('TBL_HISTORIAL_GOLF_TOUR','historial_golf_tour');
 define('TBL_HISTORIAL_GOLF_PALMARES','historial_golf_palmares');
 
+define('TBL_HISTORIAL_HALTEROFILIA','historial_halterofilia');
+define('TBL_HISTORIAL_HALTEROFILIA_CATEGORIA','historial_halterofilia_categoria');
+define('TBL_HISTORIAL_HALTEROFILIA_PALMARES','historial_halterofilia_palmares');
+
 define('TBL_HISTORIAL_BOXEO','historial_boxeo');
 define('TBL_HISTORIAL_BOXEO_PELEAS','historial_boxeo_peleas');
 define('TBL_HISTORIAL_BOXEO_PALMARES','historial_boxeo_palmares');
+
+define('TBL_HISTORIAL_HOCKEY','historial_hockey');
+define('TBL_HISTORIAL_HOCKEY_PALMARES','historial_hockey_palmares');
+define('TBL_HISTORIAL_HOCKEY_DATOS','historial_hockey_datos');
+define('TBL_HISTORIAL_HOCKEY_TORNEOS','historial_hockey_torneos');
 
 define('TBL_REL_SPORTS', 'rel_sports_perfil_historial');
 define('TBL_REL_SELECCIONADO', 'rel_sports_to_seleccionado');

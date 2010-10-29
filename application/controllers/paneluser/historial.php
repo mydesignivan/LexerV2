@@ -287,23 +287,96 @@ class Historial extends Controller {
                         $data['historial'][$i]['cboState'] = $cboState;
                         $data['historial'][$i]['tour'] = $row[TBL_HISTORIAL_GOLF_TOUR];
                     }
+                    $data['palmares'] = $row[TBL_HISTORIAL_GOLF_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_GOLF_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                    }
                     break;
-                case 10: //heterofilia
-                    $data['cboCategoria']=$this->perfildeportivo_model->getCombo("list_halterofilia_categoria","Seleccione una categoria");
-                    $data['cboDivision']=$this->perfildeportivo_model->getCombo("list_halterofilia_division","Seleccione una división");
+                case 10: //halterofilia
+                    $categoria=$this->historialdeportivo_model->getCombo("list_halterofilia_categoria","Seleccione una categoria");
+                    $division=$this->historialdeportivo_model->getCombo("list_halterofilia_division","Seleccione una división");
+
+                    $data['historial'] = $row[TBL_HISTORIAL_HALTEROFILIA];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_HALTEROFILIA]) ; $i++){
+                        $data['historial'][$i]['cboCategoria'] = $categoria;
+                        $data['historial'][$i]['categorias'] = $row[TBL_HISTORIAL_HALTEROFILIA_CATEGORIA];
+                        for($n=0;$n<count($row[TBL_HISTORIAL_HALTEROFILIA_CATEGORIA]);$n++){
+                            $data['historial'][$i]['categorias'][$n]['cboDivision'] = $division;
+                            $data['historial'][$i]['categorias'][$n]['cboCountry'] = $cboCountry;
+                        }
+                    }
+                    $data['palmares'] = $row[TBL_HISTORIAL_HALTEROFILIA_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_HALTEROFILIA_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                    }
                     break;
                 case 11: //handball
-                    $data['cboPosicion']=$this->perfildeportivo_model->getCombo("list_handball_posicion","Seleccione una posicion");
-                    $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
+
+
                     break;
-                case 12: //handball
-                    $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
-                    $data['cboPosicion']=$this->perfildeportivo_model->getCombo("list_hockeyc_posicion","Seleccione una posicion");
-                    $data['cboGolpe']=$this->perfildeportivo_model->getCombo("list_hockeyc_golpe","Seleccione un golpe");
-                    break;
-                case 13: //hockey sobre cesped
-                    $data['cboModalidad']=$this->perfildeportivo_model->getCombo("list_natacion_modalidad","Seleccione una modalidad");
-                    $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
+                case 12: //hockey
+                    $posicion=$this->historialdeportivo_model->getCombo(TBL_LIST_HOCKEYC_POSICION,"Seleccione una posicion");
+                    $superficie=$this->historialdeportivo_model->getCombo(TBL_LIST_HOCKEYC_SUPERFICIE,"Seleccione una superficie");
+                    $categorias=$this->historialdeportivo_model->getCombo(TBL_LIST_HOCKEYC_CATEGORIAS,"Seleccione una categoria");
+
+                    $defensivo=array(array("name"=>"Seleccione una posicion","id"=>""),
+                                               array("name"=>"No participo","id"=>'d'),
+                                               array("name"=>"Picador","id"=>'d'),
+                                               array("name"=>"Primer Salidor","id"=>'d'),
+                                               array("name"=>"Segundo Salidor","id"=>'d'),
+                                               array("name"=>"Arquero","id"=>'r'));
+
+                    $ofensivo=array(array("name"=>"Seleccione una posicion","id"=>""),
+                                               array("name"=>"No participo","id"=>'d'),
+                                               array("name"=>"Parador Horizontal","id"=>'r'),
+                                               array("name"=>"Parador Vertical","id"=>'r'),
+                                               array("name"=>"Desviador","id"=>'r'),
+                                               array("name"=>"Servidor","id"=>'r'),
+                                               array("name"=>"Pegador","id"=>'r'),
+                                               array("name"=>"Rebotero","id"=>'r'),
+                                               array("name"=>"Arrastrador","id"=>'r'),
+                                               array("name"=>"Elevaciones","id"=>'r'));
+                    /*Árbitro, DT, Ayudante Técnico, Otra)
+                     */
+                    $actividades=array(array("name"=>"Seleccione una actividad","id"=>""),
+                                               array("name"=>"Árbitro","id"=>'d'),
+                                               array("name"=>"DT","id"=>'100'),
+                                               array("name"=>"Ayudante","id"=>'r'),
+                                               array("name"=>"Técnico","id"=>'r'),
+                                               array("name"=>"Otra","id"=>'-1'));
+
+                   $data['historial'] = $row[TBL_HISTORIAL_HOCKEY];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_HOCKEY]) ; $i++){
+                        $data['historial'][$i]['cboDefensivo']=$defensivo;
+                        $data['historial'][$i]['cboOfensivo']=$ofensivo;
+                        $data['historial'][$i]['cboCategoria'] = $categorias;
+                        $data['historial'][$i]['cboPosicion'] = $posicion;
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+                        $data['historial'][$i]['cboSuperficie'] = $superficie;
+                        $data['historial'][$i]['datos'] = $row[TBL_HISTORIAL_HOCKEY_DATOS];
+                        $data['historial'][$i]['cboActividades'] = $actividades;
+
+                        $data['historial'][$i]['torneos']=$row[TBL_HISTORIAL_HOCKEY_TORNEOS];
+                       
+                        for($n=0;$n<count($row[TBL_HISTORIAL_HOCKEY_TORNEOS]);$n++){
+                            $data['historial'][$i]['torneos'][$n]['cboTemporada'] = $cboTemporada;
+                        }
+
+                    }
+
+
+
+
+                    $data['palmares'] = $row[TBL_HISTORIAL_HOCKEY_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_HOCKEY_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                         $data['palmares'][$i]['cboCountry'] = $cboCountry;
+                    }                case 13: //hockey sobre cesped
+
+
                     break;
                 case 14: //padel
                     $data['cboGolpe']=$this->perfildeportivo_model->getCombo("list_padel_golpe","Seleccione su mejor golpe");

@@ -49,6 +49,19 @@ var Historial = new (function(){
         });
     }
 
+    this.hockeyActividades = function(select){
+        var dom = $(select);
+         elem=dom.parent().parent().next();
+        if(dom.val() == 100 ){
+            $(elem).fadeIn("slow");
+
+        }else{
+            $(elem).fadeOut("slow");
+        }
+        LibForms.isOther(dom);
+
+    }
+
     this.addHistorial = function (el, div_table){
         var hist=$("."+div_table).first().html();
        
@@ -142,24 +155,17 @@ var Historial = new (function(){
     };
 
     this.addRowFecha = function(sel, limit, sel_celda, fix_class){
-        if (typeof(sel_celda) =='undefined'){
+        if (typeof(sel_celda) =='undefined' || sel_celda == null){
             sel_celda = '.cell1';
         }
 
         sel=$(sel).parent().find('table');
-      /*  JTable.add(sel, limit, function(tr){
-          
-            tr.removeAttr('id');
 
-            var name = sel.find(".cfecha:first").attr("name");
-            tr.find(sel_celda).html('<input type="text" name="'+name+'" value="" class="jq-data cfecha" />');
-        }, fix_class);*/
 
         JTable.add(sel, {
             limit : limit,
             callback : function(tr){
                 tr.removeAttr('id');
-
                 var name = sel.find(".cfecha:first").attr("name");
                 tr.find(sel_celda).html('<input type="text" name="'+name+'" value="" class="jq-data cfecha" />');
             },

@@ -94,7 +94,7 @@
        <? foreach($pruebas as $pruebas_row){?>
 
             <div class="cevolucion">
-                <div class="trow">
+                <div class="trow tbl">
                 <label class="label label-tablas">Evoluci&oacute;n</label>
                     <table id="tblTorneos" cellpadding="0" cellspacing="0">
                         <thead>
@@ -132,11 +132,12 @@
                     <br />
                     <input type="button" value="Agregar otro" name="btn"  onclick="Historial.addRowFecha(this)" />
                  </div>
-                 <div class="trow">
-                    <input type="button" value="A&ntilde;adir Otra tabla" name="btn"  onclick="Historial.addHistorial(this,'cevolucion')" />
-                </div>
+
             </div>
         <? } ?>
+                <div class="trow">
+                    <input type="button" value="A&ntilde;adir Otra tabla" name="btn"  onclick="Historial.addHistorial(this,'cevolucion')" />
+                </div>
                
 
             </div>

@@ -7,8 +7,8 @@ class Encpss{
     function  __construct() {
         $this->CI =& get_instance();
         $this->CI->load->library('encrypt');
-        $this->CI->encrypt->set_cipher(MCRYPT_BLOWFISH);
-        $this->CI->encrypt->set_mode(MCRYPT_MODE_CFB);
+        $this->CI->encrypt->set_cipher('blowfish');
+        $this->CI->encrypt->set_mode('cfb');
     }
 
     /* PRIVATE PROPERTIES
