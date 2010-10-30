@@ -3,159 +3,189 @@
 
     <!-- ========== Deportes =========== -->
 
-    <div>
-         <div class="trow">
-             <label class="label label-form" for="chkSeleccionado"><span class="required">*</span>Ha sido seleccionado</label>
-             <input type="checkbox" id="chkSeleccionado" name="chkSeleccionado" <?=$info['seleccionado']?"checked":""?> onclick="LibForms.isChecked(this)">
-         </div>
+<div id="tabs" >
+    <ul>
+            <li><a href="#tabs-1">Historial Deportivo</a></li>
+            <li><a href="#tabs-2">Palmares</a></li>
+    </ul>
+    <div id="div_sports">
+        <div id="tabs-1">
+        <?
 
-        <div class="<?=$info['seleccionado']?"":"hide"?>">
-            <div class="trow ">
-                <label class="label label-form" for="cboSeleccionado"><span class="required">*</span>Seleccionado</label>
-                <?=form_dropdown('cboSeleccionado', $cboSeleccionado, $info['seleccionado'], 'id="cboSeleccionado" tabindex="1"  onchange="LibForms.isOther(this);"');?>
+        foreach($historial as $hist_row){
+        ?>
+            <div class="chistorial">
+                 <!-- ========== AÑO  =========== -->
+                <div class="trow "
+                    <label class="label label-form" for="cboYear"><span class="required">*</span>Temporada</label>
+                    <?=form_dropdown('cboYear', $hist_row['cboTemporada'], $hist_row['year'], ' tabindex="1"');?>
+                </div>
+
+
+                <div class="trow">
+                    <label class="label label-form" for="txtClub"><span class="required">*</span>Club/Feder./Asoc.</label>
+                    <input type="text" name="txtClub" id="txtClub" class="wsize2" tabindex="2" value="<?=$hist_row['club'] ?>" />
+                </div>
+                <!-- ========== CATEGORIA  =========== -->
+                <div class="trow">
+                    <label class="label label-form" for="cboCategoria"><span class="required">*</span>Categoria</label>
+                    <span>
+                    <?=form_dropdown('cboCategoria', $hist_row['cboCategoria'], $hist_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
+                    </span>
+                    <span class="<?=$hist_row['categoria']>0?"":"hide";?>">
+                      <input type="text" name="txtCategoriaOther"  class="wsize2" tabindex="2" value="<?=$hist_row['categoria_other'] ?>" />
+                    </span>
+                </div>
+
+
+                   <!-- ========== CIUDAD  =========== -->
+                <div class="trow">
+                    <label class="label label-form" for="txtCiudad"><span class="required">*</span>Ciudad</label>
+                    <input type="text" name="txtCiudad" id="txtCiudad" class="wsize2" tabindex="2" value="<?=$hist_row['city'] ?>" />
+                </div>
+
+                <!-- ========== PAIS  =========== -->
+                <div class="trow">
+                    <label class="label label-form" for="cboCountry">Pa&iacute;s Origen</label>
+                    <?php $comboCountry[''] = "&nbsp;";?>
+                    <?=form_dropdown('cboCountry', $hist_row['cboCountry'], $hist_row['country'], ' tabindex="14" onchange="Historial.get_combo_states(this)"');?>
+                    <img src="images/ajax-loader.gif" alt="Loading" width="16" height="16" class="jq-loader hide" />
+                </div>
+                <!-- ========== PROVINCIA  =========== -->
+                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?>">
+                    <label class="label label-form" for="cboStates">Provincia</label>
+                    <?php if( $hist_row['state']!=0 ){
+                            echo form_dropdown('cboStates', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
+                          }else{?>
+                            <select name="cboOriginStates" id="cboOriginStates" class="jq-select" tabindex="15"></select>
+                    <?php }?>
+                </div>
+
+                <!-- ========== ESPECIALIDAD  =========== -->
+                <div class="trow">
+                    <label class="label label-form" for="cboPosicion"><span class="required">*</span>Especialidad</label>
+                    <span>
+                    <?=form_dropdown('cboEspecialidad', $hist_row['cboEspecialidad'], $hist_row['especialidad'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
+                    </span>
+                    <span class="<?=$hist_row['especialidad']>0?"":"hide";?>">
+                      <input type="text" name="txtEspecialidadOther"  class="wsize2" tabindex="2" value="<?=$hist_row['especialidad_other'] ?>" />
+                    </span>
+                </div>
+
+
+
+                <!-- ========== Torneos =========== -->
+                <div id="contTorneo" class="trow tbl">
+                    <label class="label label-tablas">Resultados</label>
+                    <table id="tblTorneos" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <td class="cell1">Fecha</td>
+                                <td class="cell2">Torneo</td>
+                                <td class="cell3">Categoria</td>
+                                <td class="cell4">Ciudad</td>
+                                <td class="cell5">Pa&iacute;s</td>
+                                <td class="cell6">club</td>
+                                <td class="cell7">Puntaje</td>
+                                <td class="cell8">Posici&oacute;n</td>
+                                <td class="cell9">Acci&oacute;n</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                <?php
+                    foreach( $hist_row['torneos'] as $torneo_row ){?>
+                            <tr <?php if( $torneo_row['torneos_id']!=0 ) echo 'id="trTorneo'.$torneo_row['torneos_id'].'"'?>>
+                                <td class="cell1">
+                                    <input type="text" name="txtFechaTorneo" value="<?=date('d-m-Y', $torneo_row['fecha']?$torneo_row['fecha']:time())?>" class="jq-data cfecha" tabindex="22" />
+                                </td>
+                                <td class="cell2">
+                                    <input type="text" name="txtTorneo" value="<?=$torneo_row['torneo']?>" class="wsize1 cvalores" />
+                                </td>
+                                <td class="cell3">
+                                    <span>
+                                    <?=form_dropdown('cboTorneoCategoria', $torneo_row['cboCategoria'], $torneo_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
+                                    </span>
+                                    <span class="<?=$torneo_row['categoria']>0?"":"hide";?>">
+                                      <input type="text" name="txtCategoriaTorneoOther"  class="wsize2" tabindex="2" value="<?=$torneo_row['categoria_other'] ?>" />
+                                    </span>
+                                </td>
+                                <td class="cell4">
+                                    <input type="text" name="txtCiudad" value="<?=$torneo_row['city']?>" class="wsize1 cvalores" />
+                                </td>
+                                <td class="cell5">
+                                    <?=form_dropdown('cboTorneoCountry', $torneo_row['cboCountry'], $torneo_row['country'], ' tabindex="14" ');?>
+                                </td>
+                                <td class="cell6">
+                                    <input type="text" name="txtClub" value="<?=$torneo_row['club']?>" class="wsize1 cvalores" />
+                                </td>
+                                <td class="cell7">
+                                    <input type="text" name="txtPuntaje" value="<?=$torneo_row['puntaje']?>" class="wsize1 cvalores" />
+                                </td>
+                                <td class="cell8">
+                                    <input type="text" name="txtPosicion" value="<?=$torneo_row['posicion']?>" class="wsize1 cvalores" />
+                                </td>
+                                <td class="cell9"><input type="button" value="Eliminar" name="btn" onclick="Historial.removeRow(this, 'torneo')" /></td>
+                            </tr>
+                    <?php }?>
+                        </tbody>
+                    </table>
+                    <br />
+                    <input type="button" value="Agregar otro" name="btn"  onclick="Historial.addRowFecha(this)" />
+                </div>
+
+
+            </div>
+            
+
+        <?
+        }
+        ?>
+            <div class="trow">
+                <input type="button" value="A&ntilde;adir Otro Historial" name="btn"  onclick="Historial.addHistorial(this,'chistorial')" />
             </div>
         </div>
-    </div>
+        <div id="tabs-2">
+               <div id="contPalmares" class="trow tbl">
+                    <label class="label label-tablas">Logros / Títulos Nacionales / Títulos Internacionales / Otros</label>
+                    <table id="tblPalmares" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <td class="cell1">A&ntilde;o</td>
+                                <td class="cell2">T&iacute;tulo</td>
+                                <td class="cell3">Equipo</td>
+                                <td class="cell4">Pa&iacute;s</td>
+                                <td class="cell6">Acci&oacute;n</td>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-   <div class="trow ">
-        <label class="label label-form" for="txtDesde1"><span class="required">*</span>Practico Tiro desde</label>
-        <input type="text" name="txtDesde1" id="txtDesde1" class="wsize2" tabindex="2" value="<?=substr($info['practica_desde'], 0 ,4 ); ?>" />
-        <input type="text" name="txtDesde2" id="txtDesde2" class="wsize2" tabindex="2" value="<?=substr($info['practica_desde'], 5 ,4 ); ?>" />
-    </div>
-   <div class="trow ">
-        <label class="label label-form" for="txtInicio1"><span class="required">*</span>Inicio en Competiciones</label>
-        <input type="text" name="txtInicio1" id="txtInicio1" class="wsize2" tabindex="2" value="<?=substr($info['inicio_competicion'], 0 ,4 ); ?>" />
-        <input type="text" name="txtInicio2" id="txtInicio2" class="wsize2" tabindex="2" value="<?=substr($info['inicio_competicion'], 5 ,4 ); ?>" />
-    </div>
+                <?php
+                    foreach( $palmares as $palmares_row ){?>
+                            <tr <?php if( $palmares_row['palmares_id']!=0 ) echo 'id="trTorneo'.$palmares_row['palmares_id'].'"'?>>
+                                <td class="cell1">
+                                    <span>
+                                <?=form_dropdown('cboTemporadaPalmares', $palmares_row['cboTemporada'], $palmares_row['year'], ' tabindex="1"');?>
+                                    </span>
+                                </td>
+                                <td class="cell2">
+                                    <input type="text" name="txtTitulo" value="<?=$palmares_row['titulo']?>" class="wsize2" />
+                                </td>
+                                <td class="cell3">
+                                    <input type="text" name="txtEquipo" value="<?=$palmares_row['equipo']?>" class="wsize2" />
+                                </td>
+                                <td class="cell4">
+                                  <?=form_dropdown('cboCountry', $palmares_row['cboCountry'], $palmares_row['country'], ' tabindex="14" ');?>
+                                </td>
 
-    <div class="trow">
-        <label class="label label-form" for="chkArcoIzquierda"><span class="required">*</span>Mano h&aacute;bil</label>
-        <label class="label" for="chkArcoIzquierda">
-            <input type="radio" name="chkArcoMano" id="chkArcoIzquierda" class="wsize2" tabindex="2" value="i" <?=getval($info['mano_habil'], 'checked', "i")?> /> Izquierda
-        </label>
-        <label class="label" for="chkArcoDerecha">
-            <input type="radio" name="chkArcoMano" id="chkArcoDerecha" class="wsize2" tabindex="2" value='d' <?=getval($info['mano_habil'], 'checked', "d")?> /> Derecha
-        </label>
-        <label class="label" for="chkArcoAmbos">
-            <input type="radio" name="chkArcoMano" id="chkArcoAmbos" class="wsize2" tabindex="2" value='a' <?=getval($info['mano_habil'], 'checked', "a")?> /> Ambidiestro
-        </label>
+                                <td class="cell5"><input type="button" value="Eliminar" name="btn" onclick="Historial.removeRow(this, 'palmares')" /></td>
+                            </tr>
+                    <?php }?>
+                        </tbody>
+                    </table>
+                    <br />
+                    <input type="button" value="Agregar otro" name="btn"  onclick="Historial.addRow(this)" />
+                </div>
+        </div>
     </div>
-
-    <div class="trow "
-        <label class="label label-form" for="cboOjo"><span class="required">*</span>Ojo principal</label>
-        <?=form_dropdown('cboOjo', $cboOjo, $info['ojo_principal'], 'id="cboOjo" tabindex="1" ');?>
-    </div>
-
-
-
-
-
-
-    <div class="trow ">
-        <label class="label label-form" for="txtEventos"><span class="required">*</span>Eventos</label>
-        <input type="text" name="txtEventos" id="txtEventos" class="wsize2" tabindex="2" value="<?=$info['eventos'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtEntrenadorPersonal"><span class="required">*</span>Entrenador Personal</label>
-        <input type="text" name="txtEntrenadorPersonal" id="txtEntrenadorPersonal" class="wsize2" tabindex="2" value="<?=$info['entrenador_personal'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtEntrenadorNacional"><span class="required">*</span>Entrenador Nacional</label>
-        <input type="text" name="txtEntrenadorNacional" id="txtEntrenadorNacional" class="wsize2" tabindex="2" value="<?=$info['entrenador_nacional'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtEquipo"><span class="required">*</span>Equipo</label>
-        <input type="text" name="txtEquipo" id="txtEquipo" class="wsize2" tabindex="2" value="<?=$info['equipo'] ?>" />
-    </div>
-
-    
-    <div class="trow ">
-        <label class="label label-form" for="txtArco"><span class="required">*</span>Arco</label>
-        <input type="text" name="txtArco" id="txtArco" class="wsize2" tabindex="2" value="<?=$info['arco'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtPalas"><span class="required">*</span>Palas</label>
-        <input type="text" name="txtPalas" id="txtPalas" class="wsize2" tabindex="2" value="<?=$info['palas'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtPotencia"><span class="required">*</span>Potencia Real</label>
-        <input type="text" name="txtPotencia" id="txtPotencia" class="wsize2" tabindex="2" value="<?=$info['potencia_real'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtEmpun"><span class="required">*</span>Empu&ntilde;adura</label>
-        <input type="text" name="txtEmpun" id="txtEmpun" class="wsize2" tabindex="2" value="<?=$info['empuniaduras'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtFlechas"><span class="required">*</span>Flechas</label>
-        <input type="text" name="txtFlechas" id="txtFlechas" class="wsize2" tabindex="2" value="<?=$info['flechas'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtPuntas"><span class="required">*</span>Puntas</label>
-        <input type="text" name="txtPuntas" id="txtPuntas" class="wsize2" tabindex="2" value="<?=$info['puntas'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtPlumas"><span class="required">*</span>Plumas</label>
-        <input type="text" name="txtPlumas" id="txtPlumas" class="wsize2" tabindex="2" value="<?=$info['plumas'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtNock"><span class="required">*</span>Nock</label>
-        <input type="text" name="txtNock" id="txtNock" class="wsize2" tabindex="2" value="<?=$info['nock'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtCuerda"><span class="required">*</span>Cuerda</label>
-        <input type="text" name="txtCuerda" id="txtCuerda" class="wsize2" tabindex="2" value="<?=$info['cuerda'] ?>" />
-    </div>
-
-    <div class="trow ">
-        <label class="label label-form" for="txtReposaFlechas"><span class="required">*</span>Reposa-Flechas</label>
-        <input type="text" name="txtReposaFlechas" id="txtReposaFlechas" class="wsize2" tabindex="2" value="<?=$info['reposa_flechas'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtClicker"><span class="required">*</span>Clicker</label>
-        <input type="text" name="txtClicker" id="txtClicker" class="wsize2" tabindex="2" value="<?=$info['clicker'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtPresion"><span class="required">*</span>Botón de Presión</label>
-        <input type="text" name="txtPresion" id="txtPresion" class="wsize2" tabindex="2" value="<?=$info['boton_presion'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtEstab"><span class="required">*</span>Estabilizadores</label>
-        <input type="text" name="txtEstab" id="txtEstab" class="wsize2" tabindex="2" value="<?=$info['estabilizadores'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtEstabSup"><span class="required">*</span>Estabilizador Superior</label>
-        <input type="text" name="txtEstabSup" id="txtEstabSup" class="wsize2" tabindex="2" value="<?=$info['estabilizador_super_izquierdo'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtMira"><span class="required">*</span>Mira</label>
-        <input type="text" name="txtMira" id="txtMira" class="wsize2" tabindex="2" value="<?=$info['mira'] ?>" />
-    </div>
-
-    <div class="trow ">
-        <label class="label label-form" for="txtDactilera"><span class="required">*</span>Dactilera</label>
-        <input type="text" name="txtDactilera" id="txtDactilera" class="wsize2" tabindex="2" value="<?=$info['dactilera'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtProtector"><span class="required">*</span>Protector Brazo</label>
-        <input type="text" name="txtProtector" id="txtProtector" class="wsize2" tabindex="2" value="<?=$info['protector_brazo'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtCarcaj"><span class="required">*</span>Carcaj</label>
-        <input type="text" name="txtCarcaj" id="txtCarcaj" class="wsize2" tabindex="2" value="<?=$info['carcaj'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtPeto"><span class="required">*</span>Peto</label>
-        <input type="text" name="txtPeto" id="txtPeto" class="wsize2" tabindex="2" value="<?=$info['peto'] ?>" />
-    </div>
-    <div class="trow ">
-        <label class="label label-form" for="txtReposaArcos"><span class="required">*</span>Reposa-Arcos</label>
-        <input type="text" name="txtReposaArcos" id="txtReposaArcos" class="wsize2" tabindex="2" value="<?=$info['reposa_arcos'] ?>" />
-    </div>
-
-
-
-
-
-
-
-
+</div>

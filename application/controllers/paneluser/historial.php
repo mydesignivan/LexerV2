@@ -444,29 +444,97 @@ class Historial extends Controller {
                     $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
                     break;
                 case 19: //Tiro con arco
-                    $data['cboOjo']=array(array("name"=>"Seleccione un ojo","id"=>""),
-                                                array("name"=>"Izquierdo","id"=>'i'),
-                                                array("name"=>"Derecho","id"=>'d'));
-                    $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
-                    break;
+                    $especialidad = $this->historialdeportivo_model->getCombo(TBL_LIST_ARCO_ESPECIALIDAD,"Seleccione una posicion");
+                    $categorias = $this->historialdeportivo_model->getCombo(TBL_LIST_ARCO_CATEGORIA,"Seleccione una categoria");
+
+                    $data['historial'] = $row[TBL_HISTORIAL_ARCO];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_ARCO]) ; $i++){
+
+                        $data['historial'][$i]['cboCategoria'] = $categorias;
+                        $data['historial'][$i]['cboEspecialidad'] = $especialidad;
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+                        $data['historial'][$i]['torneos'] = $row[TBL_HISTORIAL_ARCO_TORNEOS];
+                        for($n=0;$n<count($row[TBL_HISTORIAL_ARCO_TORNEOS]);$n++){
+                            $data['historial'][$i]['torneos'][$n]['cboCategoria'] = $categorias;
+                            $data['historial'][$i]['torneos'][$n]['cboCountry'] = $cboCountry;
+                        }
+
+                    }
+
+                    $data['palmares'] = $row[TBL_HISTORIAL_ARCO_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_ARCO_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                         $data['palmares'][$i]['cboCountry'] = $cboCountry;
+                    }
+                    break;                    break;
                 case 20: //tiro deportivo
-                    $data['cboOjo']=array(array("name"=>"Seleccione un ojo","id"=>""),
-                                                array("name"=>"Izquierdo","id"=>'i'),
-                                                array("name"=>"Derecho","id"=>'d'));
-                    $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
+                    $list_cat = TBL_LIST_TIRO_MODALIDAD;
+                    $categorias =   $this->historialdeportivo_model->getCombo(TBL_LIST_TIRO_CATEGORIA,"Seleccione una categoria");
+                    $modalidad=array(array("name"=>"Seleccione una modalidad","id"=>""),
+                                                array("name"=>"Modalidad Rifle","id"=>1),
+                                                array("name"=>"Modalidad Pistola","id"=>2),
+                                                array("name"=>"Modalidad Escopeta","id"=>3),
+                                                array("name"=>"Modalidad Blanco Móvil","id"=>4));
+
+                    
+                    $data['historial'] = $row[TBL_HISTORIAL_TIRO];
+                    for($i=0 ; $i < count($row[TBL_HISTORIAL_TIRO]) ; $i++ ){
+                        $data['historial'][$i]['cboModalidad'] = $modalidad;
+                        $data['historial'][$i]['cboCategoria'] = $categorias;
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['list'] = $list_cat;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+                        $data['historial'][$i]['torneos'] = $row[TBL_HISTORIAL_TIRO_EVENTOS];
+                    }
+                    $data['palmares'] = $row[TBL_HISTORIAL_TIRO_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_TIRO_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                         $data['palmares'][$i]['cboCountry'] = $cboCountry;
+                    }
+
+                    
                     break;
                 case 21: //Voley
-                    $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
-                    $data['cboPosicion']=$this->perfildeportivo_model->getCombo("list_voley_posicion","Seleccione una posicion");
-                    $data['cboCategoria']=$this->perfildeportivo_model->getCombo("list_voley_categoria","Seleccione una categoria");
+                    $posicion=$this->historialdeportivo_model->getCombo(TBL_LIST_VOLEY_POSICION,"Seleccione una posicion");
+                    $categoria=$this->historialdeportivo_model->getCombo(TBL_LIST_VOLEY_CATEGORIA,"Seleccione una categoria");
+                    $data['historial'] = $row[TBL_HISTORIAL_VOLEY];
+                    for($i=0 ; $i < count($row[TBL_HISTORIAL_VOLEY]) ; $i++ ){
+                        $data['historial'][$i]['cboPosicion'] = $posicion;
+                        $data['historial'][$i]['cboCategoria'] = $categoria;
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+                    }
+                    $data['palmares'] = $row[TBL_HISTORIAL_VOLEY_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_VOLEY_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                         $data['palmares'][$i]['cboCountry'] = $cboCountry;
+                    }
 
                     break;
-                case 22: //tiro deportivo
-                    $data['cboOjo']=array(array("name"=>"Seleccione un ojo","id"=>""),
-                                                array("name"=>"Izquierdo","id"=>'i'),
-                                                array("name"=>"Derecho","id"=>'d'));
-                    $data['cboCategoria']=$this->perfildeportivo_model->getCombo("list_voleyplaya_categoria","Seleccione una categoria");
-                    $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
+                case 22: //Voley Playe
+                   
+                    $categoria=$this->historialdeportivo_model->getCombo(TBL_LIST_VOLEYPLAYA_CATEGORIA,"Seleccione una categoria");
+                    $data['historial'] = $row[TBL_HISTORIAL_VOLEYPLAYA];
+                    for($i=0 ; $i < count($row[TBL_HISTORIAL_VOLEYPLAYA]) ; $i++ ){
+                        $data['historial'][$i]['cboCategoria'] = $categoria;
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+                    }
+                    $data['palmares'] = $row[TBL_HISTORIAL_VOLEYPLAYA_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_VOLEYPLAYA_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                         $data['palmares'][$i]['cboCountry'] = $cboCountry;
+                    }
+
                     break;
                 }
           return $data;

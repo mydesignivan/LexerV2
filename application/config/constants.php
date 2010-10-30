@@ -111,6 +111,14 @@ define('TBL_LIST_TEST_LEY',   'list_fuerza_testley');
 define('TBL_LIST_BOXEO_RESULTADO',   'list_boxeo_resultado');
 define('TBL_LIST_BOXEO_CATEGORIA',   'list_boxeo_categoria');
 
+define('TBL_LIST_ARCO_ESPECIALIDAD',   'list_arco_especialidad');
+define('TBL_LIST_ARCO_CATEGORIA',   'list_arco_categoria');
+
+define('TBL_LIST_TIRO_MODALIDAD',   'list_tiro_modalidad');
+define('TBL_LIST_TIRO_CATEGORIA',   'list_tiro_categoria');
+
+
+
 define('TBL_LIST_ATLETISMO_DISCIPLINA',   'list_atletismo_disciplina');
 define('TBL_LIST_ATLETISMO_CATEGORIA',   'list_atletismo_categoria');
 define('TBL_LIST_MARCIALES_MODALIDAD',   'list_marciales_modalidad');
@@ -196,6 +204,20 @@ define('TBL_HISTORIAL_HANDBALL_LANZAMIENTOS','historial_handball_lanzamientos');
 define('TBL_HISTORIAL_RUGBY','historial_rugby');
 define('TBL_HISTORIAL_RUGBY_PALMARES','historial_rugby_palmares');
 define('TBL_HISTORIAL_RUGBY_DATOS','historial_rugby_datos');
+
+define('TBL_HISTORIAL_ARCO','historial_arco');
+define('TBL_HISTORIAL_ARCO_PALMARES','historial_arco_palmares');
+define('TBL_HISTORIAL_ARCO_TORNEOS','historial_arco_torneos');
+
+define('TBL_HISTORIAL_TIRO','historial_tiro');
+define('TBL_HISTORIAL_TIRO_PALMARES','historial_tiro_palmares');
+define('TBL_HISTORIAL_TIRO_EVENTOS',   'historial_tiro_eventos');
+
+define('TBL_HISTORIAL_VOLEY','historial_voley');
+define('TBL_HISTORIAL_VOLEY_PALMARES','historial_voley_palmares');
+
+define('TBL_HISTORIAL_VOLEYPLAYA','historial_voleyplaya');
+define('TBL_HISTORIAL_VOLEYPLAYA_PALMARES','historial_voleyplaya_palmares');
 
 
 define('TBL_REL_SPORTS', 'rel_sports_perfil_historial');
