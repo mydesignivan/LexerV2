@@ -140,7 +140,10 @@ define('TBL_LIST_HOCKEYC_POSICION',   'list_hockeyc_posicion');
 define('TBL_LIST_HOCKEYC_GOLPE',   'list_hockeyc_golpe');
 define('TBL_LIST_PADEL_GOLPE',   'list_padel_golpe');
 define('TBL_LIST_NATACION_MODALIDAD',   'list_natacion_modalidad');
+define('TBL_LIST_NATACION_CATEGORIA',   'list_natacion_categoria');
+define('TBL_LIST_NATACION_PRUEBA',   'list_natacion_prueba');
 define('TBL_LIST_RUGBY_CATEGORIA',   'list_rugbi_categoria');
+define('TBL_LIST_TENIS_CATEGORIA',   'list_tenis_categoria');
 define('TBL_LIST_RUGBY_POSICION',   'list_rugbi_posicion');
 define('TBL_LIST_RUGBY_GOLPE',   'list_rugbi_golpe');
 define('TBL_LIST_SOFTBOL_HABILIDAD',   'list_softbol_habilidad');
@@ -149,6 +152,7 @@ define('TBL_LIST_SOFTBOL_HABILIDAD_RECURSOS',   'list_softbol_habilidad_recursos
 define('TBL_LIST_VOLEY_POSICION',   'list_voley_posicion');
 define('TBL_LIST_VOLEY_CATEGORIA',   'list_voley_categoria');
 define('TBL_LIST_VOLEYPLAYA_CATEGORIA',   'list_voleyplaya_categoria');
+
 
 define('TBL_LIST_CLUB_CATEGORIAS', 'list_club_categoria');
 
@@ -218,6 +222,21 @@ define('TBL_HISTORIAL_VOLEY_PALMARES','historial_voley_palmares');
 
 define('TBL_HISTORIAL_VOLEYPLAYA','historial_voleyplaya');
 define('TBL_HISTORIAL_VOLEYPLAYA_PALMARES','historial_voleyplaya_palmares');
+
+define('TBL_HISTORIAL_PADEL','historial_padel');
+define('TBL_HISTORIAL_PADEL_PALMARES','historial_padel_palmares');
+
+define('TBL_HISTORIAL_NATACION','historial_natacion');
+define('TBL_HISTORIAL_NATACION_COMPETENCIAS','historial_natacion_competencias');
+define('TBL_HISTORIAL_NATACION_PALMARES','historial_natacion_palmares');
+
+define('TBL_HISTORIAL_TENIS','historial_tenis');
+define('TBL_HISTORIAL_TENIS_FINALES_SINGLES','historial_tenis_finales_singles');
+define('TBL_HISTORIAL_TENIS_FINALES_DOBLES','historial_tenis_finales_dobles');
+define('TBL_HISTORIAL_TENIS_TITULOS_SINGLES','historial_tenis_titulos_singles');
+define('TBL_HISTORIAL_TENIS_TITULOS_DOBLES','historial_tenis_titulos_dobles');
+define('TBL_HISTORIAL_TENIS_PALMARES_SINGLES','historial_tenis_palmares_singles');
+define('TBL_HISTORIAL_TENIS_PALMARES_DOBLES','historial_tenis_palmares_dobles');
 
 
 define('TBL_REL_SPORTS', 'rel_sports_perfil_historial');

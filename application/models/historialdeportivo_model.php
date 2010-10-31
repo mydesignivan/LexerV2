@@ -216,9 +216,12 @@ class historialdeportivo_model extends Model {
         return $tablas_sport;
     }
 
-    public function getCombo($tabla, $msg=false){
-
-        list($field_id,$field_name)=$this->db->list_fields($tabla);
+    public function getCombo($tabla, $msg=false, $bhist=false){
+        if($bhist){
+            list($field_id,$field_name, $historial)=$this->db->list_fields($tabla);
+        }
+        else
+            list($field_id,$field_name)=$this->db->list_fields($tabla);
         $data=array();
         if($msg)
             $data[] = array($field_name=>$msg, $field_id=>'');

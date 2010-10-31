@@ -18,13 +18,8 @@ var Historial = new (function(){
             }
         });
 
-
-
         $('#form1').validate(o);
         this.newRow();
-        
-
-
     };
 
     this.initHist = function(){
@@ -67,6 +62,20 @@ var Historial = new (function(){
         }else{
             $(elem).fadeOut("slow");
         }
+        LibForms.isOther(dom);
+    }
+
+    this.TenisActividades = function(select){
+        var dom = $(select);
+         elem=dom.parent().parent().next();
+        if(!isNaN(dom.val()) ){
+            $(elem).fadeIn("slow");
+
+        }else{
+
+            $(elem).fadeOut("slow");
+        }
+      
         LibForms.isOther(dom);
     }
 

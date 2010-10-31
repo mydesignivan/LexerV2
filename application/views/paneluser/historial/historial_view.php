@@ -11,13 +11,12 @@
         <?=form_dropdown('cboDeporte', $comboDeportes, @$info['sports_id'], 'id="cboDeporte" tabindex="1"');?>
 
         <input type="button" id="btnSelSport" onclick="Historial.seleccionDeporte(this);" value="Mostrar">
-
     </div>
-<div id="tabs_div_ajax">
 
-</div>
-
-
+     <div class="trow">
+        <div id="tabs_div_ajax">
+        </div>
+    </div>
 
 
 
