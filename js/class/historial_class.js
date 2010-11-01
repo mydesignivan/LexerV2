@@ -79,6 +79,20 @@ var Historial = new (function(){
         LibForms.isOther(dom);
     }
 
+    this.ciclismoEspecialidad = function(select){
+        var dom = $(select);
+         elem=dom.parent().parent().next();
+        if(!isNaN(dom.val()) ){
+            $(elem).fadeIn("slow");
+
+        }else{
+
+            $(elem).fadeOut("slow");
+        }
+
+        LibForms.isOther(dom);
+    }
+
     this.addHistorial = function (el, div_table){
         var hist=$("."+div_table).first().html();
        

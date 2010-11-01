@@ -125,6 +125,7 @@ define('TBL_LIST_MARCIALES_MODALIDAD',   'list_marciales_modalidad');
 define('TBL_LIST_BASQUET_POSICION',   'list_basquet_posicion');
 define('TBL_LIST_CICLISMO_ESPECIALIDAD',   'list_ciclismo_especialidad');
 define('TBL_LIST_CICLISMO_CATEGORIA',   'list_ciclismo_categoria');
+define('TBL_LIST_CICLISMO_MODALIDAD',   'list_ciclismo_modalidad');
 define('TBL_LIST_ESCALADA_MODALIDAD',   'list_escalada_modalidad');
 define('TBL_LIST_FUTBOL_POSICION',   'list_futbol_posicion');
 define('TBL_LIST_FUTBOL_CATEGORIA',   'list_futbol_categoria');
@@ -163,6 +164,11 @@ define('TBL_TEST',   'test');
 define('TBL_HISTORIAL_MARCIALES','historial_marciales');
 define('TBL_HISTORIAL_MARCIALES_TORNEOS','historial_marciales_torneos');
 define('TBL_HISTORIAL_MARCIALES_PALMARES','historial_marciales_palmares');
+
+define('TBL_HISTORIAL_CICLISMO','historial_ciclismo');
+define('TBL_HISTORIAL_CICLISMO_NACIONALES','historial_ciclismo_nacionales');
+define('TBL_HISTORIAL_CICLISMO_INTERNACIONALES','historial_ciclismo_internacionales');
+define('TBL_HISTORIAL_CICLISMO_PALMARES','historial_ciclismo_palmares');
 
 define('TBL_HISTORIAL_ATLETISMO','historial_atletismo');
 define('TBL_HISTORIAL_ATLETISMO_CATEGORIA_PRUEBA','historial_atletismo_categoria_prueba');

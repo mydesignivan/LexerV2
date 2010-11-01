@@ -100,7 +100,6 @@ class Historial extends Controller {
             $perfil_deporte_id= $this->input->post("perfil_deporte_id");
             $data = $this->_data_historial($deporte, $historial_id);
 
-
             $path='/paneluser/historial/ajax/'.strtolower($data['sports_name']).'_view';
            
              $this->load->view($path, $data);
@@ -225,12 +224,44 @@ class Historial extends Controller {
                         $data['palmares'][$i]['cboYear'] = $cboTemporada;
                     }
                     break;
-                case 5:
-                    $data['cboEspecialidad']=$this->perfildeportivo_model->getCombo("list_ciclismo_especialidad","Seleccione una modalidad");
-                    $data['cboCategoria']=$this->perfildeportivo_model->getCombo("list_ciclismo_categoria","Seleccione una categoria");
+                case 5: //ciclismo
+                    $instituciones=array(array("name"=>"Seleccione una categoria","id"=>""),
+                                                array("name"=>"Asociación","id"=>1),
+                                                array("name"=>"Club","id"=>2),
+                                                array("name"=>"Federación","id"=>3),
+                                                array("name"=>"Sindicato","id"=>4),
+                                                array("name"=>"Otro","id"=>-1));
+                   
+                    $especialidad = $this->historialdeportivo_model->getCombo(TBL_LIST_CICLISMO_ESPECIALIDAD,"Seleccione una modalidad");
+                    $categoria = $this->historialdeportivo_model->getCombo(TBL_LIST_CICLISMO_CATEGORIA,"Seleccione una categoria");
+                    $modalidad=$this->historialdeportivo_model->getCombo(TBL_LIST_CICLISMO_MODALIDAD,"Seleccione una posicion");
+                    $categorias=$this->historialdeportivo_model->getCombo("list_futbol_categoria","Seleccione una categoria");
+
+                    $categorias=$this->historialdeportivo_model->getCombo("list_futbol_categoria","Seleccione una categoria");
+
+                    $data['historial'] = $row[TBL_HISTORIAL_CICLISMO];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_CICLISMO]) ; $i++){
+                        $data['historial'][$i]['cboInstitucion'] = $instituciones;
+                        $data['historial'][$i]['cboCategoria'] = $categorias;
+                        $data['historial'][$i]['cboModalidad'] = $modalidad;
+                        $data['historial'][$i]['cboEspecialidad'] = $especialidad;
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+
+                        $data['historial'][$i]['internacionales'] = $row[TBL_HISTORIAL_CICLISMO_INTERNACIONALES];
+                        $data['historial'][$i]['nacionales'] = $row[TBL_HISTORIAL_CICLISMO_NACIONALES];
+
+
+
+                    }
+                   $data['palmares'] = $row[TBL_HISTORIAL_CICLISMO_PALMARES];
+
+                   
                     break;
                 case 6: //escalada
-                    $data['cboModalidad']=$this->perfildeportivo_model->getCombo("list_escalada_modalidad","Seleccione una modalidad");
+                    $data['cboModalidad']=$this->historialdeportivo_model->getCombo("list_escalada_modalidad","Seleccione una modalidad");
                     break;
                 case 7: //futbol
                     $posicion=$this->historialdeportivo_model->getCombo("list_futbol_posicion","Seleccione una posicion");

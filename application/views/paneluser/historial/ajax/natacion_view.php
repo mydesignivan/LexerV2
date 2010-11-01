@@ -2,7 +2,7 @@
 <?php $this->load->helper('form');?>
 
     <!-- ========== Deportes =========== -->
-<br/>
+
 <div id="tabs" >
     <ul>
             <li><a href="#tabs-1">Historial Deportivo</a></li>
