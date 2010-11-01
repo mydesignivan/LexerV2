@@ -208,6 +208,18 @@ var Historial = new (function(){
         $(".cformatxy").mask("99/99");
     };
 
+    this.sumaCol = function(dom, sel, selres){
+
+        var total = 0;
+        alert($(dom).parent().find(sel).length);
+        $(dom).parent().parent().parent().find(sel).find("input").each(function(i){
+
+        })
+
+        $(selres).text(total);
+
+    }
+
 
 
     this.addRow = function(sel, limit, fix_class){

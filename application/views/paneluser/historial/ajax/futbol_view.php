@@ -18,8 +18,13 @@
                  <!-- ========== TEMPORADA  =========== -->
                 <div class="trow "
                     <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
-                    <?=form_dropdown('cboTemporada', $hist_row['cboTemporada'], $hist_row['temporada_inicio'], ' tabindex="1"');?>
+                    <?=form_dropdown('cboTemporada1', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1"');?>
                 </div>
+                <div class="trow "
+                    <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
+                    <?=form_dropdown('cboTemporada2', $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1"');?>
+                </div>
+                 <!-- ========== CLUB  =========== -->
                 <div class="trow">
                     <label class="label label-form" for="txtClub"><span class="required">*</span>Club</label>
                     <input type="text" name="txtClub" id="txtClub" class="wsize2" tabindex="2" value="<?=$hist_row['club'] ?>" />
@@ -45,7 +50,7 @@
                     </span>
                 </div>
 
-                   <!-- ========== CIUDAD  =========== -->
+                <!-- ========== CIUDAD  =========== -->
                 <div class="trow">
                     <label class="label label-form" for="txtCiudad"><span class="required">*</span>Ciudad</label>
                     <input type="text" name="txtCiudad" id="txtCiudad" class="wsize2" tabindex="2" value="<?=$hist_row['city'] ?>" />
@@ -58,6 +63,7 @@
                     <?=form_dropdown('cboCountry', $hist_row['cboCountry'], $hist_row['country'], ' tabindex="14" onchange="Historial.get_combo_states(this)"');?>
                     <img src="images/ajax-loader.gif" alt="Loading" width="16" height="16" class="jq-loader hide" />
                 </div>
+
                 <!-- ========== PROVINCIA  =========== -->
                 <div class="trow <?=getval($hist_row['state'], 'hide', 0)?>">
                     <label class="label label-form" for="cboStates">Provincia</label>

@@ -111,7 +111,7 @@
                                 <td class="cell3">Carrera</td>
                                 <td class="cell4">Etapa</td>
                                 <td class="cell5">Pos</td>
-                                <td class="cell6">Ptos</td>
+                                <td class="cell6_">Ptos</td>
                                 <td class="cell7">Acci&oacute;n</td>
                             </tr>
                         </thead>
@@ -136,15 +136,23 @@
                                     <input type="text" name="txtPosNacionales" value="<?=$torneo_row['pos']?>" class="wsize1 cvalores" />
                                 </td>
                                 <td class="cell6">
-                                    <input type="text" name="txtPtosNacionales" value="<?=$torneo_row['puntos']?>" class="wsize1 cvalores" />
+                                    <input type="text" name="txtPtosNacionales" value="<?=$torneo_row['puntos']?>" class="wsize1 cvalores" onkeyup="Historial.sumaCol(this, '.cell6', '.res1')" />
                                 </td>
                                 <td class="cell7"><input type="button" value="Eliminar" name="btn" onclick="Historial.removeRow(this, 'torneo')" /></td>
                             </tr>
                     <?php }?>
+                            <tr class="fix_class">
+                                <td class="cell1" colspan="5">
+                                     <label class="label label-form">Puntos Totales</label>
+                                </td>
+                                <td class="cell2" colspan="2">
+                                    <label class="label label-form res1"></label>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <br />
-                    <input type="button" value="Agregar otro" name="btn"  onclick="Historial.addRowFecha(this, 100 , '.cell1');" />
+                    <input type="button" value="Agregar otro" name="btn"  onclick="Historial.addRowFecha(this, 100 , '.cell1', '.fix_class');" />
                 </div>
           <!-- ========== Torneos =========== -->
                 <div id="contTorneo" class="trow tbl">

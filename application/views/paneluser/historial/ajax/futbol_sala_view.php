@@ -18,8 +18,13 @@
                  <!-- ========== TEMPORADA  =========== -->
                 <div class="trow "
                     <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
-                    <?=form_dropdown('cboTemporada', $hist_row['cboTemporada'], $hist_row['temporada_inicio'], ' tabindex="1"');?>
+                    <?=form_dropdown('cboTemporada1', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1"');?>
                 </div>
+                <div class="trow "
+                    <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
+                    <?=form_dropdown('cboTemporada2', $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1"');?>
+                </div>
+                 <!-- ========== CLUB  =========== -->
                 <div class="trow">
                     <label class="label label-form" for="txtClub"><span class="required">*</span>Club</label>
                     <input type="text" name="txtClub" id="txtClub" class="wsize2" tabindex="2" value="<?=$hist_row['club'] ?>" />
