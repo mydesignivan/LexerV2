@@ -145,18 +145,22 @@ var Historial = new (function(){
 
     this.seleccionDeporte = function(btnEnviar){
          $(".dep > *").attr('disabled', 'disabled');
-         $.post(baseURI+"paneluser/historial/ajax_get_sport", {
-             deporte: $("#cboDeporte option:selected").val(),
-             historial_id: $("#historial_id").val(),
-             historial_deporte_id: $("#historial_deporte_id").val()},
-             function(data){
-                $(".dep > *").attr('disabled', '');
-                $("#tabs_div_ajax").show();
-                $("#tabs_div_ajax").html(data);
-                $("#tabs").tabs();
-                Historial.initHist();
-                
-        });
+         var sport = $("#cboDeporte option:selected").val();
+
+         if (!isNaN(parseInt(sport))) {
+             $.post(baseURI+"paneluser/historial/ajax_get_sport", {
+                 deporte: sport,
+                 historial_id: $("#historial_id").val(),
+                 historial_deporte_id: $("#historial_deporte_id").val()},
+                 function(data){
+                    $(".dep > *").attr('disabled', '');
+                    $("#tabs_div_ajax").show();
+                    $("#tabs_div_ajax").html(data);
+                    $("#tabs").tabs();
+                    Historial.initHist();
+
+            });
+          }
 
     }
 
@@ -209,17 +213,70 @@ var Historial = new (function(){
     };
 
     this.sumaCol = function(dom, sel, selres){
-
         var total = 0;
-        alert($(dom).parent().find(sel).length);
         $(dom).parent().parent().parent().find(sel).find("input").each(function(i){
-
+            if (!isNaN( parseFloat($(this).val()))) {
+                total += parseFloat( $(this).val()) ;
+            }
         })
 
-        $(selres).text(total);
+        $(dom).parent().parent().parent().find(selres).text(total);
+    }
+
+    this.sumaRow = function(dom, sel, res){
+         var total = 0;
+       
+        $(dom).parent().parent().find("td > input").each(function(i){
+            if (!isNaN( parseFloat($(this).val()))) {
+                total += parseFloat( $(this).val()) ;
+            }
+        });
+        $(dom).parent().parent().find(res).text(total);
+    }
+
+    this.suma = function(dom, sel, selres, colres){
+        var total = 0;
+        this.sumaCol(dom, sel, selres);
+        this.sumaRow(dom, sel, colres);
+
+        var tmp = $(dom).parent().parent().parent();
+
+        tmp.find("tr > .res").each(function(i){
+            var tmp = parseFloat($(this).text());
+           
+             if (!isNaN( tmp)) {
+                 total += tmp;
+             }
+        });
+        tmp.find("tr > td").last().text(total);
+        //alert(total);
+
+        
 
     }
 
+    this.SoftBallSeleccion = function(dom){
+         var val = $(dom).val();
+         if (isNaN( val)) {
+             $(dom).parent().parent().parent().find(".pitcher_class").hide("slow");
+             $(dom).parent().parent().parent().find(".all_pos_class").hide("slow");
+
+         }
+         else{
+             if (val == 1) {
+                 $(dom).parent().parent().parent().find(".pitcher_class").show("slow");
+                 $(dom).parent().parent().parent().find(".all_pos_class").hide("slow");
+             }
+             else{
+                 $(dom).parent().parent().parent().find(".pitcher_class").hide("slow");
+                 $(dom).parent().parent().parent().find(".all_pos_class").show("slow");
+
+             }
+         }
+
+
+
+    }
 
 
     this.addRow = function(sel, limit, fix_class){

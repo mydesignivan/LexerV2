@@ -148,6 +148,7 @@ define('TBL_LIST_TENIS_CATEGORIA',   'list_tenis_categoria');
 define('TBL_LIST_RUGBY_POSICION',   'list_rugbi_posicion');
 define('TBL_LIST_RUGBY_GOLPE',   'list_rugbi_golpe');
 define('TBL_LIST_SOFTBOL_HABILIDAD',   'list_softbol_habilidad');
+define('TBL_LIST_SOFTBOL_CATEGORIA',   'list_softbol_categoria');
 define('TBL_LIST_SOFTBOL_POSICION',   'list_softbol_posicion');
 define('TBL_LIST_SOFTBOL_HABILIDAD_RECURSOS',   'list_softbol_habilidad_recursos');
 define('TBL_LIST_VOLEY_POSICION',   'list_voley_posicion');
@@ -244,6 +245,8 @@ define('TBL_HISTORIAL_TENIS_TITULOS_DOBLES','historial_tenis_titulos_dobles');
 define('TBL_HISTORIAL_TENIS_PALMARES_SINGLES','historial_tenis_palmares_singles');
 define('TBL_HISTORIAL_TENIS_PALMARES_DOBLES','historial_tenis_palmares_dobles');
 
+define('TBL_HISTORIAL_SOFTBOL','historial_softball');
+define('TBL_HISTORIAL_SOFTBOL_PALMARES','historial_softball_palmares');
 
 define('TBL_REL_SPORTS', 'rel_sports_perfil_historial');
 define('TBL_REL_SELECCIONADO', 'rel_sports_to_seleccionado');

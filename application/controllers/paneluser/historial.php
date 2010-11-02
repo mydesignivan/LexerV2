@@ -503,10 +503,31 @@ class Historial extends Controller {
 
                     break;
                 case 17: //Softbol
-                    $data['cboHabilidad']=$this->perfildeportivo_model->getCombo("list_softbol_habilidad","Seleccione una habilidad");
-                    $data['cboPosicion']=$this->perfildeportivo_model->getCombo("list_softbol_posicion","Seleccione una posicion");
-                    $data['recursos']=$this->perfildeportivo_model->getCombo("list_softbol_habilidad_recursos");
-                    $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
+                    $efecto=array(array("name"=>"Seleccione una efecto","id"=>""),
+                                                array("name"=>"Drope","id"=>'1'),
+                                                array("name"=>"Curva","id"=>'2'),
+                                                array("name"=>"Lenta","id"=>'3'),
+                                                array("name"=>"Riser","id"=>'4'),
+                                                array("name"=>"Otra","id"=>'-1'));
+
+                    $categorias=$this->historialdeportivo_model->getCombo(TBL_LIST_SOFTBOL_CATEGORIA,"Seleccione una categoria");
+                    $posicion=$this->historialdeportivo_model->getCombo(TBL_LIST_SOFTBOL_POSICION,"Seleccione una posicion");
+
+                    $data['historial'] = $row[TBL_HISTORIAL_SOFTBOL];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_SOFTBOL]) ; $i++){
+                        $data['historial'][$i]['cboCategoria'] = $categorias;
+                        $data['historial'][$i]['cboEfecto'] = $efecto;
+                        $data['historial'][$i]['cboPosicion'] = $posicion;
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+                    }
+                    $data['palmares'] = $row[TBL_HISTORIAL_SOFTBOL_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_SOFTBOL_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                         $data['palmares'][$i]['cboCountry'] = $cboCountry;
+                    }
                     break;
                 case 18: //Tenis
                     $categorias=$this->historialdeportivo_model->getCombo(TBL_LIST_TENIS_CATEGORIA,"Seleccione una categoria");

@@ -145,8 +145,11 @@
                                 <td class="cell1" colspan="5">
                                      <label class="label label-form">Puntos Totales</label>
                                 </td>
-                                <td class="cell2" colspan="2">
+                                <td class="cell2" >
                                     <label class="label label-form res1"></label>
+                                </td>
+                                <td class="cell3" >
+                                    <label class="label label-form"></label>
                                 </td>
                             </tr>
                         </tbody>
@@ -190,15 +193,26 @@
                                     <input type="text" name="txtPosInternacionales" value="<?=$torneo_row['pos']?>" class="wsize1 cvalores" />
                                 </td>
                                 <td class="cell6">
-                                    <input type="text" name="txtPtosInternacionales" value="<?=$torneo_row['puntos']?>" class="wsize1 cvalores" />
+                                    <input type="text" name="txtPtosInternacionales" value="<?=$torneo_row['puntos']?>" class="wsize1 cvalores" onkeyup="Historial.sumaCol(this, '.cell6', '.res1')" />
                                 </td>
                                 <td class="cell7"><input type="button" value="Eliminar" name="btn" onclick="Historial.removeRow(this, 'torneo')" /></td>
                             </tr>
                     <?php }?>
+                             <tr class="fix_class">
+                                <td class="cell1" colspan="5">
+                                     <label class="label label-form">Puntos Totales</label>
+                                </td>
+                                <td class="cell2" >
+                                    <label class="label label-form res1"></label>
+                                </td>
+                                <td class="cell3" >
+                                    <label class="label label-form"></label>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <br />
-                    <input type="button" value="Agregar otro" name="btn"  onclick="Historial.addRowFecha(this, 100 , '.cell1');" />
+                    <input type="button" value="Agregar otro" name="btn"  onclick="Historial.addRowFecha(this, 100 , '.cell1', '.fix_class');" />
                 </div>
             </div>
 
