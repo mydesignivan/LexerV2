@@ -120,6 +120,9 @@ define('TBL_LIST_ARCO_CATEGORIA',   'list_arco_categoria');
 define('TBL_LIST_TIRO_MODALIDAD',   'list_tiro_modalidad');
 define('TBL_LIST_TIRO_CATEGORIA',   'list_tiro_categoria');
 
+define('TBL_LIST_PATIN_MODALIDAD',   'list_patin_modalidad');
+define('TBL_LIST_PATIN_CATEGORIA',   'list_patin_categoria');
+
 
 
 define('TBL_LIST_ATLETISMO_DISCIPLINA',   'list_atletismo_disciplina');
@@ -257,6 +260,11 @@ define('TBL_HISTORIAL_SOFTBOL_PALMARES','historial_softball_palmares');
 
 define('TBL_HISTORIAL_ESCALADA','historial_escalada');
 define('TBL_HISTORIAL_ESCALADA_PALMARES','historial_escalada_palmares');
+
+define('TBL_HISTORIAL_PATIN','historial_patin');
+define('TBL_HISTORIAL_PATIN_VALOCIDAD_COMPETENCIA','historial_patin_velocidad_competencias');
+define('TBL_HISTORIAL_PATIN_ARTISTICO_COMPETENCIA','historial_patin_artistico_competencias');
+define('TBL_HISTORIAL_PATIN_PALMARES','historial_patin_palmares');
 
 define('TBL_REL_SPORTS', 'rel_sports_perfil_historial');
 define('TBL_REL_SELECCIONADO', 'rel_sports_to_seleccionado');

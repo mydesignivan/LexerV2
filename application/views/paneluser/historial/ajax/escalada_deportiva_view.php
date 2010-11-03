@@ -94,14 +94,15 @@
         </div>
         <div id="tabs-2">
               <div id="contPalmares" class="trow tbl">
-                    <label class="label label-tablas">Logros / Récords / Títulos Nacionales / Títulos Internacionales / Otros</label>
+                    <label class="label label-tablas">Logros / Títulos Nacionales / Títulos Internacionales / Otros</label>
                     <table id="tblPalmares" cellpadding="0" cellspacing="0">
                         <thead>
                             <tr>
                                 <td class="cell1">A&ntilde;o</td>
                                 <td class="cell2">T&iacute;tulo</td>
-                                <td class="cell3">Pa&iacute;s</td>
-                                <td class="cell46">Acci&oacute;n</td>
+                                <td class="cell3">Equipo</td>
+                                <td class="cell4">Pa&iacute;s</td>
+                                <td class="cell6">Acci&oacute;n</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -118,10 +119,13 @@
                                     <input type="text" name="txtTitulo" value="<?=$palmares_row['titulo']?>" class="wsize2" />
                                 </td>
                                 <td class="cell3">
+                                    <input type="text" name="txtEquipo" value="<?=$palmares_row['equipo']?>" class="wsize2" />
+                                </td>
+                                <td class="cell4">
                                   <?=form_dropdown('cboCountry', $palmares_row['cboCountry'], $palmares_row['country'], ' tabindex="14" ');?>
                                 </td>
 
-                                <td class="cell4"><input type="button" value="Eliminar" name="btn" onclick="Historial.removeRow(this, 'palmares')" /></td>
+                                <td class="cell5"><input type="button" value="Eliminar" name="btn" onclick="Historial.removeRow(this, 'palmares')" /></td>
                             </tr>
                     <?php }?>
                         </tbody>

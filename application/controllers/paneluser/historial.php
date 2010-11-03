@@ -453,7 +453,7 @@ class Historial extends Controller {
 
                 case 13: //Natacion
                     $categorias = $this->historialdeportivo_model->getCombo(TBL_LIST_NATACION_CATEGORIA,"Seleccione una categoria");
-                    $modalidad = $this->historialdeportivo_model->getCombo(TBL_LIST_NATACION_MODALIDAD,"Seleccione una modalidad",true);
+                    $modalidad = $this->historialdeportivo_model->getCombo(TBL_LIST_NATACION_MODALIDAD,"Seleccione una modalidad",1);
                     $prueba=$this->historialdeportivo_model->getCombo(TBL_LIST_NATACION_PRUEBA,"Seleccione una prueba");
 
                     $piscina=array(array("name"=>"Seleccione piscina","id"=>""),
@@ -503,10 +503,53 @@ class Historial extends Controller {
                     }
 
                     break;
-                case 15: //hockey sobre cesped
-                    $data['list']="list_patinaje_especialidad";
-                    $data['cboModalidad']=$this->perfildeportivo_model->getCombo("list_natacion_modalidad","Seleccione una modalidad");
-                    $data['cboSeleccionado']=$this->perfildeportivo_model->getComboSeleccionado($deporte,"Seleccione un seleccionado");
+                case 15: //patin
+                    $especialidad=array(array("name"=>"Seleccione una especialidad","id"=>""),
+                                                array("name"=>"Artístico","id"=>'1'),
+                                                array("name"=>"Velocidad","id"=>'2'));
+                    $superficie=array(array("name"=>"Seleccione una especialidad","id"=>""),
+                                                array("name"=>"En línea","id"=>'1'),
+                                                array("name"=>"Sobre Hielo","id"=>'1'),
+                                                array("name"=>"Sobre Ruedas","id"=>'2'));
+                    $data['historial'] = $row[TBL_HISTORIAL_PATIN];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_PATIN]) ; $i++){
+                        $data['historial'][$i]['cboEspecialidad'] = $especialidad;
+                        $data['historial'][$i]['cboSuperficie'] = $superficie;
+
+//modalidad y categoria dependen de la especialidad
+                        $modalidad_artistico=$this->historialdeportivo_model->getCombo(TBL_LIST_PATIN_MODALIDAD ,"Seleccione una modalidad", 1);
+                        $categoria_artistico=$this->historialdeportivo_model->getCombo(TBL_LIST_PATIN_CATEGORIA ,"Seleccione una categoria", 1);
+
+                        $modalidad_velocidad=$this->historialdeportivo_model->getCombo(TBL_LIST_PATIN_MODALIDAD ,"Seleccione una modalidad", 2);
+                        $categoria_velocidad=$this->historialdeportivo_model->getCombo(TBL_LIST_PATIN_CATEGORIA ,"Seleccione una categoria", 2);
+
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+
+                       
+                        $data['historial'][$i]['cboCategoriaArtistico'] = $categoria_artistico;
+                        $data['historial'][$i]['cboModalidadArtistico'] = $modalidad_artistico;
+                        $data['historial'][$i]['artistica_competencias'] = $row[TBL_HISTORIAL_PATIN_ARTISTICO_COMPETENCIA];
+                        for($n = 0; $n < count($row[TBL_HISTORIAL_PATIN_ARTISTICO_COMPETENCIA]);$n++){
+                            $data['historial'][$i]['artistica_competencias'][$n]['cboCountry'] = $cboCountry;
+                        }
+
+                        $data['historial'][$i]['cboCategoriaVelocidad'] = $categoria_velocidad;
+                        $data['historial'][$i]['cboModalidadVelocidad'] = $modalidad_velocidad;
+                        $data['historial'][$i]['velocidad_competencias'] = $row[TBL_HISTORIAL_PATIN_VALOCIDAD_COMPETENCIA ];
+                        for($n = 0; $n < count($row[TBL_HISTORIAL_PATIN_VALOCIDAD_COMPETENCIA]);$n++){
+                            $data['historial'][$i]['velocidad_competencias'][$n]['cboCountry'] = $cboCountry;
+                        }
+
+                    }
+                    $data['palmares'] = $row[TBL_HISTORIAL_PATIN_PALMARES];
+                    for($i=0;$i<count($row[TBL_HISTORIAL_PATIN_PALMARES]);$i++){
+                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                         $data['palmares'][$i]['cboCountry'] = $cboCountry;
+                    }
+                    
                     break;
                 case 16: //Rugby
                     $categorias=$this->historialdeportivo_model->getCombo(TBL_LIST_RUGBY_CATEGORIA,"Seleccione una categoria");

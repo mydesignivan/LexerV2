@@ -220,9 +220,19 @@ class perfildeportivo_model extends Model {
         return $rtn;
     }
 
-    public function getCombo($tabla, $msg=false){
+    public function getCombo($tabla, $msg=false, $bhist=0){
+        $fields = $this->db->list_fields($tabla);
+        if (count($fields)==3){
+            list($field_id,$field_name, $historial)=$this->db->list_fields($tabla);
+            $this->db->or_where(array($historial=>0));
+            if ($bhist){
+                $this->db->or_where(array($historial=>$bhist));
+            }
 
-        list($field_id,$field_name)=$this->db->list_fields($tabla);
+        }
+        else{
+            list($field_id,$field_name)=$this->db->list_fields($tabla);
+        }
         $data=array();
         if($msg)
             $data[] = array($field_name=>$msg, $field_id=>'');

@@ -185,6 +185,26 @@ var Historial = new (function(){
     }
 
 
+    this.patinEspecialidad = function(dom){
+        var val = $(dom).val();
+        var div_velocidad = $(dom).parent().parent().find(".div_velocidad");
+        var div_artistico = $(dom).parent().parent().find(".div_artistico");
+
+        switch(parseInt(val)){
+        case 1:
+            div_artistico.show("slow");
+            div_velocidad.hide("slow");
+            break;
+        case 2:
+            div_artistico.hide("slow");
+            div_velocidad.show("slow");
+            break;
+        default :
+            div_artistico.hide("slow");
+            div_velocidad.hide("slow");
+            break;
+        }
+    }
 
     this.removeRow = function(el, t){
 //        var id = $(el).parent().parent().attr('id').replace(/^[aA-zZ]*/gi, '');
