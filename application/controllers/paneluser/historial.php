@@ -261,8 +261,35 @@ class Historial extends Controller {
                    
                     break;
                 case 6: //escalada
-                    $data['cboModalidad']=$this->historialdeportivo_model->getCombo("list_escalada_modalidad","Seleccione una modalidad");
+                    $list_cat=TBL_LIST_ESCALADA_GRADUACION;
+                    $graduacion=array(array("name"=>"Seleccione graduacion","id"=>""),
+                                                array("name"=>"Francesa","id"=>1),
+                                                array("name"=>"UIAA","id"=>2),
+                                                array("name"=>"USA","id"=>3));
+
+                    
+                    $modalidad = $this->historialdeportivo_model->getCombo(TBL_LIST_ESCALADA_MODALIDAD,"Seleccione una modalidad");
+                    $categoria = $this->historialdeportivo_model->getCombo(TBL_LIST_ESCALADA_CATEGORIA,"Seleccione una categoria");
+
+                    $data['historial'] = $row[TBL_HISTORIAL_ESCALADA];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_ESCALADA]) ; $i++){
+                        $data['historial'][$i]['list'] = $list_cat;
+                        $data['historial'][$i]['cboCategoria'] = $categoria;
+                        $data['historial'][$i]['cboGraduacion'] = $graduacion;
+                        $data['historial'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['historial'][$i]['cboCountry'] = $cboCountry;
+                        $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
+                        $data['historial'][$i]['cboState'] = $cboState;
+                    }
+                    $data['palmares'] = $row[TBL_HISTORIAL_ESCALADA_PALMARES];
+                    for($i = 0 ; $i < count($row[TBL_HISTORIAL_ESCALADA_PALMARES]) ; $i++){
+                        $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
+                        $data['palmares'][$i]['cboCountry'] = $cboCountry;
+                    }
                     break;
+                   
+                    break;
+
                 case 7: //futbol
                     $posicion=$this->historialdeportivo_model->getCombo("list_futbol_posicion","Seleccione una posicion");
                     $categorias=$this->historialdeportivo_model->getCombo("list_futbol_categoria","Seleccione una categoria");
@@ -677,10 +704,11 @@ class Historial extends Controller {
      public function ajax_get_subcat(){
         $list=$deporte= $this->input->post("list");
         $cat=$deporte= $this->input->post("cat");
+        $label=$deporte= strlen($this->input->post("label"))>0? $this->input->post("label") : "Categoria";
 
-        $cboCategoria=$this->historialdeportivo_model->getComboSubCat($list,"Seleccione una categoria",$cat);
+        $cboCategoria=$this->historialdeportivo_model->getComboSubCat($list,"Seleccione ".$label,$cat);
 
-        echo '<label class="label label-form" for="cboCategoria"><span class="required">*</span>Categoria</label>';
+        echo '<label class="label label-form" for="cboCategoria"><span class="required">*</span>'.$label.'</label>';
         echo form_dropdown('cboSubCat', $cboCategoria, $cat, 'id="cboSubCat" tabindex="1"  onchange="LibForms.isOther(this);"');
      }
 }

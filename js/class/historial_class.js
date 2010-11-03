@@ -169,11 +169,13 @@ var Historial = new (function(){
         if(typeof(elem)=='undefined'){
             elem=$(select).parent().next();
         }
+        var lab =$(select).parent().parent().find("input[name=label]").eq(0).val();
         var list=$(select).parent().parent().find("input[name=list]").eq(0).val();
         if($(select).val() > 0 ){
              $.post(baseURI+"paneluser/historial/ajax_get_subcat", {
                  cat: $(select).val(),
-                 list: list},
+                 list: list,
+                 label: lab},
                  function(data){
                     $(elem).html(data);
                     $(elem).fadeIn();

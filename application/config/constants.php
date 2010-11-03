@@ -111,6 +111,9 @@ define('TBL_LIST_TEST_LEY',   'list_fuerza_testley');
 define('TBL_LIST_BOXEO_RESULTADO',   'list_boxeo_resultado');
 define('TBL_LIST_BOXEO_CATEGORIA',   'list_boxeo_categoria');
 
+
+
+
 define('TBL_LIST_ARCO_ESPECIALIDAD',   'list_arco_especialidad');
 define('TBL_LIST_ARCO_CATEGORIA',   'list_arco_categoria');
 
@@ -126,7 +129,11 @@ define('TBL_LIST_BASQUET_POSICION',   'list_basquet_posicion');
 define('TBL_LIST_CICLISMO_ESPECIALIDAD',   'list_ciclismo_especialidad');
 define('TBL_LIST_CICLISMO_CATEGORIA',   'list_ciclismo_categoria');
 define('TBL_LIST_CICLISMO_MODALIDAD',   'list_ciclismo_modalidad');
+
+define('TBL_LIST_ESCALADA_GRADUACION',   'list_escalada_graduacion');
+define('TBL_LIST_ESCALADA_CATEGORIA',   'list_escalada_categoria');
 define('TBL_LIST_ESCALADA_MODALIDAD',   'list_escalada_modalidad');
+
 define('TBL_LIST_FUTBOL_POSICION',   'list_futbol_posicion');
 define('TBL_LIST_FUTBOL_CATEGORIA',   'list_futbol_categoria');
 define('TBL_LIST_FUTSAL_POSICION',   'list_futsal_posicion');
@@ -247,6 +254,9 @@ define('TBL_HISTORIAL_TENIS_PALMARES_DOBLES','historial_tenis_palmares_dobles');
 
 define('TBL_HISTORIAL_SOFTBOL','historial_softball');
 define('TBL_HISTORIAL_SOFTBOL_PALMARES','historial_softball_palmares');
+
+define('TBL_HISTORIAL_ESCALADA','historial_escalada');
+define('TBL_HISTORIAL_ESCALADA_PALMARES','historial_escalada_palmares');
 
 define('TBL_REL_SPORTS', 'rel_sports_perfil_historial');
 define('TBL_REL_SELECCIONADO', 'rel_sports_to_seleccionado');
