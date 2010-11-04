@@ -48,7 +48,7 @@
                     <img src="images/ajax-loader.gif" alt="Loading" width="16" height="16" class="jq-loader hide" />
                 </div>
                 <!-- ========== PROVINCIA  =========== -->
-                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?>">
+                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?> noinit">
                     <label class="label label-form" for="cboStates">Provincia</label>
                     <?php if( $hist_row['state']!=0 ){
                             echo form_dropdown('cboStates', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');

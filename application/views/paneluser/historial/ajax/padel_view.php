@@ -53,12 +53,12 @@
                     <img src="images/ajax-loader.gif" alt="Loading" width="16" height="16" class="jq-loader hide" />
                 </div>
                 <!-- ========== PROVINCIA  =========== -->
-                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?>">
+                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?> noinit">
                     <label class="label label-form" for="cboStates">Provincia</label>
                     <?php if( $hist_row['state']!=0 ){
-                            echo form_dropdown('cboStates', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
+                            echo form_dropdown('cboState', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
                           }else{?>
-                            <select name="cboOriginStates" id="cboOriginStates" class="jq-select" tabindex="15"></select>
+                            <select name="cboState"  class="jq-select" tabindex="15"></select>
                     <?php }?>
                 </div>
 
@@ -237,8 +237,6 @@
                             </tr>
                         </tbody>
                     </table>
-                    <br />
-                    <input type="button" value="Agregar otro" name="btn"  onclick="Historial.addRow(this,0,'.fixed')" />
                 </div>
                 <!-- ========== Temporada =========== -->
                 <div id="contEficiencia" class="trow tbl">

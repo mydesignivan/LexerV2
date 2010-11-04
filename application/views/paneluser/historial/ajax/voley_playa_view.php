@@ -18,15 +18,15 @@
                  <!-- ========== TEMPORADA  =========== -->
                 <div class="trow "
                     <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
-                    <?=form_dropdown('cboTemporada', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1"');?>
+                    <?=form_dropdown('cboTemporada_1', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1"');?>
                 </div>
                 <div class="trow "
                     <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
-                    <?=form_dropdown('cboTemporada', $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1"');?>
+                    <?=form_dropdown('cboTemporada_2', $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1"');?>
                 </div>
                 <div class="trow">
                     <label class="label label-form" for="txtClub"><span class="required">*</span>Club</label>
-                    <input type="text" name="txtClub" id="txtClub" class="wsize2" tabindex="2" value="<?=$hist_row['club'] ?>" />
+                    <input type="text" name="txtClub" class="wsize2" tabindex="2" value="<?=$hist_row['club'] ?>" />
                 </div>
                 <!-- ========== CATEGORIA  =========== -->
                 <div class="trow">
@@ -34,11 +34,11 @@
                     <span>
                     <?=form_dropdown('cboCategoria', $hist_row['cboCategoria'], $hist_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                     </span>
-                    <span class="<?=$hist_row['categoria']>0?"":"hide";?>">
+                    <span class="<?=$hist_row['categoria']>0?"":"hide";?> noinit">
                       <input type="text" name="txtCategoriaOther"  class="wsize2" tabindex="2" value="<?=$hist_row['categoria_other'] ?>" />
                     </span>
                 </div>
-                <!-- ========== POSICION  =========== -->
+                <!-- ========== PAREJA  =========== -->
                 <div class="trow">
                     <label class="label label-form" for="txtPareja"><span class="required">*</span>Pareja</label>
                         <input type="text" name="txtPareja"  class="wsize2" tabindex="2" value="<?=$hist_row['pareja'] ?>" />
@@ -46,8 +46,8 @@
 
                    <!-- ========== CIUDAD  =========== -->
                 <div class="trow">
-                    <label class="label label-form" for="txtCiudad"><span class="required">*</span>Ciudad</label>
-                    <input type="text" name="txtCiudad" id="txtCiudad" class="wsize2" tabindex="2" value="<?=$hist_row['city'] ?>" />
+                    <label class="label label-form" for="txtCity"><span class="required">*</span>Ciudad</label>
+                    <input type="text" name="txtCity"  class="wsize2" tabindex="2" value="<?=$hist_row['city'] ?>" />
                 </div>
 
                 <!-- ========== PAIS  =========== -->
@@ -58,12 +58,12 @@
                     <img src="images/ajax-loader.gif" alt="Loading" width="16" height="16" class="jq-loader hide" />
                 </div>
                 <!-- ========== PROVINCIA  =========== -->
-                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?>">
+                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?> noinit">
                     <label class="label label-form" for="cboStates">Provincia</label>
                     <?php if( $hist_row['state']!=0 ){
-                            echo form_dropdown('cboStates', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
+                            echo form_dropdown('cboState', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
                           }else{?>
-                            <select name="cboOriginStates" id="cboOriginStates" class="jq-select" tabindex="15"></select>
+                            <select name="cboState"  class="jq-select" tabindex="15"></select>
                     <?php }?>
                 </div>
 
@@ -289,8 +289,6 @@
 
                         </tbody>
                     </table>
-                    <br />
-                    <input type="button" value="Agregar otro" name="btn"  onclick="Historial.addRow(this,0,'.fixed')" />
                 </div>
            <!-- ========== Observaciones  =========== -->
             <div class="trow">

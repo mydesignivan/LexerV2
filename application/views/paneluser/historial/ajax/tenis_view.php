@@ -18,17 +18,17 @@
                  <!-- ========== TEMPORADA  =========== -->
                 <div class="trow "
                     <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
-                    <?=form_dropdown('cboTemporada1', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1"');?>
+                    <?=form_dropdown('cboTemporada_1', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1"');?>
                 </div>
                 <div class="trow "
                     <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
-                    <?=form_dropdown('cboTemporada2', $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1"');?>
+                    <?=form_dropdown('cboTemporada_2', $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1"');?>
                 </div>
 
 
                 <div class="trow">
                     <label class="label label-form" for="txtClub"><span class="required">*</span>Club / Federacion</label>
-                    <input type="text" name="txtClub" id="txtClub" class="wsize2" tabindex="2" value="<?=$hist_row['club'] ?>" />
+                    <input type="text" name="txtClub" class="wsize2" tabindex="2" value="<?=$hist_row['club'] ?>" />
                 </div>
                 <!-- ========== CATEGORIA  =========== -->
                 <div class="trow">
@@ -36,7 +36,7 @@
                     <span>
                     <?=form_dropdown('cboCategoria', $hist_row['cboCategoria'], $hist_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                     </span>
-                    <span class="<?=$hist_row['categoria']>0?"":"hide";?>">
+                    <span class="<?=$hist_row['categoria']>0?"":"hide";?> noinit">
                       <input type="text" name="txtCategoriaOther"  class="wsize2" tabindex="2" value="<?=$hist_row['categoria_other'] ?>" />
                     </span>
                 </div>
@@ -44,8 +44,8 @@
 
                    <!-- ========== CIUDAD  =========== -->
                 <div class="trow">
-                    <label class="label label-form" for="txtCiudad"><span class="required">*</span>Ciudad</label>
-                    <input type="text" name="txtCiudad" id="txtCiudad" class="wsize2" tabindex="2" value="<?=$hist_row['city'] ?>" />
+                    <label class="label label-form" for="txtCity"><span class="required">*</span>Ciudad</label>
+                    <input type="text" name="txtCity"  class="wsize2" tabindex="2" value="<?=$hist_row['city'] ?>" />
                 </div>
 
                 <!-- ========== PAIS  =========== -->
@@ -56,7 +56,7 @@
                     <img src="images/ajax-loader.gif" alt="Loading" width="16" height="16" class="jq-loader hide" />
                 </div>
                 <!-- ========== PROVINCIA  =========== -->
-                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?>">
+                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?> noinit">
                     <label class="label label-form" for="cboStates">Provincia</label>
                     <?php if( $hist_row['state']!=0 ){
                             echo form_dropdown('cboStates', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
@@ -287,17 +287,17 @@
                     <span>
                     <?=form_dropdown('cboActividades', $hist_row['cboActividades'], $hist_row['otras_actividades'], ' tabindex="14" onchange="Historial.TenisActividades(this)"');?>
                     </span>
-                    <span class="<?=$hist_row['otras_actividades']>0?"":"hide";?>">
+                    <span class="<?=$hist_row['otras_actividades']>0?"":"hide";?> noinit">
                       <input type="text" name="txtOtrasActividadesOther"  class="wsize2" tabindex="2" value="<?=$hist_row['otras_actividades_other'] ?>" />
                     </span>
                 </div>
                      <!-- ========== CATEGORIA  =========== -->
-                <div class="trow <?=$hist_row['otras_actividades']==100 ? "" : "hide"; ?>">
+                <div class="trow <?=$hist_row['otras_actividades']==100 ? "" : "hide"; ?> noinit">
                     <label class="label label-form" for="cboCategoriaDT"><span class="required">*</span>Categoria DT</label>
                     <span>
                     <?=form_dropdown('cboCategoriaDT', $hist_row['cboCategoria'], $hist_row['categoria_actividades'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                     </span>
-                    <span class="<?=$hist_row['categoria_actividades']>0?"":"hide";?>">
+                    <span class="<?=$hist_row['categoria_actividades']>0?"":"hide";?> noinit">
                       <input type="text" name="txtCategoriaActividadesOther"  class="wsize2" tabindex="2" value="<?=$hist_row['categoria_other'] ?>" />
                     </span>
                 </div>
@@ -313,9 +313,9 @@
         </div>
         <div id="tabs-2">
                         <!-- ========== Finales Individuales =========== -->
-                <div id="contTorneo" class="trow tbl">
+                <div  class="trow tbl">
                     <label class="label label-tablas">Mejores Resultados Individuales</label>
-                    <table id="tblTorneos" cellpadding="0" cellspacing="0">
+                    <table  cellpadding="0" cellspacing="0">
                         <thead>
                             <tr>
                                 <td class="cell1">Fecha</td>
@@ -357,9 +357,9 @@
 
 
                 <!-- ========== TITULO DOBLES =========== -->
-                <div id="contTorneo" class="trow tbl">
+                <div class="trow tbl">
                     <label class="label label-tablas">Mejores Resultados Dobles </label>
-                    <table id="tblTorneos" cellpadding="0" cellspacing="0">
+                    <table cellpadding="0" cellspacing="0">
                         <thead>
                             <tr>
                                 <td class="cell1">Fecha</td>

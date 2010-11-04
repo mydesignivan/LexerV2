@@ -19,11 +19,11 @@
                  <!-- ========== TEMPORADA  =========== -->
                 <div class="trow "
                     <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
-                    <?=form_dropdown('cboTemporada1', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1"');?>
+                    <?=form_dropdown('cboTemporada_1', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1"');?>
                 </div>
                 <div class="trow "
                     <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
-                    <?=form_dropdown('cboTemporada2', $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1"');?>
+                    <?=form_dropdown('cboTemporada_2', $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1"');?>
                 </div>
                  <!-- ========== CLUB  =========== -->
                 <div class="trow">
@@ -39,8 +39,8 @@
 
                 <!-- ========== CIUDAD  =========== -->
                 <div class="trow">
-                    <label class="label label-form" for="txtCiudad"><span class="required">*</span>Ciudad</label>
-                    <input type="text" name="txtCiudad" id="txtCiudad" class="wsize2" tabindex="2" value="<?=$hist_row['city'] ?>" />
+                    <label class="label label-form" for="txtCity"><span class="required">*</span>Ciudad</label>
+                    <input type="text" name="txtCity" class="wsize2" tabindex="2" value="<?=$hist_row['city'] ?>" />
                 </div>
 
                 <!-- ========== PAIS  =========== -->
@@ -52,12 +52,12 @@
                 </div>
 
                 <!-- ========== PROVINCIA  =========== -->
-                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?>">
+                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?> noinit">
                     <label class="label label-form" for="cboStates">Provincia</label>
                     <?php if( $hist_row['state']!=0 ){
-                            echo form_dropdown('cboStates', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
+                            echo form_dropdown('cboState', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
                           }else{?>
-                            <select name="cboOriginStates" id="cboOriginStates" class="jq-select" tabindex="15"></select>
+                            <select name="cboStates"  class="jq-select" tabindex="15"></select>
                     <?php }?>
                 </div>
 
@@ -74,7 +74,7 @@
                 </div>
 
 
-                <div class="trow <?=$hist_row['especialidad']==1?"":"hide";?> div_artistico">
+                <div class="trow <?=$hist_row['especialidad']==1?"":"hide noinit";?> div_artistico">
                     <!-- ========== SUPERFICIE  =========== -->
                     <div class="trow">
                         <label class="label label-form" for="cboSuperficie"><span class="required">*</span>Superficie</label>
@@ -87,7 +87,7 @@
                         <span>
                         <?=form_dropdown('cboCategoriaArtistico', $hist_row['cboCategoriaArtistico'], $hist_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                         </span>
-                        <span class="<?=$hist_row['categoria']>0?"":"hide";?>">
+                        <span class="<?=$hist_row['categoria']>0?"":"hide";?> noinit">
                           <input type="text" name="txtCategoriaOther"  class="wsize2" tabindex="2" value="<?=$hist_row['categoria_other'] ?>" />
                         </span>
                     </div>
@@ -98,7 +98,7 @@
                         <span>
                         <?=form_dropdown('cboModalidadArtistico', $hist_row['cboModalidadArtistico'], $hist_row['modalidad'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                         </span>
-                        <span class="<?=$hist_row['modalidad']>0?"":"hide";?>">
+                        <span class="<?=$hist_row['modalidad']>0?"":"hide";?> noinit">
                           <input type="text" name="txtModalidadOther"  class="wsize2" tabindex="2" value="<?=$hist_row['modalidad_other'] ?>" />
                         </span>
                     </div>
@@ -157,7 +157,7 @@
                 </div>
 
 
-                <div class="trow <?=$hist_row['especialidad']==2?"":"hide";?> div_velocidad">
+                <div class="trow <?=$hist_row['especialidad']==2?"":"hide noinit";?> div_velocidad">
                     <!-- ========== SUPERFICIE  =========== -->
                     <div class="trow">
                         <label class="label label-form" for="cboSuperficie"><span class="required">*</span>Superficie</label>
@@ -170,7 +170,7 @@
                         <span>
                         <?=form_dropdown('cboCategoriaArtistico', $hist_row['cboCategoriaArtistico'], $hist_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                         </span>
-                        <span class="<?=$hist_row['categoria']>0?"":"hide";?>">
+                        <span class="<?=$hist_row['categoria']>0?"":"hide";?> noinit">
                           <input type="text" name="txtCategoriaOther"  class="wsize2" tabindex="2" value="<?=$hist_row['categoria_other'] ?>" />
                         </span>
                     </div>
@@ -181,7 +181,7 @@
                         <span>
                         <?=form_dropdown('cboModalidadArtistico', $hist_row['cboModalidadArtistico'], $hist_row['modalidad'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                         </span>
-                        <span class="<?=$hist_row['modalidad']>0?"":"hide";?>">
+                        <span class="<?=$hist_row['modalidad']>0?"":"hide";?> noinit">
                           <input type="text" name="txtModalidadOther"  class="wsize2" tabindex="2" value="<?=$hist_row['modalidad_other'] ?>" />
                         </span>
                     </div>

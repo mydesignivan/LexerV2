@@ -18,11 +18,11 @@
                  <!-- ========== TEMPORADA  =========== -->
                 <div class="trow "
                     <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
-                    <?=form_dropdown('cboTemporada1', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1"');?>
+                    <?=form_dropdown('cboTemporada_1', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1"');?>
                 </div>
                 <div class="trow "
                     <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
-                    <?=form_dropdown('cboTemporada2', $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1"');?>
+                    <?=form_dropdown('cboTemporada_2', $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1"');?>
                 </div>
                  <!-- ========== CLUB  =========== -->
                 <div class="trow">
@@ -35,7 +35,7 @@
                     <span>
                     <?=form_dropdown('cboCategoria', $hist_row['cboCategoria'], $hist_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                     </span>
-                    <span class="<?=$hist_row['categoria']>0?"":"hide";?>">
+                    <span class="<?=$hist_row['categoria']>0?"":"hide";?> noinit">
                       <input type="text" name="txtCategoriaOther"  class="wsize2" tabindex="2" value="<?=$hist_row['categoria_other'] ?>" />
                     </span>
                 </div>
@@ -49,8 +49,8 @@
 
                 <!-- ========== CIUDAD  =========== -->
                 <div class="trow">
-                    <label class="label label-form" for="txtCiudad"><span class="required">*</span>Ciudad</label>
-                    <input type="text" name="txtCiudad" id="txtCiudad" class="wsize2" tabindex="2" value="<?=$hist_row['city'] ?>" />
+                    <label class="label label-form" for="txtCity"><span class="required">*</span>Ciudad</label>
+                    <input type="text" name="txtCity" class="wsize2" tabindex="2" value="<?=$hist_row['city'] ?>" />
                 </div>
 
                 <!-- ========== PAIS  =========== -->
@@ -65,15 +65,15 @@
                 <div class="trow <?=getval($hist_row['state'], 'hide', 0)?>">
                     <label class="label label-form" for="cboStates">Provincia</label>
                     <?php if( $hist_row['state']!=0 ){
-                            echo form_dropdown('cboStates', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
+                            echo form_dropdown('cboState', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
                           }else{?>
-                            <select name="cboOriginStates" id="cboOriginStates" class="jq-select" tabindex="15"></select>
+                            <select name="cboState" class="jq-select" tabindex="15"></select>
                     <?php }?>
                 </div>
 
 
                 <!-- ========== Pitcher =========== -->
-                <div class="pitcher_class trow tbl <?=$hist_row['posicion']!=1? "hide":""?>">
+                <div class="pitcher_class trow tbl <?=$hist_row['posicion']!=1? "hide":""?> noinit">
                     <label class="label label-tablas">Defensa - Datos Promedios por Partido</label>
                     <table id="tblDatos" cellpadding="0" cellspacing="0">
                         <tbody>
@@ -119,13 +119,13 @@
                             </tr>
                             <tr class="fixed">
                                 <td class="cell1">
-                                     <label class="label " for="txtPenalesConvertidos">Efectos de Bola</label>
+                                     <label class="label " for="txtEfecto">Efectos de Bola</label>
                                 </td>
                                 <td class="cell2">
                                     <span>
                                     <?=form_dropdown('cboEfecto', $hist_row['cboEfecto'], $hist_row['efecto'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                                     </span>
-                                    <span class="<?=$hist_row['efecto']>0?"":"hide";?>">
+                                    <span class="<?=$hist_row['efecto']>0?"":"hide";?> noinit">
                                       <input type="text" name="txtEfectoOther"  class="wsize2" tabindex="2" value="<?=$hist_row['efecto_other'] ?>" />
                                     </span>
                                 </td>
@@ -142,7 +142,7 @@
                     </table>
                 </div>
                 <!-- ========== OTROS NO PITCHER =========== -->
-                <div class="all_pos_class trow tbl <?=$hist_row['posicion']!=1 && $hist_row['posicion']!=0 ? "":"hide"?>">
+                <div class="all_pos_class trow tbl <?=$hist_row['posicion']!=1 && $hist_row['posicion']!=0 ? "":"hide"?> noinit">
                     <label class="label label-tablas">Defensa - Datos Promedios por Partido</label>
                     <table id="tblDatos" cellpadding="0" cellspacing="0">
                         <tbody>

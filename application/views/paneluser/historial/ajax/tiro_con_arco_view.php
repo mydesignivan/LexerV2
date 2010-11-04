@@ -24,7 +24,7 @@
 
                 <div class="trow">
                     <label class="label label-form" for="txtClub"><span class="required">*</span>Club/Feder./Asoc.</label>
-                    <input type="text" name="txtClub" id="txtClub" class="wsize2" tabindex="2" value="<?=$hist_row['club'] ?>" />
+                    <input type="text" name="txtClub" class="wsize2" tabindex="2" value="<?=$hist_row['club'] ?>" />
                 </div>
                 <!-- ========== CATEGORIA  =========== -->
                 <div class="trow">
@@ -32,7 +32,7 @@
                     <span>
                     <?=form_dropdown('cboCategoria', $hist_row['cboCategoria'], $hist_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                     </span>
-                    <span class="<?=$hist_row['categoria']>0?"":"hide";?>">
+                    <span class="<?=$hist_row['categoria']>0?"":"hide";?> noinit">
                       <input type="text" name="txtCategoriaOther"  class="wsize2" tabindex="2" value="<?=$hist_row['categoria_other'] ?>" />
                     </span>
                 </div>
@@ -40,8 +40,8 @@
 
                    <!-- ========== CIUDAD  =========== -->
                 <div class="trow">
-                    <label class="label label-form" for="txtCiudad"><span class="required">*</span>Ciudad</label>
-                    <input type="text" name="txtCiudad" id="txtCiudad" class="wsize2" tabindex="2" value="<?=$hist_row['city'] ?>" />
+                    <label class="label label-form" for="txtCity"><span class="required">*</span>Ciudad</label>
+                    <input type="text" name="txtCity" class="wsize2" tabindex="2" value="<?=$hist_row['city'] ?>" />
                 </div>
 
                 <!-- ========== PAIS  =========== -->
@@ -52,12 +52,12 @@
                     <img src="images/ajax-loader.gif" alt="Loading" width="16" height="16" class="jq-loader hide" />
                 </div>
                 <!-- ========== PROVINCIA  =========== -->
-                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?>">
+                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?> noinit">
                     <label class="label label-form" for="cboStates">Provincia</label>
                     <?php if( $hist_row['state']!=0 ){
-                            echo form_dropdown('cboStates', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
+                            echo form_dropdown('cboState', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
                           }else{?>
-                            <select name="cboOriginStates" id="cboOriginStates" class="jq-select" tabindex="15"></select>
+                            <select name="cboState"  class="jq-select" tabindex="15"></select>
                     <?php }?>
                 </div>
 
@@ -67,7 +67,7 @@
                     <span>
                     <?=form_dropdown('cboEspecialidad', $hist_row['cboEspecialidad'], $hist_row['especialidad'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                     </span>
-                    <span class="<?=$hist_row['especialidad']>0?"":"hide";?>">
+                    <span class="<?=$hist_row['especialidad']>0?"":"hide";?> noinit">
                       <input type="text" name="txtEspecialidadOther"  class="wsize2" tabindex="2" value="<?=$hist_row['especialidad_other'] ?>" />
                     </span>
                 </div>
@@ -106,7 +106,7 @@
                                     <span>
                                     <?=form_dropdown('cboTorneoCategoria', $torneo_row['cboCategoria'], $torneo_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                                     </span>
-                                    <span class="<?=$torneo_row['categoria']>0?"":"hide";?>">
+                                    <span class="<?=$torneo_row['categoria']>0?"":"hide";?> noinit">
                                       <input type="text" name="txtCategoriaTorneoOther"  class="wsize2" tabindex="2" value="<?=$torneo_row['categoria_other'] ?>" />
                                     </span>
                                 </td>
