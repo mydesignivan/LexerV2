@@ -33,7 +33,7 @@
                          <label class="label label-form" for="cboGraduacion"><span class="required">*</span>Tipo de Graduaci&oacute;n</label>
                         <?=form_dropdown('cboGraduacion', $hist_row['cboGraduacion'], 0, 'tabindex="1"  onchange="Historial.selCat(this);"');?>
                     </div>
-                    <div class="trow hide ">
+                    <div class="trow hide noinit">
                     </div>
                 </div>
 
@@ -62,7 +62,7 @@
                 </div>
 
                 <!-- ========== PROVINCIA  =========== -->
-                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?>">
+                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?> noinit">
                     <label class="label label-form" for="cboStates">Provincia</label>
                     <?php if( $hist_row['state']!=0 ){
                             echo form_dropdown('cboStates', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
