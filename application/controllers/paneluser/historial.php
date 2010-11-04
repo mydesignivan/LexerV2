@@ -647,13 +647,8 @@ class Historial extends Controller {
                         }
 
                     }
-
                     $data['palmares'] = $row[TBL_HISTORIAL_ARCO_PALMARES];
-                    for($i=0;$i<count($row[TBL_HISTORIAL_ARCO_PALMARES]);$i++){
-                         $data['palmares'][$i]['cboTemporada'] = $cboTemporada;
-                         $data['palmares'][$i]['cboCountry'] = $cboCountry;
-                    }
-                    break;                    break;
+                    break;                    
                 case 20: //tiro deportivo
                     $list_cat = TBL_LIST_TIRO_MODALIDAD;
                     $categorias =   $this->historialdeportivo_model->getCombo(TBL_LIST_TIRO_CATEGORIA,"Seleccione una categoria");
