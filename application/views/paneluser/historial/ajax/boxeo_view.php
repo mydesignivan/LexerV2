@@ -22,7 +22,7 @@
                         <label class="label label-form" for="cboNivel"><span class="required">*</span>Categoria</label>
                         <?=form_dropdown('cboNivel', $hist_row['cboNivel'], 0, 'tabindex="1"  onchange="Historial.selCat(this);"');?>
                     </div>
-                    <div class="trow hide ">
+                    <div class="trow hide noinit">
                     </div>
                 </div>
 

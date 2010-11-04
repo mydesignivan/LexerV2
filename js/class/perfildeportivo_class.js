@@ -121,6 +121,58 @@ var PerfilDeportivo = new (function(){
         });
     };
 
+    this.addRowFecha = function(sel, limit, sel_celda, fix_class){
+        if (typeof(sel_celda) =='undefined' || sel_celda == null){
+            sel_celda = '.cell1';
+        }
+
+        sel=$(sel).parent().find('table');
+
+
+        JTable.add(sel, {
+            limit : limit,
+            callback : function(tr){
+                tr.removeAttr('id');
+                var name = "";
+                tr.find(".cfecha").each(function(i){
+
+                    name = $(this).attr("name");
+                    $(this).parent().html('<input type="text" name="'+name+'" value="" class="jq-data cfecha" />');
+                });
+
+                tr.find(".noinit").hide();
+            },
+            fixed_class : fix_class
+        });
+
+        this.newRow(sel);
+
+    };
+
+    this.newRow = function(sel){
+
+        var last=0;
+        if (typeof(sel) =='undefined'){
+            last=$(".cfecha");
+        }
+        else{
+            last=sel.find(".cfecha");
+        }
+
+        // Configura el calendario
+        $(last).datepicker({
+            showOn          : 'both',
+            buttonImage     : 'images/icon_calendar.png',
+            buttonImageOnly : true,
+            dateFormat      : 'dd-mm-yy',
+            changeMonth     : true,
+            changeYear      : true,
+            yearRange       : '1950:'+(new Date().getFullYear()),
+            monthNamesShort : ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+
+        });
+    }
+
     this.cboPaseSelection = function(selec){
         var selected=$("#"+selec.id+" option:selected");
        

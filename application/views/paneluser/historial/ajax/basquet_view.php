@@ -18,11 +18,11 @@
                  <!-- ========== TEMPORADA  =========== -->
                 <div class="trow "
                     <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
-                    <?=form_dropdown('cboTemporada1', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1"');?>
+                    <?=form_dropdown('cboTemporada_1', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1"');?>
                 </div>
                 <div class="trow "
                     <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
-                    <?=form_dropdown('cboTemporada2', $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1"');?>
+                    <?=form_dropdown('cboTemporada_2', $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1"');?>
                 </div>
 
                  <!-- ========== CLUB  =========== -->
@@ -36,7 +36,7 @@
                     <span>
                     <?=form_dropdown('cboCategoria', $hist_row['cboCategoria'], $hist_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                     </span>
-                    <span class="<?=$hist_row['categoria']>0?"":"hide";?>">
+                    <span class="<?=$hist_row['categoria']>0?"":"hide";?> noinit">
                       <input type="text" name="txtCategoriaOther"  class="wsize2" tabindex="2" value="<?=$hist_row['categoria_other'] ?>" />
                     </span>
                 </div>
@@ -46,7 +46,7 @@
                     <span>
                     <?=form_dropdown('cboPosicion', $hist_row['cboPosicion'], $hist_row['posicion'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                     </span>
-                    <span class="<?=$hist_row['posicion']>0?"":"hide";?>">
+                    <span class="<?=$hist_row['posicion']>0?"":"hide";?> noinit">
                       <input type="text" name="txtPosicionOther"  class="wsize2" tabindex="2" value="<?=$hist_row['posicion_other'] ?>" />
                     </span>
                 </div>
@@ -59,7 +59,7 @@
                     <img src="images/ajax-loader.gif" alt="Loading" width="16" height="16" class="jq-loader hide" />
                 </div>
                 <!-- ========== PROVINCIA  =========== -->
-                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?>">
+                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?> noinit">
                     <label class="label label-form" for="cboStates">Provincia</label>
                     <?php if( $hist_row['state']!=0 ){
                             echo form_dropdown('cboStates', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
@@ -131,7 +131,7 @@
                             </tr>
                             <tr class="fixed">
                                 <td class="cell1">
-                                     <label class="label " for="cboStates">Triples</label>
+                                     <label class="label " for="txtTriples">Triples</label>
                                 </td>
                                 <td class="cell2">
                                     <input type="text" name="txtTriples" value="<?=$hist_row['triples']?>" class="wsize1 " />
@@ -142,7 +142,7 @@
                                      <label class="label " for="txtPuntos">Promedio de Puntos</label>
                                 </td>
                                 <td class="cell2">
-                                    <input type="text" name="txtPuntos" value="<?=$hist_row['puntos_promedio']?>" class="wsize1 " />
+                                    <input type="text" name="txtPuntosPromedio" value="<?=$hist_row['puntos_promedio']?>" class="wsize1 " />
                                 </td>
                             </tr>
                             <tr class="fixed">
@@ -181,10 +181,10 @@
                 <?php foreach( $hist_row['datos'] as $datos_row ){?>
                         <tr <?php if( $datos_row['datos_id']!=0 ) echo 'id="trDatos'.$datos_row['datos_id'].'"'?>>
                                 <td class="cell1">
-                                      <input type="text" name="txtOpcion" value="<?=$datos_row['opcion']?>" class="wsize1 " />
+                                      <input type="text" name="txtOpcion-datos" value="<?=$datos_row['opcion']?>" class="wsize1 " />
                                 </td>
                                 <td class="cell2">
-                                    <input type="text" name="txtDato" value="<?=$datos_row['dato']?>" class="wsize1 " />
+                                    <input type="text" name="txtDato-datos" value="<?=$datos_row['dato']?>" class="wsize1 " />
                                 </td>
                                 <td class="cell3">
                                     <input type="button" value="Eliminar" name="btn" onclick="Historial.removeRow(this, 'torneo')" />
@@ -235,13 +235,13 @@
                                     </span>
                                 </td>
                                 <td class="cell2">
-                                    <input type="text" name="txtTitulo" value="<?=$palmares_row['titulo']?>" class="wsize2" />
+                                    <input type="text" name="txtTitulo-palmares" value="<?=$palmares_row['titulo']?>" class="wsize2" />
                                 </td>
                                 <td class="cell3">
-                                    <input type="text" name="txtEquipo" value="<?=$palmares_row['equipo']?>" class="wsize2" />
+                                    <input type="text" name="txtEquipo-palmares" value="<?=$palmares_row['equipo']?>" class="wsize2" />
                                 </td>
                                 <td class="cell4">
-                                  <?=form_dropdown('cboCountry', $palmares_row['cboCountry'], $palmares_row['country'], ' tabindex="14" ');?>
+                                  <?=form_dropdown('cboCountry-palmares', $palmares_row['cboCountry'], $palmares_row['country'], ' tabindex="14" ');?>
                                 </td>
 
                                 <td class="cell5"><input type="button" value="Eliminar" name="btn" onclick="Historial.removeRow(this, 'palmares')" /></td>

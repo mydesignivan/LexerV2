@@ -70,27 +70,6 @@ class Historial extends Controller {
 
 
 
-    /* AJAX FUNCTIONSget_tabla
-     **************************************************************************/
-    public function ajax_upload_image(){
-        if( $_SERVER['REQUEST_METHOD']=="POST" ){
-
-            $this->load->library('superupload', array(
-                'path'          => UPLOAD_PATH_CV.'.tmp/',
-                'thumb_width'   => IMAGE_CV_THUMB_WIDTH,
-                'thumb_height'  => IMAGE_CV_THUMB_HEIGHT,
-                'maxsize'       => UPLOAD_MAXSIZE,
-                'filetype'      => UPLOAD_FILETYPE,
-                'resize_image_original' => false,
-                'filename_prefix'       => $this->session->userdata('users_id')."_"
-            ));
-
-
-
-             echo json_encode($this->superupload->upload('txtImage'));
-        }
-    }
-
     public function ajax_get_sport(){
        
          if( $_SERVER['REQUEST_METHOD']=="POST" ){
@@ -132,6 +111,7 @@ class Historial extends Controller {
 
                     $data['categoria']=$row[TBL_HISTORIAL_ATLETISMO_CATEGORIA];
                     for($i=0;$i<count($row[TBL_HISTORIAL_ATLETISMO_CATEGORIA]);$i++){
+                        $data['categoria'][$i]['cboTemporada'] = $cboTemporada;
                         $data['categoria'][$i]['cboTemporada'] = $cboTemporada;
                         $data['categoria'][$i]['cboCategoria'] = $categorias;
                         $data['categoria'][$i]['categorias']=$row[TBL_HISTORIAL_ATLETISMO_CATEGORIA_PRUEBA];
@@ -178,8 +158,8 @@ class Historial extends Controller {
 
                     break;
                 case 3: // basquet
-                    $categorias=$this->historialdeportivo_model->getCombo("list_basquet_categoria","Seleccione una categoria");
-                    $posicion=$this->historialdeportivo_model->getCombo("list_basquet_posicion","Seleccione una categoria");
+                    $categorias=$this->historialdeportivo_model->getCombo(TBL_LIST_BASQUET_CATEGORIA,"Seleccione una categoria");
+                    $posicion=$this->historialdeportivo_model->getCombo(TBL_LIST_BASQUET_POSICION,"Seleccione una posicion");
 
                     $data['historial'] = $row[TBL_HISTORIAL_BASQUET];
                     for($i = 0 ; $i < count($row[TBL_HISTORIAL_BASQUET]) ; $i++){

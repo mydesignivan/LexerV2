@@ -14,161 +14,7 @@ class historialdeportivo_model extends Model {
 
     /* PUBLIC FUNCTIONS
      **************************************************************************/
-    public function save(){
-        $extra_post = json_decode($this->input->post('extra_post'));
-        $json = json_decode($_POST['json']);
-
-        
-
-        //print_array($extra_post, true);
-
-        $data = array(
-            'users_id'        => $this->_users_id,
-            'lastname'        => $this->input->post('txtLastName'),
-            'firstname'       => $this->input->post('txtFirstName'),
-            'sex'             => $this->input->post('optSex'),
-            'nacimiento'      => strtotime($this->input->post('txtFnac')),
-            'estado_civil'    => $this->input->post('cboEstadoCivil'),
-            'documento_tipo'  => get_def_post('txtTipoDocOther', $this->input->post('cboTipoDoc')),
-            'documento_tipo_other'  => get_def_post('txtTipoDocOther', ''),
-            'documento_num'   => $this->input->post('txtNumDoc'),
-            'documento_show'  => $this->input->post('chkShowNroDoc'),
-            'current_country' => $this->input->post('cboCurrentCountry'),
-            'current_city'    => $this->input->post('txtCurrentCity'),
-            'current_state'   => $this->input->post('cboCurrentStates'),
-            'current_zipcode' => $this->input->post('txtCurrentZipCode'),
-            'origin_country'  => $this->input->post('cboOriginCountry'),
-            'origin_city'     => $this->input->post('txtOriginCity'),
-            'origin_state'    => $this->input->post('cboOriginStates'),
-            'origin_zipcode'  => $this->input->post('txtOriginZipCode'),
-            'nacionalidad'    => $this->input->post('txtNacionalidad'),
-            'passport'        => $this->input->post('cboPassport'),
-            'phone_area'      => $this->input->post('txtPhoneArea'),
-            'phone_city'      => $this->input->post('txtPhoneCity'),
-            'phone_num'       => $this->input->post('txtPhoneNum'),
-            'celu_area'       => $this->input->post('txtCeluArea'),
-            'celu_city'       => $this->input->post('txtCeluCity'),
-            'celu_num'        => $this->input->post('txtCeluNum'),
-            'website'         => $this->input->post('txtWebSite'),
-            'profesion'       => $this->input->post('txtProfesion'),
-            'estudios'        => $this->input->post('txtEstudios'),
-            'check_discapacidad' => $this->input->post('chkDisc'),
-            'image_thumb'    => $json->filename_image,
-            'image_width'   => $json->thumb_width,
-            'image_height'  => $json->thumb_height,
-        );
-//        print_array($data,true);
-
-  /*      if( isset($datUpload['filename_image']) ){
-            $data['image_thumb'] = $datUpload['filename_image'];
-            $data['image_width'] = $datUpload['thumb_width'];
-            $data['image_height'] = $datUpload['thumb_height'];
-        }*/
-
-        $this->db->trans_start(); // INICIO TRANSACCION
-
-        // GUARDA LOS "DATOS PERSONALES"
-        $this->db->where('users_id', $this->_users_id);
-        if( !$this->db->update(TBL_USERS_DEP, $data) ) return false;
-        //----------------------------------------------------------------------
-
-
-        // "IDIOMAS" ALTA
-        $lngName = $extra_post->langNew->cboLangName;
-        $lngLOral = $extra_post->langNew->cboLangLevelOral;
-        $lngLWrite = $extra_post->langNew->cboLangLevelWrite;
-
-        for( $n=0; $n<=count($lngName)-1; $n++ ){
-            if( !empty($lngName[$n]) ){
-                $data = array(
-                    'users_id'    => $this->_users_id,
-                    'lang_id'     => $lngName[$n],
-                    'level_oral'  => $lngLOral[$n],
-                    'level_write' => $lngLWrite[$n]
-                );
-
-                if( !$this->db->insert(TBL_USERS_DEP_LANG, $data) ) break;
-            }
-        }
-
-        // "IDIOMAS" BAJA
-        foreach( $extra_post->langDel as $id ){
-            if( !$this->db->delete(TBL_USERS_DEP_LANG, array('deplang_id'=>$id)) ) break;
-        }
-
-        // "IDIOMAS" MODIFICACION
-        foreach( $extra_post->langEdit as $row ){
-            $data = array();
-
-            foreach($row as $row2){
-                $id = $row2[0];
-                $name = $row2[1];
-                $val = $row2[2];
-                if( $name=='cboLangName' ) $key = 'lang_id';
-                else if( $name=='cboLangLevelOral' ) $key = 'level_oral';
-                else if( $name=='cboLangLevelWrite' ) $key = 'level_write';
-                $data[$key] = $val;
-            }
-
-            $this->db->where('deplang_id', $id);
-            if( !$this->db->update(TBL_USERS_DEP_LANG, $data) ) break;
-        }
-        //----------------------------------------------------------------------
-
-
-        // "DISCAPACIDADES" ALTA
-        if( $this->input->post('chkDisc')==1 ){
-            $discType = $extra_post->discNew->cboDiscTipo;
-            $discDetalle = $extra_post->discNew->txtDiscDetalle;
-
-            for( $n=0; $n<=count($discType)-1; $n++ ){
-                if( !empty($discType[$n]) ){
-                    $data = array(
-                        'users_id' => $this->_users_id,
-                        'type'     => $discType[$n],
-                        'detalle'  => $discDetalle[$n]
-                    );
-
-                    if( !$this->db->insert(TBL_USERS_DEP_DISC, $data) ) break;
-                }
-            }
-        }
-
-        // "DISCAPACIDAD" BAJA
-        foreach( $extra_post->langDisc as $id ){
-            if( !$this->db->delete(TBL_USERS_DEP_DISC, array('disc_id'=>$id)) ) break;
-        }
-
-        // "DISCAPACIDAD" MODIFICACION
-        foreach( $extra_post->discEdit as $row ){
-            $data = array();
-
-            foreach($row as $row2){
-                $id = $row2[0];
-                $name = $row2[1];
-                $val = $row2[2];
-                if( $name=='cboDiscTipo' ) $key = 'type';
-                else if( $name=='txtDiscDetalle' ) $key = 'detalle';
-                $data[$key] = $val;
-            }
-
-            $this->db->where('disc_id', $id);
-            if( !$this->db->update(TBL_USERS_DEP_DISC, $data) ) break;
-        }
-        //----------------------------------------------------------------------
-
-
-        // ELIMINA LA IMAGEN ANTERIOR
-        $filename = $this->input->post('filename_image_old');
-        if( !@copy($json->href_image_full, UPLOAD_PATH_CV.$json->filename_image) ) return false;
-        
-        @unlink(UPLOAD_PATH_CV . $filename);
-        @unlink($json->href_image_full);
-
-        $this->db->trans_complete(); // COMPLETO LA TRANSACCION
-
-        return true;
-    }
+ 
 
     public function get_info(){
         $info = $this->db->get_where(TBL_HISTORIAL, array('users_id' => $this->_users_id))->row_array();
@@ -183,6 +29,10 @@ class historialdeportivo_model extends Model {
     }
 
     public function get_info_dep($sports_id, $historial_id){
+      //  $this->db->query("select *, 'fede' as 'table_name' from historial_atletismo_palmares ");
+     //   $this->db->select("*, 'fede' as 'table_name'");
+        //$this->db->get(TBL_HISTORIAL_ATLETISMO_PALMARES);
+//echo $this->db->last_query();echo "aaaa";die();
         $this->db->select(TBL_REL_SPORTS.".*, ".TBL_LIST_SPORTS.".name as name_deporte");
         $this->db->join(TBL_LIST_SPORTS,TBL_LIST_SPORTS.".sports_id = ".TBL_REL_SPORTS.".sports_id");
         $row=$this->db->get_where(TBL_REL_SPORTS,array(TBL_REL_SPORTS.".sports_id"=>$sports_id))->row_array();
@@ -195,16 +45,31 @@ class historialdeportivo_model extends Model {
         //ej: historial_marciales, historial_marciales_palmares, historial_marciales_torneos
         $tablas_sport=array();
         for($i=0;$i<count($tablas);$i++){
-            if(strpos($tablas[$i], $pref_historial )!==false)   {
+            if(strpos($tablas[$i], $pref_historial )!==false){
+                //agrega a cada resultado un campo llamado table_name con el nombre de la tabla.
+                $select = "select *, '".$tablas[$i]."' as '".TABLE_NAME_FIELD."' ";
+
+                $historial_id = $historial_id ? $historial_id : 0;
+                $from = "from ".$tablas[$i]." ";
+                $where = "where historial_id = ".$historial_id;
+                $query = $select.$from.$where;
+
+                // el select de abajo no funciona por eso se arma la sentencia SQL.
+                //$this->db->select( "select *, 'fede' as 'table_name' ");
+
                 //cada tabla con sus datos la inserta con la clave correspondiente al nombre de la tabla
-                $tablas_sport[$tablas[$i]]= $this->db->get_where($tablas[$i],array("historial_id"=>$historial_id))->result_array();
+                //$tablas_sport[$tablas[$i]]= $this->db->get_where($tablas[$i],array("historial_id"=>$historial_id))->result_array();
+                $tablas_sport[$tablas[$i]]= $this->db->query($select.$from.$where)->result_array();
+                
 
                 //si la tabla es vacia se inserta un row vacio
-                
                if (count( $tablas_sport[$tablas[$i]])==0){
                     $columns=$this->db->list_fields($tablas[$i]);
+
                     foreach($columns as $column)
                         $tablas_sport[$tablas[$i]][0][$column]="";
+                    //se agrega la columan table_name en el registro vacio
+                    $tablas_sport[$tablas[$i]][0][TABLE_NAME_FIELD]=$tablas[$i];
 
                 }
             }
@@ -252,13 +117,13 @@ class historialdeportivo_model extends Model {
         return $data;
    }
 
-   function getBoxeoLicencia($perfil_id){
+/*   function getBoxeoLicencia($perfil_id){
         $rtn=$this->db->get_where(TBL_PERFIL_BEXEO_LICENCIA,array("perfil_id"=>$perfil_id));
         return $rtn;
        
    }
-
-    public function getComboSeleccionado($deporte){
+*/
+    /*public function getComboSeleccionado($deporte){
         $this->db->select(TBL_LIST_SELECCIONADO.".name, ".TBL_LIST_SELECCIONADO.".seleccionado_id");
         $this->db->join(TBL_REL_SELECCIONADO,TBL_REL_SELECCIONADO.".sport_id = ".TBL_LIST_SPORTS.".sports_id");
         $this->db->join(TBL_LIST_SELECCIONADO,TBL_LIST_SELECCIONADO.".seleccionado_id = ".TBL_REL_SELECCIONADO.".seleccionado_id");
@@ -271,7 +136,7 @@ class historialdeportivo_model extends Model {
 
         if ($tmp) $result[]=$tmp;
         return $result;
-    }
+    }*/
 
 
 

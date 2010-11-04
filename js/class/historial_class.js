@@ -103,6 +103,7 @@ var Historial = new (function(){
         var div_last_historial = $("."+div_table).last();
         
         div_last_historial.find('select').each(function(){this.selectedIndex=0});
+        div_last_historial.find('.noinit').hide();
         $("."+div_table).last().find(".tbl").each(function(i){
             JTable.resetJtable($(this));
        });
@@ -226,6 +227,7 @@ var Historial = new (function(){
                 tr.removeAttr('id');
                 var name = sel.find(".cfecha:first").attr("name");
                 tr.find(sel_celda).html('<input type="text" name="'+name+'" value="" class="jq-data cfecha" />');
+                tr.find(".noinit").hide();
             },
             fixed_class : fix_class
         });
@@ -295,9 +297,6 @@ var Historial = new (function(){
 
              }
          }
-
-
-
     }
 
 
@@ -308,6 +307,7 @@ var Historial = new (function(){
        sel=$(sel).parent().find('table');
         JTable.add(sel, limit, function(tr){
             tr.removeAttr('id');
+            tr.find(".noinit").hide();
 
         }, fix_class);
         $(".cformatxy").mask("99/99");

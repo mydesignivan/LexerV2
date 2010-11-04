@@ -18,11 +18,11 @@
                  <!-- ========== TEMPORADA  =========== -->
                 <div class="trow "
                     <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
-                    <?=form_dropdown('cboTemporada', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1"');?>
+                    <?=form_dropdown('cboTemporada_!', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1"');?>
                 </div>
                 <div class="trow "
                     <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
-                    <?=form_dropdown('cboTemporada', $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1"');?>
+                    <?=form_dropdown('cboTemporada_2', $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1"');?>
                 </div>
 
                 <!-- ========== INSTITUCION  =========== -->
@@ -31,7 +31,7 @@
                     <span>
                     <?=form_dropdown('cboInstitucion', $hist_row['cboInstitucion'], $hist_row['institucion'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                     </span>
-                    <span class="<?=$hist_row['institucion']>0?"":"hide";?>">
+                    <span class="<?=$hist_row['institucion']>0?"":"hide";?> noinit">
                       <input type="text" name="txtInstitucionOther"  class="wsize2" tabindex="2" value="<?=$hist_row['institucion_other'] ?>" />
                     </span>
                 </div>
@@ -47,7 +47,7 @@
                     <span>
                     <?=form_dropdown('cboCategoria', $hist_row['cboCategoria'], $hist_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                     </span>
-                    <span class="<?=$hist_row['categoria']>0?"":"hide";?>">
+                    <span class="<?=$hist_row['categoria']>0?"":"hide";?> noinit">
                       <input type="text" name="txtCategoriaOther"  class="wsize2" tabindex="2" value="<?=$hist_row['categoria_other'] ?>" />
                     </span>
                 </div>
@@ -67,7 +67,7 @@
                     <img src="images/ajax-loader.gif" alt="Loading" width="16" height="16" class="jq-loader hide" />
                 </div>
                 <!-- ========== PROVINCIA  =========== -->
-                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?>">
+                <div class="trow <?=getval($hist_row['state'], 'hide', 0)?> noinit">
                     <label class="label label-form" for="cboStates">Provincia</label>
                     <?php if( $hist_row['state']!=0 ){
                             echo form_dropdown('cboStates', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
@@ -82,7 +82,7 @@
                     <span>
                     <?=form_dropdown('cboEspecialidad', $hist_row['cboEspecialidad'], $hist_row['especialidad'], ' tabindex="14" onchange="Historial.ciclismoEspecialidad(this);"');?>
                     </span>
-                    <span class="<?=$hist_row['especialidad']>0?"":"hide";?>">
+                    <span class="<?=$hist_row['especialidad']>0?"":"hide";?> noinit">
                       <input type="text" name="txtEspecialidadOther"  class="wsize2" tabindex="2" value="<?=$hist_row['especialidad_other'] ?>" />
                     </span>
                 </div>
@@ -93,7 +93,7 @@
                     <span>
                     <?=form_dropdown('cboModalidad', $hist_row['cboModalidad'], $hist_row['modalidad'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                     </span>
-                    <span class="<?=$hist_row['modalidad']>0?"":"hide";?>">
+                    <span class="<?=$hist_row['modalidad']>0?"":"hide";?> noinit">
                       <input type="text" name="txtModalidadOther"  class="wsize2" tabindex="2" value="<?=$hist_row['modalidad_other'] ?>" />
                     </span>
                 </div>

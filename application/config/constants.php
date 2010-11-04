@@ -129,6 +129,7 @@ define('TBL_LIST_ATLETISMO_DISCIPLINA',   'list_atletismo_disciplina');
 define('TBL_LIST_ATLETISMO_CATEGORIA',   'list_atletismo_categoria');
 define('TBL_LIST_MARCIALES_MODALIDAD',   'list_marciales_modalidad');
 define('TBL_LIST_BASQUET_POSICION',   'list_basquet_posicion');
+define('TBL_LIST_BASQUET_CATEGORIA',   'list_basquet_categoria');
 define('TBL_LIST_CICLISMO_ESPECIALIDAD',   'list_ciclismo_especialidad');
 define('TBL_LIST_CICLISMO_CATEGORIA',   'list_ciclismo_categoria');
 define('TBL_LIST_CICLISMO_MODALIDAD',   'list_ciclismo_modalidad');
@@ -270,6 +271,8 @@ define('TBL_REL_SPORTS', 'rel_sports_perfil_historial');
 define('TBL_REL_SELECCIONADO', 'rel_sports_to_seleccionado');
 
 define('TBL_CONTENT',  'content');
+
+define('TABLE_NAME_FIELD', 'table_name');
 
 
 /*

@@ -19,10 +19,10 @@
                 <div class="trow">
                     <label class="label label-form" for="cboCategoria"><span class="required">*</span>Categoria</label>
                     <span>
-                    <?=form_dropdown('cboCategoria', $cat_row['cboCategoria'], $cat_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
+                    <?=form_dropdown('cboCategoria-'.$cat_row[TABLE_NAME_FIELD] , $cat_row['cboCategoria'], $cat_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                     </span>
-                    <span class="<?=$cat_row['categoria']<0?"":"hide";?>">
-                      <input type="text" name="txtCategoriaOther"  class="wsize2" tabindex="2" value="<?=$cat_row['categoria_other'] ?>" />
+                    <span class="<?=$cat_row['categoria']<0?"":"hide";?> noinit">
+                      <input type="text" name="txtCategoriaOther-<?=$cat_row[TABLE_NAME_FIELD] ?>"  class="wsize2" tabindex="2" value="<?=$cat_row['categoria_other'] ?>" />
                     </span>
                 </div>
                 <!-- ========== Torneos =========== -->
@@ -48,26 +48,26 @@
                             <tr <?php if( $prueba_row['categorias_id']!=0 ) echo 'id="trTorneo'.$prueba_row['categorias_id'].'"'?>>
                                 <td class="cell1">
                                     <span>
-                                    <?=form_dropdown('cboPrueba', $prueba_row['cboPrueba'], $prueba_row['prueba'], ' tabindex="14"  onchange="LibForms.isOther(this);"');?>
+                                    <?=form_dropdown('cboPrueba-'.$prueba_row[TABLE_NAME_FIELD], $prueba_row['cboPrueba'], $prueba_row['prueba'], ' tabindex="14"  onchange="LibForms.isOther(this);"');?>
                                     </span>
-                                    <span class="<?=$prueba_row['prueba']>0?"":"hide";?>">
-                                    <input type="text" name="txtPruebaOther" value="<?=$prueba_row['prueba_other']?>" class="wsize1 " />
+                                    <span class="<?=$prueba_row['prueba']>0?"":"hide";?> noinit">
+                                    <input type="text" name="txtPruebaOther-<?=$prueba_row[TABLE_NAME_FIELD] ?>" value="<?=$prueba_row['prueba_other']?>" class="wsize1 " />
                                     </span>
                                 </td>
                                 <td class="cell2">
-                                    <input type="text" name="txtTorneo" value="<?=$prueba_row['marca']?>" class="wsize1 " />
+                                    <input type="text" name="txtTorneo-<?=$prueba_row[TABLE_NAME_FIELD] ?>" value="<?=$prueba_row['marca']?>" class="wsize1 " />
                                 </td>
                                 <td class="cell3">
-                                    <input type="text" name="txtTorneo" value="<?=$prueba_row['federacion']?>" class="wsize1 " />
+                                    <input type="text" name="txtFederacion-<?=$prueba_row[TABLE_NAME_FIELD] ?>" value="<?=$prueba_row['federacion']?>" class="wsize1 " />
                                 </td>
                                 <td class="cell4">
-                                    <input type="text" name="txtFechaTorneo" value="<?=date('d-m-Y', $prueba_row['fecha']?$prueba_row['fecha']:time())?>" class="jq-data cfecha" tabindex="22" />
+                                    <input type="text" name="txtFecha-<?=$prueba_row[TABLE_NAME_FIELD] ?>" value="<?=date('d-m-Y', $prueba_row['fecha']?$prueba_row['fecha']:time())?>" class="jq-data cfecha" tabindex="22" />
                                 </td>
                                 <td class="cell5">
-                                    <input type="text" name="txtCiudadTorneo" value="<?=$prueba_row['city']?>" class="wsize1 " />
+                                    <input type="text" name="txtCiudad--<?=$prueba_row[TABLE_NAME_FIELD] ?>" value="<?=$prueba_row['city']?>" class="wsize1 " />
                                 </td>
                                 <td class="cell6">
-                                    <input type="text" name="txtCiudadTorneo" value="<?=$prueba_row['city']?>" class="wsize1 " />
+                                    <?=form_dropdown('cboCountry-'.$prueba_row[TABLE_NAME_FIELD] , $prueba_row['cboCountry'], $prueba_row['country'], ' tabindex="1"  ');?>
                                 </td>
                                 <td class="cell7"><input type="button" value="Eliminar" name="btn" onclick="Historial.removeRow(this, 'torneo')" /></td>
                             </tr>
@@ -80,7 +80,7 @@
                 <div class="trow">
                     <label class="label label-form" for="txtObservaciones"><span class="required">*</span>Observaciones</label>
 
-                      <input type="text" name="txtObservaciones" class="wsize2" tabindex="2" value="<?=$cat_row['observaciones'] ?>" />
+                      <input type="text" name="txtObservaciones--<?=$cat_row[TABLE_NAME_FIELD] ?>" class="wsize2" tabindex="2" value="<?=$cat_row['observaciones'] ?>" />
                 </div>
 
             </div>
@@ -111,18 +111,18 @@
                     foreach( $pruebas_row as $pr_num ){?>
                             <tr <?php if( $prueba_row['categorias_id']!=0 ) echo 'id="trTorneo'.$pr_num['categorias_id'].'"'?>>
                                 <td class="cell1">
-                                    <input type="text" name="txtFechaTorneo" value="<?=date('d-m-Y', $pr_num['fecha']?$pr_num['fecha']:time())?>" class="jq-data cfecha" tabindex="22" />
+                                    <input type="text" name="txtFecha-<?=$cat_row[TABLE_NAME_FIELD] ?>" value="<?=date('d-m-Y', $pr_num['fecha']?$pr_num['fecha']:time())?>" class="jq-data cfecha" tabindex="22" />
                                 </td>
                                 <td class="cell2">
                                     <span>
-                                    <?=form_dropdown('cboPrueba', $pr_num['cboPrueba'], $pr_num['prueba'], ' tabindex="14"  onchange="LibForms.isOther(this);"');?>
+                                    <?=form_dropdown('cboPrueba-'.$cat_row[TABLE_NAME_FIELD] , $pr_num['cboPrueba'], $pr_num['prueba'], ' tabindex="14"  onchange="LibForms.isOther(this);"');?>
                                     </span>
-                                    <span class="<?=$pr_num['prueba']>0?"":"hide";?>">
-                                    <input type="text" name="txtPruebaOther" value="<?=$pr_num['prueba_other']?>" class="wsize1 " />
+                                    <span class="<?=$pr_num['prueba']>0?"":"hide";?> noinit">
+                                    <input type="text" name="txtPruebaOther-<?=$cat_row[TABLE_NAME_FIELD] ?>" value="<?=$pr_num['prueba_other']?>" class="wsize1 " />
                                     </span>
                                 </td>
                                 <td class="cell3">
-                                    <input type="text" name="txtTorneo" value="<?=$pr_num['observaciones']?>" class="wsize1 " />
+                                    <input type="text" name="txtObsercaciones-<?=$cat_row[TABLE_NAME_FIELD] ?>" value="<?=$pr_num['observaciones']?>" class="wsize1 " />
                                 </td>
                                 <td class="cell4"><input type="button" value="Eliminar" name="btn" onclick="Historial.removeRow(this, '.evolucion')" /></td>
                             </tr>
@@ -163,23 +163,23 @@
                             <tr <?php if( $palmares_row['palmares_id']!=0 ) echo 'id="trTorneo'.$palmares_row['palmares_id'].'"'?>>
                                 <td class="cell1">
                                     <span>
-                                <?=form_dropdown('cboPruebaPalmares', $palmares_row['pruebas'], $palmares_row['prueba'], ' tabindex="1"  onchange="LibForms.isOther(this);"');?>
+                                <?=form_dropdown('cboPruebaPalmares-'.$palmares_row[TABLE_NAME_FIELD] , $palmares_row['pruebas'], $palmares_row['prueba'], ' tabindex="1"  onchange="LibForms.isOther(this);"');?>
                                     </span>
-                                    <span class="<?=$palmares_row['prueba']>0 ? "hide" : ""?>">
-                                <input type="text" name="txtMarcaPalmares" value="<?=$palmares_row['prueba_other']?>" class="wsize2" />
+                                    <span class="<?=$palmares_row['prueba']<0 ? "" : "hide"?> noinit">
+                                <input type="text" name="txtPruebaOther-<?=$palmares_row[TABLE_NAME_FIELD] ?>" value="<?=$palmares_row['prueba_other']?>" class="wsize2" />
                                     </span>
                                 </td>
                                 <td class="cell2">
-                                    <input type="text" name="txtMarcaPalmares" value="<?=$palmares_row['marca']?>" class="wsize2" />
+                                    <input type="text" name="txtMarca-<?=$palmares_row[TABLE_NAME_FIELD] ?>" value="<?=$palmares_row['marca']?>" class="wsize2" />
                                 </td>
                                 <td class="cell3">
-                                    <input type="text" name="txtPuestoPalmares" value="<?=$palmares_row['puesto']?>" class="wsize2" />
+                                    <input type="text" name="txtPuesto-<?=$palmares_row[TABLE_NAME_FIELD] ?>" value="<?=$palmares_row['puesto']?>" class="wsize2" />
                                 </td>
                                 <td class="cell4">
-                                <?=form_dropdown('cboTemporadaPalmares', $palmares_row['cboTemporada'], $palmares_row['year'], ' tabindex="1"');?>
+                                <?=form_dropdown('cboYear-'.$palmares_row[TABLE_NAME_FIELD] , $palmares_row['cboTemporada'], $palmares_row['year'], ' tabindex="1"');?>
                                 </td>
                                 <td class="cell5">
-                                    <input type="text" name="txtDescripcionPalmares" value="<?=$palmares_row['descripcion']?>" class="wsize2" />
+                                    <input type="text" name="txtDescripcion-<?=$palmares_row[TABLE_NAME_FIELD] ?>" value="<?=$palmares_row['descripcion']?>" class="wsize2" />
                                 </td>
 
                                 <td class="cell6"><input type="button" value="Eliminar" name="btn" onclick="Historial.removeRow(this, 'palmares')" /></td>
