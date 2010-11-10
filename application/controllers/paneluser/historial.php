@@ -402,7 +402,7 @@ class Historial extends Controller {
                                                array("name"=>"Técnico","id"=>'r'),
                                                array("name"=>"Otra","id"=>'-1'));
 
-                   $data['historial'] = $row[TBL_HISTORIAL_HOCKEY];
+                    $data['historial'] = $row[TBL_HISTORIAL_HOCKEY];
                     for($i = 0 ; $i < count($row[TBL_HISTORIAL_HOCKEY]) ; $i++){
                         $data['historial'][$i]['cboDefensivo']=$defensivo;
                         $data['historial'][$i]['cboOfensivo']=$ofensivo;
@@ -421,7 +421,6 @@ class Historial extends Controller {
                         for($n=0;$n<count($row[TBL_HISTORIAL_HOCKEY_TORNEOS]);$n++){
                             $data['historial'][$i]['torneos'][$n]['cboTemporada'] = $cboTemporada;
                         }
-
                     }
 
                     $data['palmares'] = $row[TBL_HISTORIAL_HOCKEY_PALMARES];
@@ -657,7 +656,6 @@ class Historial extends Controller {
                                                 array("name"=>"Modalidad Pistola","id"=>2),
                                                 array("name"=>"Modalidad Escopeta","id"=>3),
                                                 array("name"=>"Modalidad Blanco Móvil","id"=>4));
-
                     
                     $data['historial'] = $row[TBL_HISTORIAL_TIRO];
                     for($i=0 ; $i < count($row[TBL_HISTORIAL_TIRO]) ; $i++ ){

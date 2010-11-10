@@ -51,8 +51,6 @@ class Myaccount extends Controller {
         }
     }
 
-
-
     /* PRIVATE FUNCTIONS
      **************************************************************************/
 
