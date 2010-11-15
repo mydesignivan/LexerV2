@@ -10,26 +10,26 @@
     </ul>
     <div id="div_sports">
         <div id="tabs-1">
-            
+            <div class="trow">
         <?
 
         foreach($categoria as $cat_row){
         ?>
-            <div class="chistorial trow">
+            <div class="chistorial">
                 <div class="trow">
-                    <label class="label label-form" ><span class="required">*</span>Categoria</label>
+                    <label class="label label-form" for="cboCategoria"><span class="required">*</span>Categoria</label>
                     <span>
-                    <?=form_dropdown($cat_row[TABLE_NAME_FIELD]."[categoria]" , $cat_row['cboCategoria'], $cat_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);" class="hinput"');?>
+                    <?=form_dropdown($cat_row[TABLE_NAME_FIELD]."[categoria]" , $cat_row['cboCategoria'], $cat_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                     </span>
                     <span class="<?=$cat_row['categoria']<0?"":"hide";?> noinit">
-                      <input type="text" name="<?=$cat_row[TABLE_NAME_FIELD] ?>[categoria_other]"  class="wsize2 hinput" tabindex="2" value="<?=$cat_row['categoria_other'] ?>" />
+                      <input type="text" name="<?=$cat_row[TABLE_NAME_FIELD] ?>[categoria_other]"  class="wsize2" tabindex="2" value="<?=$cat_row['categoria_other'] ?>" />
                     </span>
                 </div>
                 <!-- ========== Torneos =========== -->
 
                 <div class="trow tbl">
                     <label class="label label-tablas">Torneos Nacionales e Internacionales</label>
-                    <table name="tblTorneos" cellpadding="0" cellspacing="0">
+                    <table id="tblTorneos" cellpadding="0" cellspacing="0">
                         <thead>
                             <tr>
                                 <td class="cell1">Prueba</td>
@@ -45,10 +45,10 @@
 
                 <?php
                     foreach( $cat_row['categorias'] as $prueba_row ){?>
-                            <tr <?php if( $prueba_row['prueba_id']!=0 ) echo 'id="trTorneo'.$prueba_row['prueba_id'].'"'?>>
+                            <tr <?php if( $prueba_row['categorias_id']!=0 ) echo 'id="trTorneo'.$prueba_row['categorias_id'].'"'?>>
                                 <td class="cell1">
                                     <span>
-                                    <?=form_dropdown($prueba_row[TABLE_NAME_FIELD]."[prueba]", $prueba_row['cboPrueba'], $prueba_row['prueba'], ' tabindex="14"  onchange="LibForms.isOther(this);"');?>
+                                    <?=form_dropdown('cboPrueba-'.$prueba_row[TABLE_NAME_FIELD], $prueba_row['cboPrueba'], $prueba_row['prueba'], ' tabindex="14"  onchange="LibForms.isOther(this);"');?>
                                     </span>
                                     <span class="<?=$prueba_row['prueba']>0?"":"hide";?> noinit">
                                     <input type="text" name="<?=$prueba_row[TABLE_NAME_FIELD] ?>[prueba_other]" value="<?=$prueba_row['prueba_other']?>" class="wsize1 " />
@@ -80,7 +80,7 @@
                 <div class="trow">
                     <label class="label label-form" ><span class="required">*</span>Observaciones</label>
 
-                      <input type="text" name="<?=$cat_row[TABLE_NAME_FIELD] ?>[observaciones]" class="wsize2 hinput" tabindex="2" value="<?=$cat_row['observaciones'] ?>" />
+                      <input type="text" name="<?=$cat_row[TABLE_NAME_FIELD] ?>[observaciones]" class="wsize2" tabindex="2" value="<?=$cat_row['observaciones'] ?>" />
                 </div>
 
             </div>
@@ -89,14 +89,14 @@
                 </div>
             
         <? }?>
-           
-           
+           </div>
+            <div class="trow">
        <? foreach($pruebas as $pruebas_row){?>
 
-            <div class="cevolucion trow">
+            <div class="cevolucion">
                 <div class="trow tbl">
                 <label class="label label-tablas">Evoluci&oacute;n</label>
-                    <table name="tblPruebas" cellpadding="0" cellspacing="0">
+                    <table id="tblTorneos" cellpadding="0" cellspacing="0">
                         <thead>
                             <tr>
                                 <td class="cell1">Fecha</td>
@@ -108,22 +108,21 @@
                         <tbody>
 
                 <?php
-      
                     foreach( $pruebas_row as $pr_num ){?>
-                            <tr <?php if( $pr_num['prueba_id']!=0 ) echo 'id="trTorneo'.$pr_num['prueba_id'].'"'?>>
+                            <tr <?php if( $prueba_row['categorias_id']!=0 ) echo 'id="trTorneo'.$pr_num['categorias_id'].'"'?>>
                                 <td class="cell1">
-                                    <input type="text" name="<?=$pr_num[TABLE_NAME_FIELD] ?>[fecha]" value="<?=date('d-m-Y', $pr_num['fecha']?$pr_num['fecha']:time())?>" class="jq-data cfecha" tabindex="22" />
+                                    <input type="text" name="<?=$cat_row[TABLE_NAME_FIELD] ?>[fecha]" value="<?=date('d-m-Y', $pr_num['fecha']?$pr_num['fecha']:time())?>" class="jq-data cfecha" tabindex="22" />
                                 </td>
                                 <td class="cell2">
                                     <span>
-                                    <?=form_dropdown($pr_num[TABLE_NAME_FIELD]."[prueba]" , $pr_num['cboPrueba'], $pr_num['prueba'], ' tabindex="14"  onchange="LibForms.isOther(this);"');?>
+                                    <?=form_dropdown($cat_row[TABLE_NAME_FIELD]."[prueba]" , $pr_num['cboPrueba'], $pr_num['prueba'], ' tabindex="14"  onchange="LibForms.isOther(this);"');?>
                                     </span>
                                     <span class="<?=$pr_num['prueba']>0?"":"hide";?> noinit">
-                                    <input type="text" name="<?=$pr_num[TABLE_NAME_FIELD] ?>[prueba_other]" value="<?=$pr_num['prueba_other']?>" class="wsize1 " />
+                                    <input type="text" name="<?=$cat_row[TABLE_NAME_FIELD] ?>[prueba_other]" value="<?=$pr_num['prueba_other']?>" class="wsize1 " />
                                     </span>
                                 </td>
                                 <td class="cell3">
-                                    <input type="text" name="<?=$pr_num[TABLE_NAME_FIELD] ?>[observaciones]" value="<?=$pr_num['observaciones']?>" class="wsize1 " />
+                                    <input type="text" name="<?=$cat_row[TABLE_NAME_FIELD] ?>['observaciones']" value="<?=$pr_num['observaciones']?>" class="wsize1 " />
                                 </td>
                                 <td class="cell4"><input type="button" value="Eliminar" name="btn" onclick="Historial.removeRow(this, '.evolucion')" /></td>
                             </tr>
@@ -141,12 +140,12 @@
                 </div>
                
 
-            
+            </div>
         </div>
         <div id="tabs-2">
                 <div id="contPalmares" class="trow tbl">
                     <label class="label label-tablas">Logros / Títulos Nacionales / Títulos Internacionales / Otros</label>
-                    <table name="tblPalmares" cellpadding="0" cellspacing="0">
+                    <table id="tblPalmares" cellpadding="0" cellspacing="0">
                         <thead>
                             <tr>
                                 <td class="cell1">Prueba</td>
@@ -164,7 +163,7 @@
                             <tr <?php if( $palmares_row['palmares_id']!=0 ) echo 'id="trTorneo'.$palmares_row['palmares_id'].'"'?>>
                                 <td class="cell1">
                                     <span>
-                                <?=form_dropdown($palmares_row[TABLE_NAME_FIELD]."[pruebas]" , $palmares_row['cboPrueba'], $palmares_row['prueba'], ' tabindex="1"  onchange="LibForms.isOther(this);"');?>
+                                <?=form_dropdown($palmares_row[TABLE_NAME_FIELD]."[pruebas]" , $palmares_row['prueba'], $palmares_row['prueba'], ' tabindex="1"  onchange="LibForms.isOther(this);"');?>
                                     </span>
                                     <span class="<?=$palmares_row['prueba']<0 ? "" : "hide"?> noinit">
                                 <input type="text" name="<?=$palmares_row[TABLE_NAME_FIELD] ?>[prueba_other]" value="<?=$palmares_row['prueba_other']?>" class="wsize2" />

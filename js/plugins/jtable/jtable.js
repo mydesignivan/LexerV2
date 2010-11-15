@@ -77,6 +77,44 @@ var JTable = new (function(){
         el.find("tbody").find("tr:not(.fixed):gt(0)").remove();
     }
 
+    this.fixSubmitTable = function(param){
+        var hinput = [];
+        $(".hinput").each(function(index){
+            hinput[index] = $(this).attr("name");
+        });
+        hinput = hinput.unique();
+        for (i = 0; i < hinput.length ; i++){
+            $("[name="+hinput[i]+"] ").each(function(index){
+                var tmp = $(this).attr("name").toString();
+                var arr_tmp = tmp.split("[");
+                tmp = arr_tmp[0]+"["+index+"]["+arr_tmp[1];
+                $(this).attr("name",tmp);
+            })
+        }
+
+        var tables = [];
+        $("table").each(function(x){
+            tables[x] = $(this).attr("name");
+        })
+        tables = tables.unique();
+        
+
+        for (i = 0; i < tables.length ; i++){
+            $("table[name="+tables[i]+"]").each(function (x){
+                alert($(this).attr("name"));
+                $(this).find('tbody >tr:not('+param.fixed_class+') ').each(function(index){
+
+                    $(this).find("input:text, input:file, textarea, select").each(function(){
+                        var tmp = $(this).attr("name").toString();
+                        var arr_tmp = tmp.split("[");
+                        tmp = arr_tmp[0]+"["+x+"]"+"["+index+"]["+arr_tmp[1];
+                        $(this).attr("name",tmp);
+                    })
+                })
+            });
+        }
+    }
+
 
     /* PRIVATE PROPERTIES
      **************************************************************************/

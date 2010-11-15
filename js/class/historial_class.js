@@ -5,13 +5,17 @@ var Historial = new (function(){
     this.initializer = function(){
         var o = $.extend({}, jQueryValidatorOptDef, {
             rules : {
-                cboDeporte: 'required',
-                txtObjetivo: 'required'
 
             },
             submitHandler : function(form){
-                loader.show();
-              //  form.submit();
+              //  loader.show();
+                JTable.fixSubmitTable({fixed_class : ".fixed"})
+
+                $("#historial_id").val(JSON.encode(_his_array));
+                $(".temp").remove();
+                form.submit();
+
+
             },
             invalidHandler : function(){
                 loader.hide();
@@ -116,7 +120,9 @@ var Historial = new (function(){
          div_last_historial.find('input:text, input:file, textarea').val('');
     }
 
-    this.get_combo_states = function(el){
+    this.get_combo_states = function(el, extra){
+
+        if (typeof(extra)=='undefined') extra = "hinput";
         
         var sel=$(el).parent().next();
 
@@ -129,7 +135,7 @@ var Historial = new (function(){
             dataname  : 'states',
             name      : select.attr('name'),
             'default' : 'Seleccione una Provincia',
-            extra     : 'class="jq-select"'
+            extra     : 'class="jq-select '+ extra +'"'
         };
 
         el.disabled=true;
@@ -147,11 +153,17 @@ var Historial = new (function(){
     this.seleccionDeporte = function(btnEnviar){
          $(".dep > *").attr('disabled', 'disabled');
          var sport = $("#cboDeporte option:selected").val();
+         $("#historial_deporte_id").val(sport);
+         var hist = [];
+         $(".historial_id").each(function(index){
+             hist.push($(this).val());
+         });
+         _his_array = hist;
 
          if (!isNaN(parseInt(sport))) {
              $.post(baseURI+"paneluser/historial/ajax_get_sport", {
                  deporte: sport,
-                 historial_id: $("#historial_id").val(),
+                 historial_id: JSON.encode(hist),
                  historial_deporte_id: $("#historial_deporte_id").val()},
                  function(data){
                     $(".dep > *").attr('disabled', '');
@@ -171,17 +183,18 @@ var Historial = new (function(){
             elem=$(select).parent().next();
         }
         var lab =$(select).parent().parent().find("input[name=label]").eq(0).val();
-        var list=$(select).parent().parent().find("input[name=list]").eq(0).val();
+        var name_comp=$(select).parent().parent().find("#name_comp").eq(0).val();
+        var list=$(select).parent().parent().find("#list").eq(0).val();
         if($(select).val() > 0 ){
              $.post(baseURI+"paneluser/historial/ajax_get_subcat", {
                  cat: $(select).val(),
                  list: list,
+                 name_comp: name_comp,
                  label: lab},
                  function(data){
                     $(elem).html(data);
                     $(elem).fadeIn();
             });
-
         }else $(elem).fadeOut("slow");
     }
 
@@ -316,6 +329,8 @@ var Historial = new (function(){
 
     /* PRIVATE PROPERTIES
      **************************************************************************/
+     _his_array = [];
+
 
     /* PRIVATE METHODS
      **************************************************************************/

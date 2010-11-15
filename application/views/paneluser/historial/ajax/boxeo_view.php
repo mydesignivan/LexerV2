@@ -17,9 +17,9 @@
             <div class="chistorial">
                  <!-- ========== CATEGORIA Y NIVEL  =========== -->
                 <div>
-                    <input type="hidden" name="list" value="<?=$hist_row['list']?>">
+                    <input type="hidden" id="list" value="<?=$hist_row['list']?>">
                     <div class="trow "
-                        <label class="label label-form" for="cboNivel"><span class="required">*</span>Categoria</label>
+                        <label class="label label-form" ><span class="required">*</span>Categoria</label>
                         <?=form_dropdown('cboNivel', $hist_row['cboNivel'], 0, 'tabindex="1"  onchange="Historial.selCat(this);"');?>
                     </div>
                     <div class="trow hide noinit">

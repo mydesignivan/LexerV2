@@ -17,26 +17,26 @@
             <div class="chistorial">
                  <!-- ========== TEMPORADA  =========== -->
                 <div class="trow "
-                    <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
-                    <?=form_dropdown('cboTemporada', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1"');?>
+                    <label class="label label-form"><span class="required">*</span>Temporada</label>
+                    <?=form_dropdown($hist_row[TABLE_NAME_FIELD].'[temporada_1]', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1" class="hinput"');?>
                 </div>
 
                   <!-- ========== Entrenador  =========== -->
                 <div class="trow">
                     <label class="label label-form" for="txtEntrenador"><span class="required">*</span>Entrenador</label>
-                    <input type="text" name="txtEntrenador" class="wsize2" tabindex="2" value="<?=$hist_row['entrenador'] ?>" />
+                    <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD] ?>[entrenador]" class="wsize2 hinput" tabindex="2" value="<?=$hist_row['entrenador'] ?>" />
                 </div>
 
                  <!-- ========== CLUB  =========== -->
                 <div class="trow">
-                    <label class="label label-form" for="txtClub"><span class="required">*</span>Club</label>
-                    <input type="text" name="txtClub" id="txtClub" class="wsize2" tabindex="2" value="<?=$hist_row['club'] ?>" />
+                    <label class="label label-form" ><span class="required">*</span>Club</label>
+                    <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD] ?>[club]" class="wsize2 hinput" tabindex="2" value="<?=$hist_row['club'] ?>" />
                 </div>
 
                 <!-- ========== CATEGORIA  =========== -->
                 <div class="trow">
                     <label class="label label-form" for="txtCategoria"><span class="required">*</span>Categoria</label>
-                    <input type="text" name="txtCategoria" class="wsize2" tabindex="2" value="<?=$hist_row['categoria'] ?>" />
+                    <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD] ?>[categoria]" class="wsize2 hinput" tabindex="2" value="<?=$hist_row['categoria'] ?>" />
                 </div>
 
 
@@ -44,41 +44,41 @@
                 <div class="trow">
                     <label class="label label-form" for="cboCountry">Pa&iacute;s Origen</label>
                     <?php $comboCountry[''] = "&nbsp;";?>
-                    <?=form_dropdown('cboCountry', $hist_row['cboCountry'], $hist_row['country'], ' tabindex="14" onchange="Historial.get_combo_states(this)"');?>
+                    <?=form_dropdown($hist_row[TABLE_NAME_FIELD].'[country]', $hist_row['cboCountry'], $hist_row['country'], ' tabindex="14" onchange="Historial.get_combo_states(this)" class="hinput"');?>
                     <img src="images/ajax-loader.gif" alt="Loading" width="16" height="16" class="jq-loader hide" />
                 </div>
                 <!-- ========== PROVINCIA  =========== -->
                 <div class="trow <?=getval($hist_row['state'], 'hide', 0)?> noinit">
                     <label class="label label-form" for="cboStates">Provincia</label>
                     <?php if( $hist_row['state']!=0 ){
-                            echo form_dropdown('cboStates', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
+                            echo form_dropdown($hist_row[TABLE_NAME_FIELD].'[state]', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
                           }else{?>
-                            <select name="cboOriginStates" id="cboOriginStates" class="jq-select" tabindex="15"></select>
+                            <select name="<?=$hist_row[TABLE_NAME_FIELD] ?>[state]" class="jq-select hinput" tabindex="15"></select>
                     <?php }?>
                 </div>
                    <!-- ========== CIUDAD  =========== -->
                 <div class="trow">
-                    <label class="label label-form" for="txtCiudad"><span class="required">*</span>Ciudad</label>
-                    <input type="text" name="txtCiudad" id="txtCiudad" class="wsize2" tabindex="2" value="<?=$hist_row['city'] ?>" />
+                    <label class="label label-form" ><span class="required">*</span>Ciudad</label>
+                    <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD] ?>[city]"  class="wsize2 hinput" tabindex="2" value="<?=$hist_row['city'] ?>" />
                 </div>
 
                 <!-- ========== RANQUING  =========== -->
                 <div class="trow">
                     <label class="label label-form" for="txtRanking"><span class="required">*</span>Ranking</label>
-                    <input type="text" name="txtRanking" class="wsize2" tabindex="2" value="<?=$hist_row['ranking'] ?>" />
+                    <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD] ?>[ranking]" class="wsize2 hinput" tabindex="2" value="<?=$hist_row['ranking'] ?>" />
                 </div>
 
                 <!-- ========== TOUR NAME  =========== -->
                 <div class="trow">
-                    <label class="label label-form" for="txtTourName"><span class="required">*</span>Nombre del tour</label>
-                    <input type="text" name="txtTourName" class="wsize2" tabindex="2" value="<?=$hist_row['tour_name'] ?>" />
+                    <label class="label label-form" ><span class="required">*</span>Nombre del tour</label>
+                    <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD] ?>[tour_name]" class="wsize2 hinput" tabindex="2" value="<?=$hist_row['tour_name'] ?>" />
                 </div>
 
 
                 <!-- ========== Torneos =========== -->
                 <div id="contTorneo" class="trow tbl">
                     <label class="label label-tablas">Torneos Nacionales e Internacionales</label>
-                    <table id="tblTorneos" cellpadding="0" cellspacing="0">
+                    <table name="tblTorneos" cellpadding="0" cellspacing="0">
                         <thead>
                             <tr>
                                 <td class="cell1">Fecha</td>
@@ -100,34 +100,34 @@
                     foreach( $hist_row['tour'] as $tour_row ){?>
                             <tr <?php if( $tour_row['tour_id']!=0 ) echo 'id="trTorneo'.$tour_row['tour_id'].'"'?>>
                                 <td class="cell1">
-                                    <input type="text" name="txtFechaTorneo" value="<?=date('d-m-Y', $tour_row['fecha']?$torneo_row['fecha']:time())?>" class="jq-data cfecha" tabindex="22" />
+                                    <input type="text" name="<?=$tour_row[TABLE_NAME_FIELD] ?>[fecha]" value="<?=date('d-m-Y', $tour_row['fecha']?$tour_row['fecha']:time())?>" class="jq-data cfecha" tabindex="22" />
                                 </td>
                                 <td class="cell2">
-                                    <input type="text" name="txtTorneo" value="<?=$tour_row['torneo']?>" class="wsize1 cvalores" />
+                                    <input type="text" name="<?=$tour_row[TABLE_NAME_FIELD] ?>[torneo]" value="<?=$tour_row['torneo']?>" class="wsize1 cvalores" />
                                 </td>
                                 <td class="cell3">
-                                    <input type="text" name="txtPosicionTorneo" value="<?=$tour_row['posicion']?>" class="wsize1 cvalores" />
+                                    <input type="text" name="<?=$tour_row[TABLE_NAME_FIELD] ?>[posicion]" value="<?=$tour_row['posicion']?>" class="wsize1 cvalores" />
                                 </td>
                                 <td class="cell4">
-                                    <input type="text" name="txtR1Torneo" value="<?=$tour_row['r1']?>" class="wsize1 cvalores" />
+                                    <input type="text" name="<?=$tour_row[TABLE_NAME_FIELD] ?>[r1]" value="<?=$tour_row['r1']?>" class="wsize1 cvalores" />
                                 </td>
                                 <td class="cell5">
-                                    <input type="text" name="txtR2Torneo" value="<?=$tour_row['r2']?>" class="wsize1 cvalores" />
+                                    <input type="text" name="<?=$tour_row[TABLE_NAME_FIELD] ?>[r2]" value="<?=$tour_row['r2']?>" class="wsize1 cvalores" />
                                 </td>
                                 <td class="cell6">
-                                    <input type="text" name="txtR3Torneo" value="<?=$tour_row['r3']?>" class="wsize1 cvalores" />
+                                    <input type="text" name="<?=$tour_row[TABLE_NAME_FIELD] ?>[r3]" value="<?=$tour_row['r3']?>" class="wsize1 cvalores" />
                                 </td>
                                 <td class="cell7">
-                                    <input type="text" name="txtR4Torneo" value="<?=$tour_row['r4']?>" class="wsize1 cvalores" />
+                                    <input type="text" name="<?=$tour_row[TABLE_NAME_FIELD] ?>[r4]" value="<?=$tour_row['r4']?>" class="wsize1 cvalores" />
                                 </td>
                                 <td class="cell8">
-                                    <input type="text" name="txtTotalTorneo" value="" class="wsize1 cvalores" />
+                                    <input type="text" value="" class="wsize1 cvalores" />
                                 </td>
                                 <td class="cell9">
-                                    <input type="text" name="txtParTorneo" value="<?=$tour_row['par']?>" class="wsize1 cvalores" />
+                                    <input type="text" name="<?=$tour_row[TABLE_NAME_FIELD] ?>[par]" value="<?=$tour_row['par']?>" class="wsize1 cvalores" />
                                 </td>
                                 <td class="cell10">
-                                    <input type="text" name="txtGananciaTorneo" value="<?=$tour_row['ganancia']?>" class="wsize1 cvalores" />
+                                    <input type="text" name="<?=$tour_row[TABLE_NAME_FIELD] ?>[ganancia]" value="<?=$tour_row['ganancia']?>" class="wsize1 cvalores" />
                                 </td>
 
                                 <td class="cell11"><input type="button" value="Eliminar" name="btn" onclick="Historial.removeRow(this, 'torneo')" /></td>
@@ -172,7 +172,7 @@
            <!-- ========== Observaciones  =========== -->
             <div class="trow">
                 <label class="label label-form" for="txtObservaciones"><span class="required">*</span>Observaciones</label>
-                <textarea name="txtObservaciones" class="wsize2" tabindex="7"><?=$hist_row['observaciones']?></textarea>
+                <textarea name="<?=$hist_row[TABLE_NAME_FIELD] ?>[observaciones]" class="wsize2 hinput" tabindex="7"><?=$hist_row['observaciones']?></textarea>
             </div>
             </div>
 
@@ -187,7 +187,7 @@
         <div id="tabs-2">
                <div id="contPalmares" class="trow tbl">
                     <label class="label label-tablas">Career Highlights / Logros / Titulos Nacionales e Internacionales / Otros Títulos</label>
-                    <table id="tblPalmares" cellpadding="0" cellspacing="0">
+                    <table name="tblPalmares" cellpadding="0" cellspacing="0">
                         <thead>
                             <tr>
                                 <td class="cell1">A&ntilde;o</td>
@@ -202,11 +202,11 @@
                             <tr <?php if( $palmares_row['palmares_id']!=0 ) echo 'id="trTorneo'.$palmares_row['palmares_id'].'"'?>>
                                 <td class="cell1">
                                     <span>
-                                <?=form_dropdown('cboTemporadaPalmares', $palmares_row['cboTemporada'], $palmares_row['year'], ' tabindex="1"');?>
+                                <?=form_dropdown($palmares_row[TABLE_NAME_FIELD].'[year]', $palmares_row['cboTemporada'], $palmares_row['year'], ' tabindex="1"');?>
                                     </span>
                                 </td>
                                 <td class="cell2">
-                                    <input type="text" name="txtTitulo" value="<?=$palmares_row['titulo']?>" class="wsize2" />
+                                    <input type="text" name="<?=$palmares_row[TABLE_NAME_FIELD] ?>[titulo]" value="<?=$palmares_row['titulo']?>" class="wsize2" />
                                 </td>
 
                                 <td class="cell3"><input type="button" value="Eliminar" name="btn" onclick="Historial.removeRow(this, 'palmares')" /></td>
