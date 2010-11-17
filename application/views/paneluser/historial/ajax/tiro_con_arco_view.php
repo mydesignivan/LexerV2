@@ -32,7 +32,7 @@
                     <span>
                     <?=form_dropdown($hist_row[TABLE_NAME_FIELD]."[categoria]", $hist_row['cboCategoria'], $hist_row['categoria'], 'class="hinput" tabindex="14" onchange="LibForms.isOther(this);"');?>
                     </span>
-                    <span class="<?=$hist_row['categoria']>0?"":"hide";?> noinit">
+                    <span class="<?=$hist_row['categoria']<0?"":"hide";?> noinit">
                       <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD]?>[categoria_other]"  class="wsize2 hinput" tabindex="2" value="<?=$hist_row['categoria_other'] ?>" />
                     </span>
                 </div>
@@ -67,7 +67,7 @@
                     <span>
                     <?=form_dropdown($hist_row[TABLE_NAME_FIELD]."[especialidad]", $hist_row['cboEspecialidad'], $hist_row['especialidad'], ' tabindex="14" onchange="LibForms.isOther(this);" class="hinput"');?>
                     </span>
-                    <span class="<?=$hist_row['especialidad']>0?"":"hide";?> noinit">
+                    <span class="<?=$hist_row['especialidad']<0?"":"hide";?> noinit">
                       <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD]?>[especialidad_other]"  class="wsize2 hinput" tabindex="2" value="<?=$hist_row['especialidad_other'] ?>" />
                     </span>
                 </div>
@@ -104,6 +104,7 @@
                                 </td>
                                 <td class="cell3">
                                     <span>
+                                        <? print_array($torneo_row);?>
                                     <?=form_dropdown($torneo_row[TABLE_NAME_FIELD]."[categoria]", $torneo_row['cboCategoria'], $torneo_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);"');?>
                                     </span>
                                     <span class="<?=$torneo_row['categoria']>-1?"hide":"";?> noinit">

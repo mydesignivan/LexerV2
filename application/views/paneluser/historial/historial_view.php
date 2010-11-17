@@ -23,12 +23,8 @@
 
     <!-- ========== Deportes =========== -->
 
-    <?  foreach($info as $nf){   ?>
-    <input type="hidden" class="historial_id" value="<?=@$nf['historial_id']?>">
-    <? } ?>
 
-
-    <input type="hidden" name="historial_id" id="historial_id" value="">
+    <input type="hidden" name="historial_id" id="historial_id" value="<?=@$info['historial_id']?>">
     <input type="hidden" name="historial_deporte_id" id="historial_deporte_id">
     <input type="submit" value="Guardar" id="btnGuardar"  />
 </form>

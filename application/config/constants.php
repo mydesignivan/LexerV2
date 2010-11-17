@@ -249,12 +249,12 @@ define('TBL_HISTORIAL_NATACION_COMPETENCIAS','historial_natacion_competencias');
 define('TBL_HISTORIAL_NATACION_PALMARES','historial_natacion_palmares');
 
 define('TBL_HISTORIAL_TENIS','historial_tenis');
-define('TBL_HISTORIAL_TENIS_FINALES_SINGLES','historial_tenis_finales_singles');
-define('TBL_HISTORIAL_TENIS_FINALES_DOBLES','historial_tenis_finales_dobles');
-define('TBL_HISTORIAL_TENIS_TITULOS_SINGLES','historial_tenis_titulos_singles');
-define('TBL_HISTORIAL_TENIS_TITULOS_DOBLES','historial_tenis_titulos_dobles');
-define('TBL_HISTORIAL_TENIS_PALMARES_SINGLES','historial_tenis_palmares_singles');
-define('TBL_HISTORIAL_TENIS_PALMARES_DOBLES','historial_tenis_palmares_dobles');
+define('TBL_HISTORIAL_TENIS_FINALES_SINGLES','historial_tenis_finalessingles');
+define('TBL_HISTORIAL_TENIS_FINALES_DOBLES','historial_tenis_finalesdobles');
+define('TBL_HISTORIAL_TENIS_TITULOS_SINGLES','historial_tenis_titulossingles');
+define('TBL_HISTORIAL_TENIS_TITULOS_DOBLES','historial_tenis_titulosdobles');
+define('TBL_HISTORIAL_TENIS_PALMARES_SINGLES','historial_tenis_palmaressingles');
+define('TBL_HISTORIAL_TENIS_PALMARES_DOBLES','historial_tenis_palmaresdobles');
 
 define('TBL_HISTORIAL_SOFTBOL','historial_softball');
 define('TBL_HISTORIAL_SOFTBOL_PALMARES','historial_softball_palmares');
@@ -263,8 +263,8 @@ define('TBL_HISTORIAL_ESCALADA','historial_escalada');
 define('TBL_HISTORIAL_ESCALADA_PALMARES','historial_escalada_palmares');
 
 define('TBL_HISTORIAL_PATIN','historial_patin');
-define('TBL_HISTORIAL_PATIN_VALOCIDAD_COMPETENCIA','historial_patin_velocidad_competencias');
-define('TBL_HISTORIAL_PATIN_ARTISTICO_COMPETENCIA','historial_patin_artistico_competencias');
+define('TBL_HISTORIAL_PATIN_VALOCIDAD_COMPETENCIA','historial_patin_velocidadcompetencias');
+define('TBL_HISTORIAL_PATIN_ARTISTICO_COMPETENCIA','historial_patin_artisticocompetencias');
 define('TBL_HISTORIAL_PATIN_PALMARES','historial_patin_palmares');
 
 define('TBL_REL_SPORTS', 'rel_sports_perfil_historial');

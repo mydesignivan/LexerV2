@@ -50,7 +50,7 @@
                                     <span>
                                     <?=form_dropdown($prueba_row[TABLE_NAME_FIELD]."[prueba]", $prueba_row['cboPrueba'], $prueba_row['prueba'], ' tabindex="14"  onchange="LibForms.isOther(this);"');?>
                                     </span>
-                                    <span class="<?=$prueba_row['prueba']>0?"":"hide";?> noinit">
+                                    <span class="<?=$prueba_row['prueba']<0?"":"hide";?> noinit">
                                     <input type="text" name="<?=$prueba_row[TABLE_NAME_FIELD] ?>[prueba_other]" value="<?=$prueba_row['prueba_other']?>" class="wsize1 " />
                                     </span>
                                 </td>
@@ -118,7 +118,7 @@
                                     <span>
                                     <?=form_dropdown($pr_num[TABLE_NAME_FIELD]."[prueba]" , $pr_num['cboPrueba'], $pr_num['prueba'], ' tabindex="14"  onchange="LibForms.isOther(this);"');?>
                                     </span>
-                                    <span class="<?=$pr_num['prueba']>0?"":"hide";?> noinit">
+                                    <span class="<?=$pr_num['prueba']<0?"":"hide";?> noinit">
                                     <input type="text" name="<?=$pr_num[TABLE_NAME_FIELD] ?>[prueba_other]" value="<?=$pr_num['prueba_other']?>" class="wsize1 " />
                                     </span>
                                 </td>

@@ -101,7 +101,6 @@ var JTable = new (function(){
 
         for (i = 0; i < tables.length ; i++){
             $("table[name="+tables[i]+"]").each(function (x){
-                alert($(this).attr("name"));
                 $(this).find('tbody >tr:not('+param.fixed_class+') ').each(function(index){
 
                     $(this).find("input:text, input:file, textarea, select").each(function(){

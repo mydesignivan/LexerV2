@@ -17,16 +17,16 @@
             <div class="chistorial">
                  <!-- ========== TEMPORADA  =========== -->
                 <div class="trow "
-                    <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
+                    <label class="label label-form" ><span class="required">*</span>Temporada</label>
                     <?=form_dropdown($hist_row[TABLE_NAME_FIELD].'[temporada_1]', $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1" class="hinput"');?>
                 </div>
                 <div class="trow "
-                    <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
+                    <label class="label label-form" ><span class="required">*</span>Temporada</label>
                     <?=form_dropdown($hist_row[TABLE_NAME_FIELD].'[temporada_2]', $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1" class="hinput"');?>
                 </div>
                  <!-- ========== CLUB  =========== -->
                 <div class="trow">
-                    <label class="label label-form" for="txtClub"><span class="required">*</span>Club</label>
+                    <label class="label label-form" ><span class="required">*</span>Club</label>
                     <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD] ?>[club]"  class="wsize2 hinput" tabindex="2" value="<?=$hist_row['club'] ?>" />
                 </div>
                 <!-- ========== CATEGORIA  =========== -->
@@ -35,17 +35,17 @@
                     <span>
                     <?=form_dropdown($hist_row[TABLE_NAME_FIELD]. '[categoria]', $hist_row['cboCategoria'], $hist_row['categoria'], ' tabindex="14" class="hinput" onchange="LibForms.isOther(this);"');?>
                     </span>
-                    <span class="<?=$hist_row['categoria']>0?"":"hide";?> noinit" >
+                    <span class="<?=$hist_row['categoria']<0?"":"hide";?> noinit" >
                         <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD] ?>[categoria_other]"  class="wsize2 hinput" tabindex="2" value="<?=$hist_row['categoria_other'] ?>" />
                     </span>
                 </div>
                 <!-- ========== POSICION  =========== -->
                 <div class="trow">
-                    <label class="label label-form" for="cboPosicion"><span class="required">*</span>Posicion</label>
+                    <label class="label label-form" ><span class="required">*</span>Posicion</label>
                     <span>
                     <?=form_dropdown($hist_row[TABLE_NAME_FIELD].'[posicion]', $hist_row['cboPosicion'], $hist_row['posicion'], ' tabindex="14" onchange="LibForms.isOther(this);" class="hinput"');?>
                     </span>
-                    <span class="<?=$hist_row['posicion']>0?"":"hide";?> noinit" >
+                    <span class="<?=$hist_row['posicion']<0?"":"hide";?> noinit" >
                       <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD] ?>[posicion_other]"  class="wsize2 hinput" tabindex="2" value="<?=$hist_row['posicion_other'] ?>" />
                     </span>
                 </div>
@@ -81,7 +81,7 @@
                         <tbody>
                             <tr class="fixed">
                                 <td class="cell1">
-                                     <label class="label " for="txtPartidosJugados">Partidos Jugados</label>
+                                     <label class="label " >Partidos Jugados</label>
                                 </td>
                                 <td class="cell2">
                                     <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD] ?>[partidos_jugados]" value="<?=$hist_row['partidos_jugados']?>" class="wsize1 hinput" />

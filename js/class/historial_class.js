@@ -11,8 +11,8 @@ var Historial = new (function(){
               //  loader.show();
                 JTable.fixSubmitTable({fixed_class : ".fixed"})
 
-                $("#historial_id").val(JSON.encode(_his_array));
                 $(".temp").remove();
+
                 form.submit();
 
 
@@ -154,16 +154,13 @@ var Historial = new (function(){
          $(".dep > *").attr('disabled', 'disabled');
          var sport = $("#cboDeporte option:selected").val();
          $("#historial_deporte_id").val(sport);
-         var hist = [];
-         $(".historial_id").each(function(index){
-             hist.push($(this).val());
-         });
-         _his_array = hist;
+         var hist =  $("#historial_id").val();
+
 
          if (!isNaN(parseInt(sport))) {
              $.post(baseURI+"paneluser/historial/ajax_get_sport", {
                  deporte: sport,
-                 historial_id: JSON.encode(hist),
+                 historial_id: hist,
                  historial_deporte_id: $("#historial_deporte_id").val()},
                  function(data){
                     $(".dep > *").attr('disabled', '');
@@ -182,7 +179,7 @@ var Historial = new (function(){
         if(typeof(elem)=='undefined'){
             elem=$(select).parent().next();
         }
-        var lab =$(select).parent().parent().find("input[name=label]").eq(0).val();
+        var lab =$(select).parent().parent().find("#label").eq(0).val();
         var name_comp=$(select).parent().parent().find("#name_comp").eq(0).val();
         var list=$(select).parent().parent().find("#list").eq(0).val();
         if($(select).val() > 0 ){
@@ -200,22 +197,29 @@ var Historial = new (function(){
 
 
     this.patinEspecialidad = function(dom){
+        
         var val = $(dom).val();
-        var div_velocidad = $(dom).parent().parent().find(".div_velocidad");
-        var div_artistico = $(dom).parent().parent().find(".div_artistico");
+        var div_velocidad = $(".div_velocidad");
+        var div_artistico = $(".div_artistico");
 
         switch(parseInt(val)){
         case 1:
             div_artistico.show("slow");
             div_velocidad.hide("slow");
+            div_artistico.removeClass("temp");
+            div_velocidad.addClass("temp");
             break;
         case 2:
             div_artistico.hide("slow");
             div_velocidad.show("slow");
+            div_artistico.addClass("temp");
+            div_velocidad.removeClass("temp");
             break;
         default :
             div_artistico.hide("slow");
             div_velocidad.hide("slow");
+            div_artistico.addClass("temp");
+            div_velocidad.addClass("temp");
             break;
         }
     }
@@ -329,7 +333,7 @@ var Historial = new (function(){
 
     /* PRIVATE PROPERTIES
      **************************************************************************/
-     _his_array = [];
+     
 
 
     /* PRIVATE METHODS

@@ -35,21 +35,21 @@
 
                 <!-- ========== CATEGORIA  =========== -->
                 <div class="trow">
-                    <label class="label label-form" for="txtCategoria"><span class="required">*</span>Categoria</label>
+                    <label class="label label-form" ><span class="required">*</span>Categoria</label>
                     <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD] ?>[categoria]" class="wsize2 hinput" tabindex="2" value="<?=$hist_row['categoria'] ?>" />
                 </div>
 
 
                 <!-- ========== PAIS  =========== -->
                 <div class="trow">
-                    <label class="label label-form" for="cboCountry">Pa&iacute;s Origen</label>
+                    <label class="label label-form" >Pa&iacute;s Origen</label>
                     <?php $comboCountry[''] = "&nbsp;";?>
                     <?=form_dropdown($hist_row[TABLE_NAME_FIELD].'[country]', $hist_row['cboCountry'], $hist_row['country'], ' tabindex="14" onchange="Historial.get_combo_states(this)" class="hinput"');?>
                     <img src="images/ajax-loader.gif" alt="Loading" width="16" height="16" class="jq-loader hide" />
                 </div>
                 <!-- ========== PROVINCIA  =========== -->
                 <div class="trow <?=getval($hist_row['state'], 'hide', 0)?> noinit">
-                    <label class="label label-form" for="cboStates">Provincia</label>
+                    <label class="label label-form" >Provincia</label>
                     <?php if( $hist_row['state']!=0 ){
                             echo form_dropdown($hist_row[TABLE_NAME_FIELD].'[state]', $hist_row['cboState'], $hist_row['state'], ' class="jq-select" tabindex="15"');
                           }else{?>

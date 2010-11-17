@@ -36,7 +36,7 @@
                     <span>
                     <?=form_dropdown($hist_row[TABLE_NAME_FIELD]."[categoria]", $hist_row['cboCategoria'], $hist_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);" class="hinput"');?>
                     </span>
-                    <span class="<?=$hist_row['categoria']>0?"":"hide";?> noinit">
+                    <span class="<?=$hist_row['categoria']<0?"":"hide";?> noinit">
                       <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD]?>[categoria_other]"  class="wsize2 hinput" tabindex="2" value="<?=$hist_row['categoria_other'] ?>" />
                     </span>
                 </div>
@@ -46,7 +46,7 @@
                     <span>
                     <?=form_dropdown($hist_row[TABLE_NAME_FIELD]."[posicion]", $hist_row['cboPosicion'], $hist_row['posicion'], ' tabindex="14" onchange="LibForms.isOther(this);" class="hinput"');?>
                     </span>
-                    <span class="<?=$hist_row['posicion']>0?"":"hide";?> noinit">
+                    <span class="<?=$hist_row['posicion']<0?"":"hide";?> noinit">
                       <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD]?>[posicion_other]"  class="wsize2 hinput" tabindex="2" value="<?=$hist_row['posicion_other'] ?>" />
                     </span>
                 </div>

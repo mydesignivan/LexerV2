@@ -12,6 +12,7 @@ class historialdeportivo_model extends Model {
      **************************************************************************/
     private $_users_id;
     private $_sports_id;
+    private $_historial_id;
 
     /* PUBLIC FUNCTIONS
      **************************************************************************/
@@ -20,31 +21,54 @@ class historialdeportivo_model extends Model {
 
         print_array($datos);
 
+
         $bnuevo = false;
         $this->_sports_id = $sports_id;
 
         //se busca la tablas historiales correspondiente al deporte
         $row = $this->db->get_where(TBL_REL_SPORTS, array("sports_id"=>$sports_id))->row_array();
 
-        //se guardan en un array los nombres de las tablas
-        $tablas = array_keys($datos);
-
-        //se obtienen los historiales correspondientes al usuario y se eliminan.
-        $historiales = $this->db->get_where(TBL_HISTORIAL, array("users_id"=>$this->_users_id))->result_array();
-        foreach($historiales as $historial){
-            foreach($tablas as $tabla){
-                $this->db->delete($tabla, array("historial_id"=>$historial['historial_id']));
-            }
-        }
-        $this->db->delete(TBL_HISTORIAL, array("users_id"=>$this->_users_id));
 
         //se guarda en pref_historial el nombre de la tabla historial principal
         $pref_historial = $row['historial'];
 
+        //se guardan en un array los nombres de las tablas
+        $tablas = array_keys($datos);
+
+
 
         //se elimina palmares para un tratamiento diferente
-        $palmares = array_pop($datos);
-        $palmares = $palmares[0];
+        $palmares = array();
+        for($i=0;$i<count($tablas);$i++){
+            if(strpos($tablas[$i], "palmares")!==false){
+                $palmares[$tablas[$i]] = $datos[$tablas[$i]];
+                unset($datos[$tablas[$i]]);
+                
+            }
+        }
+
+
+  
+        //se obtienen los historiales anteriores correspondientes al usuario y se borran
+        $historial = $this->db->get_where(TBL_HISTORIAL, array("users_id"=>$this->_users_id))->row_array();
+
+        if ($historial){
+            $tablas_full = $this->db->list_tables();
+            $sub_tablas_old = $this->searchSubTable($historial['historial'], $tablas_full);
+
+            foreach($sub_tablas_old as $tabla_old){
+                $this->db->delete($tabla_old, array("historial_id"=>$historial['historial_id']));
+            }
+            $this->db->delete(TBL_HISTORIAL, array("historial_id"=>$historial['historial_id']));
+        }
+
+        // Se inserta una nueva tabla historial y se genera el id para todas las tablas;
+        $this->db->insert(TBL_HISTORIAL,array("sports_id"=>$this->_sports_id,
+                                                  "historial"=>$pref_historial,
+                                                  "users_id"=>$this->_users_id ));
+        $this->_historial_id = $this->db->insert_id();
+
+
 
         //se guardan en un array los nombres de las tablas sin palmares
         $tablas = array_keys($datos);
@@ -77,7 +101,7 @@ class historialdeportivo_model extends Model {
                                 //guarda elementos agregando datos de tablas padres
                                  
                                 //guarda los datos en la tabla
-                                $add = $this->saveData($row_sub, $st, $add);
+                                $this->saveData($row_sub, $st, $add);
                             }
                         }
                     }
@@ -86,14 +110,17 @@ class historialdeportivo_model extends Model {
             }
         }
 
+        /************** PALMARES ****************/
 
         
-        foreach($datos as $historial=>$dato){
-            if (!$bnuevo){
-         //       $this->db->delete($historial, array("historial_id"=>$historial_id));
+        foreach($palmares as $name_table=>$palmar){
+            foreach($palmar[0] as $palm_row){
+                $this->saveData($palm_row, $name_table, array('historial_id'=>$this->_historial_id));
             }
-            
+
         }
+
+
     }
 
     function saveData($arr_datos, $tabla, $arr_add=false, $pref=false){
@@ -109,13 +136,8 @@ class historialdeportivo_model extends Model {
         $segments = explode("_",$tabla);
         $id_field = $segments[count($segments)-1]."_id";
 
-        //si es la tabla principal del deporte guarda tambien referencia en la tabla historial
-        if ($pref==$tabla) {
-            $this->db->insert(TBL_HISTORIAL,array("sports_id"=>$this->_sports_id,
-                                                  "users_id"=>$this->_users_id ));
-            $arr_add['historial_id'] = $this->db->insert_id();
-        }
-
+        //se agrega el mismo id del historial en cada registro que se guarda;
+        $arr_add['historial_id'] = $this->_historial_id;
        
         //agrega los datos de referencia de las tablas padres en el array arr_add
         if ($arr_add) {
@@ -203,7 +225,7 @@ class historialdeportivo_model extends Model {
 
     
     public function get_info(){
-        $info = $this->db->get_where(TBL_HISTORIAL, array('users_id' => $this->_users_id))->result_array();
+        $info = $this->db->get_where(TBL_HISTORIAL, array('users_id' => $this->_users_id))->row_array();
 
         return $info;
 
@@ -236,16 +258,12 @@ class historialdeportivo_model extends Model {
                     //agrega a cada resultado un campo llamado table_name con el nombre de la tabla.
                     $select = "select *, '".$tablas[$i]."' as '".TABLE_NAME_FIELD."' ";
 
-                    $historial = $historial ? $historial : array("0");
+                    $historial = $historial ? $historial : 0;
                     $from = "from ".$tablas[$i]." ";
-                    $where = "where historial_id = ".$historial[0];
-                    $or_where = "";
-                    if (count($historial)>1){
-                        for($n = 1; $n < count($historial) ; $n++){
-                            $or_where = " or  historial_id = ".$historial[$n];
-                        }
-                    }
-                    $query = $select.$from.$where.$or_where;
+                    $where = "where historial_id = ".$historial;
+                   
+
+                    $query = $select.$from.$where;
 
                     // el select de abajo no funciona por eso se arma la sentencia SQL.
                     //$this->db->select( "select *, 'fede' as 'table_name' ");
@@ -319,29 +337,6 @@ class historialdeportivo_model extends Model {
 
         return $data;
    }
-
-
-
-/*   function getBoxeoLicencia($perfil_id){
-        $rtn=$this->db->get_where(TBL_PERFIL_BEXEO_LICENCIA,array("perfil_id"=>$perfil_id));
-        return $rtn;
-       
-   }
-*/
-    /*public function getComboSeleccionado($deporte){
-        $this->db->select(TBL_LIST_SELECCIONADO.".name, ".TBL_LIST_SELECCIONADO.".seleccionado_id");
-        $this->db->join(TBL_REL_SELECCIONADO,TBL_REL_SELECCIONADO.".sport_id = ".TBL_LIST_SPORTS.".sports_id");
-        $this->db->join(TBL_LIST_SELECCIONADO,TBL_LIST_SELECCIONADO.".seleccionado_id = ".TBL_REL_SELECCIONADO.".seleccionado_id");
-        $result=$this->db->get_where(TBL_LIST_SPORTS,array(TBL_LIST_SPORTS.".sports_id"=>$deporte, TBL_LIST_SELECCIONADO.".seleccionado_id >"=>0))->result_array();
-
-        $this->db->select(TBL_LIST_SELECCIONADO.".name, ".TBL_LIST_SELECCIONADO.".seleccionado_id");
-        $this->db->join(TBL_REL_SELECCIONADO,TBL_REL_SELECCIONADO.".sport_id = ".TBL_LIST_SPORTS.".sports_id");
-        $this->db->join(TBL_LIST_SELECCIONADO,TBL_LIST_SELECCIONADO.".seleccionado_id = ".TBL_REL_SELECCIONADO.".seleccionado_id");
-        $tmp=$this->db->get_where(TBL_LIST_SPORTS,array(TBL_LIST_SPORTS.".sports_id"=>$deporte, TBL_LIST_SELECCIONADO.".seleccionado_id <"=>0))->row_array();
-
-        if ($tmp) $result[]=$tmp;
-        return $result;
-    }*/
 
 
 

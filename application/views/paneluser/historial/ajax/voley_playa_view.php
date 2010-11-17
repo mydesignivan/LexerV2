@@ -17,11 +17,11 @@
             <div class="chistorial">
                  <!-- ========== TEMPORADA  =========== -->
                 <div class="trow "
-                    <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
+                    <label class="label label-form" ><span class="required">*</span>Temporada</label>
                     <?=form_dropdown($hist_row[TABLE_NAME_FIELD]."[temporada_1]", $hist_row['cboTemporada'], $hist_row['temporada_1'], ' tabindex="1" class="hinput"');?>
                 </div>
                 <div class="trow "
-                    <label class="label label-form" for="cboTemporada"><span class="required">*</span>Temporada</label>
+                    <label class="label label-form" ><span class="required">*</span>Temporada</label>
                     <?=form_dropdown($hist_row[TABLE_NAME_FIELD]."[temporada_2]", $hist_row['cboTemporada'], $hist_row['temporada_2'], ' tabindex="1" class="hinput"');?>
                 </div>
                  <!-- ========== CLUB  =========== -->
@@ -41,7 +41,7 @@
                     <span>
                     <?=form_dropdown($hist_row[TABLE_NAME_FIELD].'[categoria]', $hist_row['cboCategoria'], $hist_row['categoria'], ' tabindex="14" onchange="LibForms.isOther(this);" class="hinput"');?>
                     </span>
-                    <span class="<?=$hist_row['categoria']>0?"":"hide";?> noinit">
+                    <span class="<?=$hist_row['categoria']<0?"":"hide";?> noinit">
                       <input type="text" name="<?=$hist_row[TABLE_NAME_FIELD]?>[categoria_other]"  class="wsize2 hinput" tabindex="2" value="<?=$hist_row['categoria_other'] ?>" />
                     </span>
                 </div>
@@ -310,7 +310,7 @@
                 </div>
            <!-- ========== Observaciones  =========== -->
             <div class="trow">
-                <label class="label label-form" for="txtObservaciones"><span class="required">*</span>Observaciones</label>
+                <label class="label label-form" ><span class="required">*</span>Observaciones</label>
                 <textarea name="<?=$hist_row[TABLE_NAME_FIELD]?>[observaciones]" class="wsize2 hinput" tabindex="7"><?=$hist_row['observaciones']?></textarea>
             </div>
             </div>

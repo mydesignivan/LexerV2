@@ -53,7 +53,7 @@ class Historial extends Controller {
          if( $_SERVER['REQUEST_METHOD']=="POST" ){
            
             $deporte= $this->input->post("deporte");
-            $historial_id= json_decode($this->input->post("historial_id"));
+            $historial_id = $this->input->post("historial_id");
             $perfil_deporte_id= $this->input->post("perfil_deporte_id");
             $data = $this->_data_historial($deporte, $historial_id);
 
@@ -133,11 +133,9 @@ class Historial extends Controller {
                         $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
                         $data['historial'][$i]['cboState'] = $cboState;
 
-                        $data['historial'][$i]['torneos']=$row[TBL_HISTORIAL_MARCIALES_TORNEOS];
+                        $arr_data = array("cboCountry"=>$cboCountry);
+                        $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_MARCIALES_TORNEOS, "historial", "torneos", $arr_data);
 
-                        for($n=0;$n<count($row[TBL_HISTORIAL_MARCIALES_TORNEOS]);$n++){
-                            $data['historial'][$i]['torneos'][$n]['cboCountry'] = $cboCountry;
-                        }
                     }
                     $data['palmares'] = $row[TBL_HISTORIAL_MARCIALES_PALMARES];
                     for($i=0;$i<count($row[TBL_HISTORIAL_MARCIALES_PALMARES]);$i++){
@@ -172,7 +170,7 @@ class Historial extends Controller {
                     break;
                 case 4: //boxeo
                     $list_cat=TBL_LIST_BOXEO_CATEGORIA;;
-                    $nivel=array(array("name"=>"Seleccione una categoria","id"=>""),
+                    $cboNivel=array(array("name"=>"Seleccione una categoria","id"=>""),
                                                 array("name"=>"profesional","id"=>1),
                                                 array("name"=>"Aficionado","id"=>2),
                                                 array("name"=>"Amateur","id"=>3));
@@ -181,13 +179,23 @@ class Historial extends Controller {
 
                     $data['historial'] = $row[TBL_HISTORIAL_BOXEO];
                     for($i = 0 ; $i < count($row[TBL_HISTORIAL_BOXEO]) ; $i++){
+                        $categoria =  $data['historial'][$i]['categoria'];
+                        $nivel = $this->historialdeportivo_model->get_combo_first_value($list_cat, $categoria);
+
+                        $cboCategoria = $this->historialdeportivo_model->getComboSubCat($list_cat,"Seleccione categoria",$nivel);
+
+                        $data['historial'][$i]['nivel'] = $nivel;
+                        $data['historial'][$i]['cboNivel'] = $cboNivel;
+                        $data['historial'][$i]['cboCategoria'] = $cboCategoria;
+
+
+
                         $data['historial'][$i]['list'] = $list_cat;
-                        $data['historial'][$i]['cboNivel'] = $nivel;
-                        $data['historial'][$i]['peleas'] = $row[TBL_HISTORIAL_BOXEO_PELEAS];
-                        for($n=0;$n<count($row[TBL_HISTORIAL_BOXEO_PELEAS]);$n++){
-                            $data['historial'][$i]['peleas'][$n]['cboResultado'] = $resultados;
-                            $data['historial'][$i]['peleas'][$n]['cboCountry'] = $cboCountry;
-                        }
+                       
+                        $arr_data = array("cboResultado" => $resultados,
+                                           "cboCountry" => $cboCountry);
+                        $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_BOXEO_PELEAS, "historial", "peleas", $arr_data);
+
                     }
                     $data['palmares'] = $row[TBL_HISTORIAL_BOXEO_PALMARES];
                     for($i = 0 ; $i < count($row[TBL_HISTORIAL_BOXEO_PALMARES]) ; $i++){
@@ -220,8 +228,10 @@ class Historial extends Controller {
                         $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
                         $data['historial'][$i]['cboState'] = $cboState;
 
-                        $data['historial'][$i]['internacionales'] = $row[TBL_HISTORIAL_CICLISMO_INTERNACIONALES];
-                        $data['historial'][$i]['nacionales'] = $row[TBL_HISTORIAL_CICLISMO_NACIONALES];
+                        $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_CICLISMO_INTERNACIONALES, "historial", "internacionales", array());
+                        
+                        $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_CICLISMO_NACIONALES, "historial", "nacionales", array());
+
 
 
 
@@ -232,7 +242,7 @@ class Historial extends Controller {
                     break;
                 case 6: //escalada
                     $list_cat=TBL_LIST_ESCALADA_GRADUACION;
-                    $graduacion=array(array("name"=>"Seleccione graduacion","id"=>""),
+                    $cboGrado=array(array("name"=>"Seleccione grado","id"=>""),
                                                 array("name"=>"Francesa","id"=>1),
                                                 array("name"=>"UIAA","id"=>2),
                                                 array("name"=>"USA","id"=>3));
@@ -243,9 +253,19 @@ class Historial extends Controller {
 
                     $data['historial'] = $row[TBL_HISTORIAL_ESCALADA];
                     for($i = 0 ; $i < count($row[TBL_HISTORIAL_ESCALADA]) ; $i++){
+                        $grado =  $data['historial'][$i]['graduacion'];
+                        $graduacion = $this->historialdeportivo_model->get_combo_first_value($list_cat, $grado);
+
+                        $cboGraduacion = $this->historialdeportivo_model->getComboSubCat($list_cat,"Seleccione graduacion",$graduacion);
+
+                        $data['historial'][$i]['grado'] = $graduacion;
+                        $data['historial'][$i]['cboGrado'] = $cboGrado;
+                        $data['historial'][$i]['cboGraduacion'] = $cboGraduacion;
+
+
                         $data['historial'][$i]['list'] = $list_cat;
                         $data['historial'][$i]['cboCategoria'] = $categoria;
-                        $data['historial'][$i]['cboGraduacion'] = $graduacion;
+
                         $data['historial'][$i]['cboTemporada'] = $cboTemporada;
                         $data['historial'][$i]['cboCountry'] = $cboCountry;
                         $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
@@ -357,8 +377,10 @@ class Historial extends Controller {
                         $data['historial'][$i]['cboCountry'] = $cboCountry;
                         $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
                         $data['historial'][$i]['cboState'] = $cboState;
-                        $data['historial'][$i]['datos'] = $row[TBL_HISTORIAL_HANDBALL_DATOS];
-                        $data['historial'][$i]['lanzamientos_lista'] = $row[TBL_HISTORIAL_HANDBALL_LANZAMIENTOS];
+
+                        $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_HANDBALL_DATOS, "historial", "datos", array());
+                        $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_HANDBALL_LANZAMIENTOS, "historial", "lanzamientos_lista", array());
+
                     }
 
                     $data['palmares'] = $row[TBL_HISTORIAL_HANDBALL_PALMARES];
@@ -373,30 +395,30 @@ class Historial extends Controller {
                     $categorias=$this->historialdeportivo_model->getCombo(TBL_LIST_HOCKEYC_CATEGORIAS,"Seleccione una categoria");
 
                     $defensivo=array(array("name"=>"Seleccione una posicion","id"=>""),
-                                               array("name"=>"No participo","id"=>'d'),
-                                               array("name"=>"Picador","id"=>'d'),
-                                               array("name"=>"Primer Salidor","id"=>'d'),
-                                               array("name"=>"Segundo Salidor","id"=>'d'),
-                                               array("name"=>"Arquero","id"=>'r'));
+                                               array("name"=>"No participo","id"=>1),
+                                               array("name"=>"Picador","id"=>2),
+                                               array("name"=>"Primer Salidor","id"=>3),
+                                               array("name"=>"Segundo Salidor","id"=>4),
+                                               array("name"=>"Arquero","id"=>5));
 
                     $ofensivo=array(array("name"=>"Seleccione una posicion","id"=>""),
-                                               array("name"=>"No participo","id"=>'d'),
-                                               array("name"=>"Parador Horizontal","id"=>'r'),
-                                               array("name"=>"Parador Vertical","id"=>'r'),
-                                               array("name"=>"Desviador","id"=>'r'),
-                                               array("name"=>"Servidor","id"=>'r'),
-                                               array("name"=>"Pegador","id"=>'r'),
-                                               array("name"=>"Rebotero","id"=>'r'),
-                                               array("name"=>"Arrastrador","id"=>'r'),
-                                               array("name"=>"Elevaciones","id"=>'r'));
+                                               array("name"=>"No participo","id"=>1),
+                                               array("name"=>"Parador Horizontal","id"=>2),
+                                               array("name"=>"Parador Vertical","id"=>3),
+                                               array("name"=>"Desviador","id"=>4),
+                                               array("name"=>"Servidor","id"=>5),
+                                               array("name"=>"Pegador","id"=>6),
+                                               array("name"=>"Rebotero","id"=>7),
+                                               array("name"=>"Arrastrador","id"=>8),
+                                               array("name"=>"Elevaciones","id"=>9));
                     /*Árbitro, DT, Ayudante Técnico, Otra)
                      */
                     $actividades=array(array("name"=>"Seleccione una actividad","id"=>""),
-                                               array("name"=>"Árbitro","id"=>'d'),
+                                               array("name"=>"Árbitro","id"=>1),
                                                array("name"=>"DT","id"=>'100'),
-                                               array("name"=>"Ayudante","id"=>'r'),
-                                               array("name"=>"Técnico","id"=>'r'),
-                                               array("name"=>"Otra","id"=>'-1'));
+                                               array("name"=>"Ayudante","id"=>2),
+                                               array("name"=>"Técnico","id"=>3),
+                                               array("name"=>"Otra","id"=>-1));
 
                     $data['historial'] = $row[TBL_HISTORIAL_HOCKEY];
                     for($i = 0 ; $i < count($row[TBL_HISTORIAL_HOCKEY]) ; $i++){
@@ -412,11 +434,9 @@ class Historial extends Controller {
                         $data['historial'][$i]['datos'] = $row[TBL_HISTORIAL_HOCKEY_DATOS];
                         $data['historial'][$i]['cboActividades'] = $actividades;
 
-                        $data['historial'][$i]['torneos']=$row[TBL_HISTORIAL_HOCKEY_TORNEOS];
-                       
-                        for($n=0;$n<count($row[TBL_HISTORIAL_HOCKEY_TORNEOS]);$n++){
-                            $data['historial'][$i]['torneos'][$n]['cboTemporada'] = $cboTemporada;
-                        }
+                        $arr_data = array("cboTemporada"=>$cboTemporada);
+                        $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_HOCKEY_TORNEOS, "historial", "torneos", $arr_data);
+
                     }
 
                     $data['palmares'] = $row[TBL_HISTORIAL_HOCKEY_PALMARES];
@@ -434,6 +454,11 @@ class Historial extends Controller {
                     $piscina=array(array("name"=>"Seleccione piscina","id"=>""),
                                                 array("name"=>"25 Mts","id"=>'1'),
                                                 array("name"=>"50 Mts","id"=>'2'));
+
+                    $arr_datos = array("cboPrueba"=>$prueba,
+                                           "cboPiscina"=>$piscina,
+                                           "cboCountry"=>$cboCountry);
+
                     $data['historial'] = $row[TBL_HISTORIAL_NATACION];
                     for($i = 0 ; $i < count($row[TBL_HISTORIAL_NATACION]) ; $i++){
                         $data['historial'][$i]['cboModalidad'] = $modalidad;
@@ -442,12 +467,8 @@ class Historial extends Controller {
                         $data['historial'][$i]['cboCountry'] = $cboCountry;
                         $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
                         $data['historial'][$i]['cboState'] = $cboState;
-                        $data['historial'][$i]['competencias'] = $row[TBL_HISTORIAL_NATACION_COMPETENCIAS];
-                        for($n = 0; $n < count($row[TBL_HISTORIAL_NATACION_COMPETENCIAS]);$n++){
-                            $data['historial'][$i]['competencias'][$n]['cboPrueba'] = $prueba;
-                            $data['historial'][$i]['competencias'][$n]['cboPiscina'] = $piscina;
-                            $data['historial'][$i]['competencias'][$n]['cboCountry'] = $cboCountry;
-                        }
+
+                        $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_NATACION_COMPETENCIAS, "historial", "competencias", $arr_datos);
                     }
                     $data['palmares'] = $row[TBL_HISTORIAL_NATACION_PALMARES];
                     for($i=0;$i<count($row[TBL_HISTORIAL_NATACION_PALMARES]);$i++){
@@ -506,17 +527,13 @@ class Historial extends Controller {
                        
                         $data['historial'][$i]['cboCategoriaArtistico'] = $categoria_artistico;
                         $data['historial'][$i]['cboModalidadArtistico'] = $modalidad_artistico;
-                        $data['historial'][$i]['artistica_competencias'] = $row[TBL_HISTORIAL_PATIN_ARTISTICO_COMPETENCIA];
-                        for($n = 0; $n < count($row[TBL_HISTORIAL_PATIN_ARTISTICO_COMPETENCIA]);$n++){
-                            $data['historial'][$i]['artistica_competencias'][$n]['cboCountry'] = $cboCountry;
-                        }
+
+                        $arr_datos = array("cboCountry"=>$cboCountry);
+                        $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_PATIN_ARTISTICO_COMPETENCIA, "historial", "artistica_competencias", $arr_datos);
+                        $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_PATIN_VALOCIDAD_COMPETENCIA, "historial", "velocidad_competencias", $arr_datos);
 
                         $data['historial'][$i]['cboCategoriaVelocidad'] = $categoria_velocidad;
                         $data['historial'][$i]['cboModalidadVelocidad'] = $modalidad_velocidad;
-                        $data['historial'][$i]['velocidad_competencias'] = $row[TBL_HISTORIAL_PATIN_VALOCIDAD_COMPETENCIA ];
-                        for($n = 0; $n < count($row[TBL_HISTORIAL_PATIN_VALOCIDAD_COMPETENCIA]);$n++){
-                            $data['historial'][$i]['velocidad_competencias'][$n]['cboCountry'] = $cboCountry;
-                        }
 
                     }
                     $data['palmares'] = $row[TBL_HISTORIAL_PATIN_PALMARES];
@@ -539,7 +556,7 @@ class Historial extends Controller {
                         $cboState = $this->lists_model->get_states(false, null,$data['historial'][$i]['country']);
                         $data['historial'][$i]['cboState'] = $cboState;
 
-                         $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_RUGBY_DATOS, "historial", "datos", array());
+                        $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_RUGBY_DATOS, "historial", "datos", array());
                     }
                     $data['palmares'] = $row[TBL_HISTORIAL_RUGBY_PALMARES];
                     for($i=0;$i<count($row[TBL_HISTORIAL_RUGBY_PALMARES]);$i++){
@@ -598,22 +615,13 @@ class Historial extends Controller {
                         $data['historial'][$i]['cboState'] = $cboState;
                         $data['historial'][$i]['cboActividades'] = $actividades;
 
-                        $data['historial'][$i]['titulos_singles'] = $row[TBL_HISTORIAL_TENIS_TITULOS_SINGLES];
-                        for($n=0;$n<count($row[TBL_HISTORIAL_TENIS_TITULOS_SINGLES]);$n++)
-                            $data['historial'][$i]['titulos_singles'][$n]['cboSuperficie'] = $superficie;
+                        $arr_datos = array('cboSuperficie'=>$superficie);
 
-                        $data['historial'][$i]['titulos_dobles'] = $row[TBL_HISTORIAL_TENIS_TITULOS_DOBLES];
-                        for($n=0;$n<count($row[TBL_HISTORIAL_TENIS_TITULOS_DOBLES]);$n++)
-                            $data['historial'][$i]['titulos_dobles'][$n]['cboSuperficie'] = $superficie;
-
-                        $data['historial'][$i]['finales_singles'] = $row[TBL_HISTORIAL_TENIS_FINALES_SINGLES];
-                        for($n=0;$n<count($row[TBL_HISTORIAL_TENIS_FINALES_SINGLES]);$n++)
-                            $data['historial'][$i]['finales_singles'][$n]['cboSuperficie'] = $superficie;
-
-                        $data['historial'][$i]['finales_dobles'] = $row[TBL_HISTORIAL_TENIS_FINALES_DOBLES];
-                        for($n=0;$n<count($row[TBL_HISTORIAL_TENIS_FINALES_DOBLES]);$n++)
-                            $data['historial'][$i]['finales_dobles'][$n]['cboSuperficie'] = $superficie;
-
+                        $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_TENIS_TITULOS_SINGLES, "historial", "titulos_singles", $arr_datos);
+                        $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_TENIS_TITULOS_DOBLES, "historial", "titulos_dobles", $arr_datos);
+                        $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_TENIS_FINALES_SINGLES, "historial", "finales_singles", $arr_datos);
+                        $this->_inicializarTablaHija($data, $row, $i, TBL_HISTORIAL_TENIS_FINALES_DOBLES, "historial", "finales_dobles", $arr_datos);
+    
                     }
                     $data['palmares_singles'] = $row[TBL_HISTORIAL_TENIS_PALMARES_SINGLES];
                     for($i=0;$i<count($row[TBL_HISTORIAL_TENIS_PALMARES_SINGLES]);$i++)
@@ -726,8 +734,8 @@ class Historial extends Controller {
 
     public function save(){
         $datos = $_POST;
-    //    print_array($datos);
-
+     
+        
         $sports_id = array_pop($datos);
         $historial_id = array_pop($datos);
      
@@ -759,9 +767,11 @@ class Historial extends Controller {
      //private
 
      private function _inicializarTablaHija(&$data, $row, $cont, $tabla_hija, $alias_padre="historial", $alias_hijo, $arr_campos){
-         
+        //asigna un elemento vacio a la primer tabla de cualquier historial por si no existe
+        //ningun elemento guardado
         $data[$alias_padre][$cont][$alias_hijo][0] = $row[$tabla_hija][0];
         $tmp =  $data[$alias_padre][$cont][$alias_hijo][0][TABLE_NAME_FIELD];
+
         foreach($data[$alias_padre][$cont][$alias_hijo][0] as $key=>$value){
             $data[$alias_padre][$cont][$alias_hijo][0][$key]="";
             foreach($arr_campos as $key=>$datos){
@@ -769,16 +779,18 @@ class Historial extends Controller {
             }
         }
 
+        //asigna elementos a cada tabla
         $data[$alias_padre][$cont][$alias_hijo][0][TABLE_NAME_FIELD] = $tmp;
         $index=0;
         for($n=0;$n<count($row[$tabla_hija]);$n++){
+            //compara el id que vincula a tabla padre y tabla hija.
             if ($row[$tabla_hija][$n][$alias_padre."_id"] == $data[$alias_padre][$cont][$alias_padre."_id"]){
                 $data[$alias_padre][$cont][$alias_hijo][$index] = $row[$tabla_hija][$n];
 
                 foreach($arr_campos as $key=>$datos){
-                    $data[$alias_padre][$cont][$alias_hijo][$n][$key] = $datos;
+                    $data[$alias_padre][$cont][$alias_hijo][$index][$key] = $datos;
                 }
-            $index++;
+                $index++;
             }
         }
      }
